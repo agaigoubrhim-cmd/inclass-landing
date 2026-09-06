@@ -53,6 +53,7 @@ export interface ResourceItem extends ArticleItem {
   coverImageUrl?: string | null;
   tutorId?: string | null;
   avatarUrl?: string | null;
+  isAnonymous?: boolean;
 }
 
 export const RESOURCE_TYPES: ResourceType[] = [

@@ -62,6 +62,7 @@ function toResourceItem(base: Article): ResourceItem {
     coverImageUrl: base.cover,
     tutorId: null,
     avatarUrl: null,
+    isAnonymous: false,
   };
 }
 
@@ -477,6 +478,7 @@ function mapApiResourceToResource(item: ApiResource): ResourceItem {
     coverImageUrl: item.cover_image_url || null,
     tutorId: item.tutor?.id || null,
     avatarUrl: item.tutor?.avatar_url || null,
+    isAnonymous: Boolean(item.is_anonymous),
   };
 }
 
