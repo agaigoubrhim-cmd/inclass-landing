@@ -62,6 +62,10 @@ export default function Hero() {
         <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-black/40 to-black/20" />
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
 
+        {/* Brand color grade */}
+        <div className="pointer-events-none absolute inset-0 mix-blend-screen bg-gradient-to-br from-tutor-500/25 via-transparent to-student-500/20" />
+        <div className="pointer-events-none absolute inset-0 mix-blend-soft-light bg-gradient-to-t from-tutor-700/25 via-transparent to-parent-500/15" />
+
         {/* Brand glows */}
         <div
           data-parallax="-0.2"

@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: process.cwd(),
   },
+  // Allow the Arena live-preview subdomains (e.g. 3000-*.e2b.app) during dev.
+  allowedDevOrigins: ["*.e2b.app"],
   images: {
     remotePatterns: [
       {

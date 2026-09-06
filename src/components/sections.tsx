@@ -39,6 +39,14 @@ const STEP_ICONS: Record<string, React.ComponentType<{ className?: string }>> = 
   rocket: RocketAnimatedIcon,
 };
 
+const STAT_ACCENTS = [
+  { dot: "bg-tutor-500", ring: "ring-tutor-500/20", label: "text-tutor-700 dark:text-tutor-300" },
+  { dot: "bg-student-500", ring: "ring-student-500/20", label: "text-student-700 dark:text-student-300" },
+  { dot: "bg-parent-500", ring: "ring-parent-500/20", label: "text-parent-700 dark:text-parent-300" },
+  { dot: "bg-student-500", ring: "ring-student-500/20", label: "text-student-700 dark:text-student-300" },
+  { dot: "bg-tutor-500", ring: "ring-tutor-500/20", label: "text-tutor-700 dark:text-tutor-300" },
+];
+
 export function StatsBar() {
   const { dict } = useI18n();
 
@@ -51,22 +59,33 @@ export function StatsBar() {
   ];
 
   return (
-    <section className="bg-cream dark:bg-ink-950">
+    <section className="relative overflow-hidden border-y border-line/70 bg-white/60 py-10 backdrop-blur-sm dark:border-white/10 dark:bg-white/[0.02]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-tutor-300/60 to-transparent dark:via-tutor-500/50" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-student-300/60 to-transparent dark:via-student-500/50" />
+
       <div
         data-anim-stagger
-        className="mx-auto grid max-w-7xl grid-cols-2 gap-y-8 px-4 py-10 sm:px-6 md:grid-cols-5 lg:px-8"
+        className="mx-auto grid max-w-7xl grid-cols-2 gap-3 px-4 py-6 sm:px-6 md:grid-cols-5 lg:gap-4 lg:px-8"
       >
-        {localizedStats.map((stat) => (
-          <div key={stat.label} data-anim-child className="text-center">
-            <p className="font-brand text-[clamp(1.8rem,3.2vw,2.4rem)] font-extrabold leading-none text-ink dark:text-white">
-              <RollingNumber targetNumber={stat.value} height={40} />
-            </p>
+        {localizedStats.map((stat, i) => {
+          const accent = STAT_ACCENTS[i % STAT_ACCENTS.length];
+          return (
+            <div
+              key={stat.label}
+              data-anim-child
+              className={`relative overflow-hidden rounded-3xl border border-line/80 bg-white/80 px-4 py-5 text-center shadow-card ring-1 ${accent.ring} transition-all duration-300 hover:-translate-y-1 hover:shadow-pop dark:border-white/10 dark:bg-ink-800/60`}
+            >
+              <span className={`absolute left-4 top-4 h-2 w-2 rounded-full ${accent.dot} opacity-80`} />
+              <p className="font-brand text-[clamp(1.7rem,3.2vw,2.35rem)] font-extrabold leading-none text-ink dark:text-white">
+                <RollingNumber targetNumber={stat.value} height={40} />
+              </p>
 
-            <p className="mt-2 text-sm font-medium text-ink-soft dark:text-white/60">
-              {stat.label}
-            </p>
-          </div>
-        ))}
+              <p className={`mt-2 text-[13px] font-bold ${accent.label}`}>
+                {stat.label}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </section>
   );
@@ -662,10 +681,10 @@ export function CtaBand({
 }) {
   const { dict } = useI18n();
   const bg: Record<Tone, string> = {
-    student: "bg-student-600 text-student-50",
-    tutor: "bg-tutor-600 text-tutor-50",
-    parent: "bg-parent-600 text-parent-50",
-    ink: "bg-ink text-cream dark:bg-ink-800 dark:border dark:border-white/10",
+    student: "bg-gradient-to-br from-student-600 via-student-600 to-student-800 text-student-50",
+    tutor: "bg-gradient-to-br from-tutor-500 via-tutor-600 to-tutor-800 text-tutor-50",
+    parent: "bg-gradient-to-br from-parent-500 via-parent-600 to-parent-800 text-parent-50",
+    ink: "bg-gradient-to-br from-ink-700 via-ink to-ink-950 text-cream dark:from-ink-700 dark:via-ink-700 dark:to-ink-950 dark:border dark:border-white/10",
   };
 
   const displayTitle = title || `${dict.hero.titlePrefix} ${dict.hero.highlight} ${dict.hero.titleSuffix}`;
@@ -677,6 +696,12 @@ export function CtaBand({
         data-anim="scale"
         className={`relative overflow-hidden rounded-[36px] px-8 py-14 text-center sm:px-16 ${bg[tone]}`}
       >
+        {/* Decorative color glows */}
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+        <div className="pointer-events-none absolute -right-16 -top-20 h-72 w-72 rounded-full bg-white/10 blur-[100px]" />
+        <div className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-black/20 blur-[110px]" />
+        <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-[80%] -translate-x-1/2 rounded-full bg-white/[0.08] blur-[80px]" />
+
         <h2 className="relative text-[clamp(1.9rem,4.4vw,3rem)] font-extrabold leading-tight text-white">
           {displayTitle}
         </h2>

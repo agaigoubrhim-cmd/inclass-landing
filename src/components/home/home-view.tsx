@@ -85,8 +85,12 @@ export default function HomeView({
       {/* =========================================================
           TESTIMONIALS
          ========================================================= */}
-      <section className="bg-sand/60 py-20 dark:bg-ink-950/50">
-        <TestimonialCarousel items={testimonials} />
+      <section className="relative overflow-hidden bg-gradient-to-br from-tutor-50/70 via-sand/60 to-student-50/70 py-20 dark:from-tutor-950/30 dark:via-ink-950/50 dark:to-student-950/25">
+        <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-tutor-500/10 blur-[110px] dark:bg-tutor-500/15" />
+        <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-student-500/10 blur-[110px] dark:bg-student-500/15" />
+        <div className="relative">
+          <TestimonialCarousel items={testimonials} />
+        </div>
       </section>
 
       {/* =========================================================

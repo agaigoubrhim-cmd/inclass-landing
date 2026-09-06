@@ -86,6 +86,7 @@ export function Eyebrow({
     <span
       className={`inline-flex items-center gap-2 rounded-full px-3.5 py-1.5 text-xs font-bold uppercase tracking-[0.14em] font-brand ${tones[tone]} ${className}`}
     >
+      <span className="h-1.5 w-1.5 rounded-full bg-current opacity-80" aria-hidden="true" />
       {children}
     </span>
   );
