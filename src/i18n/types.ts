@@ -304,6 +304,8 @@ export interface Dictionary {
     pageLabel: string;
     partOne: string;
     sectionOne: string;
+    exerciseInstruction: string;
+    answerHere: string;
     practiceArea: string;
     yourAnswer: string;
     showSolution: string;

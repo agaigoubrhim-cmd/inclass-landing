@@ -460,25 +460,63 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
     }
 
     case "exercise": {
+      const items = [
+        article.category,
+        article.subject,
+        article.educationLevel,
+        ...(article.tags || []),
+      ]
+        .filter((item): item is string => Boolean(item))
+        .slice(0, 5);
+
       return (
         <Link
           href={href}
-          className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[26px] border border-tutor-200/70 bg-[#eef3ff] p-6 text-ink transition-all duration-300 hover:-translate-y-1.5 dark:border-tutor-500/20 dark:bg-ink-800 dark:text-white sm:p-7"
+          className="group relative flex min-h-[410px] flex-col overflow-hidden rounded-[8px] border border-[#a9c7e8] bg-white p-4 text-ink transition-all duration-300 hover:-translate-y-1.5 dark:bg-ink-800 dark:text-white sm:p-5"
         >
-          <div className="pointer-events-none absolute right-4 top-4 grid h-11 w-11 place-items-center rounded-xl bg-tutor-500/10 text-tutor-600 dark:text-tutor-300" aria-hidden="true">
-            <FileText className="h-5 w-5" />
+          {/* blue title header */}
+          <div className="rounded-[4px] bg-gradient-to-r from-[#dcebfc] to-[#eef6ff] px-3 py-2.5 text-center text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#2f5c8a] dark:from-ink-700 dark:to-ink-600 dark:text-blue-200">
+            {dict.resourcesPage.types.exercise}
           </div>
-          <div className="relative z-10">
-            <TypeChip type={type} skin="light" />
-            <h3 className="mt-4 text-xl font-extrabold leading-snug transition-colors group-hover:text-tutor-700 dark:text-white dark:group-hover:text-tutor-300">
-              {article.title}
-            </h3>
-            <p className="mt-4 text-sm leading-relaxed text-ink-soft line-clamp-[7] dark:text-white/65">
+
+          <h3 className="mt-4 text-lg font-extrabold leading-snug text-[#1c3a5e] transition-colors group-hover:text-[#2b62e8] dark:text-white dark:group-hover:text-blue-300">
+            {article.title}
+          </h3>
+
+          {/* instruction box */}
+          <div className="mt-4 rounded-[5px] border border-[#bcd6f2] bg-[#f5faff] px-3.5 py-3 dark:border-blue-500/30 dark:bg-ink-900">
+            <span className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#2f5c8a] dark:text-blue-300">
+              {dict.resourcesPage.exerciseInstruction}
+            </span>
+            <p className="mt-1.5 text-[13px] leading-relaxed text-ink-soft dark:text-white/70">
               {article.excerpt}
             </p>
           </div>
-          <div className="relative z-10 mt-6">
-            <CardFooter article={article} skin="light" />
+
+          {/* section rows */}
+          <div className="mt-4 space-y-2.5">
+            {items.map((item, i) => (
+              <div
+                key={i}
+                className="flex items-center gap-2 rounded-[5px] border border-[#cfe0f4] bg-[#fbfdff] px-3 py-2 dark:border-blue-500/20 dark:bg-ink-900"
+              >
+                <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${i % 2 ? "bg-[#8a9bb0]" : "bg-[#2b62e8]"}`} aria-hidden="true" />
+                <span className="min-w-0 flex-1 truncate text-[12px] font-bold text-[#2f5c8a] dark:text-blue-200">
+                  {item}
+                </span>
+                <span className="shrink-0 text-[10px] font-extrabold uppercase tracking-wider text-[#8a9bb0] dark:text-white/40">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+            ))}
+          </div>
+
+          {/* bottom instruction line */}
+          <div className="mt-auto flex items-start gap-2 border-t border-[#dcebfc] pt-4 dark:border-blue-500/20">
+            <FileText className="mt-0.5 h-4 w-4 shrink-0 text-[#2b62e8] dark:text-blue-300" aria-hidden="true" />
+            <p className="text-[12px] leading-relaxed text-[#5a6b7c] dark:text-white/60">
+              {article.tags?.[0] || article.category} · {article.readMinutes} {dict.resourcesPage.minRead}
+            </p>
           </div>
         </Link>
       );

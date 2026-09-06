@@ -429,6 +429,8 @@ export const es: Dictionary = {
     pageLabel: "Página",
     partOne: "Primera parte",
     sectionOne: "Sección primera",
+    exerciseInstruction: "Instrucción",
+    answerHere: "Respuesta",
     practiceArea: "A practicar",
     yourAnswer: "Tu respuesta",
     showSolution: "Ver la solución",

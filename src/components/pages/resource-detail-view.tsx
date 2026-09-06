@@ -9,6 +9,7 @@ import {
   CalendarDays,
   ChevronDown,
   Clock3,
+  FileText,
   Headphones,
   Lightbulb,
   ListChecks,
@@ -626,6 +627,87 @@ function VintageGuidePage({ article }: { article: ResourceItem }) {
   );
 }
 
+function ExerciseSheet({ article }: { article: ResourceItem }) {
+  const { dict } = useI18n();
+  const items = [
+    article.category,
+    article.subject,
+    article.educationLevel,
+    ...(article.tags || []),
+  ]
+    .filter((item): item is string => Boolean(item))
+    .slice(0, 8);
+
+  const paragraphs = (article.body || article.excerpt)
+    .split(/\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  return (
+    <div
+      data-anim="up"
+      className="mx-auto max-w-3xl rounded-[8px] border border-[#c9dcf2] bg-white p-4 text-ink dark:bg-ink-800 dark:text-white sm:p-7"
+    >
+      {/* blue document title header */}
+      <div className="rounded-[4px] bg-gradient-to-r from-[#dcebfc] to-[#eef6ff] px-4 py-3 text-center text-[12px] font-extrabold uppercase tracking-[0.18em] text-[#2f5c8a] dark:from-ink-700 dark:to-ink-600 dark:text-blue-200">
+        {dict.resourcesPage.types.exercise}
+      </div>
+
+      <h1 className="mt-6 text-center text-[clamp(1.6rem,4vw,2.5rem)] font-extrabold leading-tight text-[#1c3a5e] dark:text-white">
+        {article.title}
+      </h1>
+
+      {/* instruction row box */}
+      <div className="mt-7 rounded-[6px] border border-[#bcd6f2] bg-[#f5faff] px-4 py-4 dark:border-blue-500/30 dark:bg-ink-900">
+        <span className="text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#2f5c8a] dark:text-blue-300">
+          {dict.resourcesPage.exerciseInstruction}
+        </span>
+        <p className="mt-2 text-[15px] leading-relaxed text-ink-soft dark:text-white/75">{article.excerpt}</p>
+      </div>
+
+      {/* section list */}
+      <div className="mt-6 space-y-3">
+        {items.map((item, i) => (
+          <div
+            key={i}
+            className="flex items-center gap-3 rounded-[6px] border border-[#cfe0f4] bg-[#fbfdff] px-4 py-3 dark:border-blue-500/20 dark:bg-ink-900"
+          >
+            <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-[#2b62e8]/10 text-[11px] font-extrabold text-[#2b62e8] dark:text-blue-300">
+              {i + 1}
+            </span>
+            <span className="text-[14px] font-bold text-[#2f5c8a] dark:text-blue-200">{item}</span>
+          </div>
+        ))}
+      </div>
+
+      {/* exercise body */}
+      <div className="mt-7 overflow-hidden rounded-[6px] border border-[#cfe0f4] dark:border-blue-500/20">
+        <div className="border-b border-[#cfe0f4] bg-[#f5faff] px-4 py-2.5 text-[11px] font-extrabold uppercase tracking-[0.18em] text-[#2f5c8a] dark:border-blue-500/20 dark:bg-ink-900 dark:text-blue-300">
+          {article.subject || article.category}
+        </div>
+        <div className="space-y-4 bg-white p-5 dark:bg-ink-900">
+          {paragraphs.slice(0, 8).map((paragraph, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <span className="mt-1 shrink-0 text-[12px] font-extrabold text-[#2b62e8] dark:text-blue-300">
+                {String(i + 1).padStart(2, "0")}.
+              </span>
+              <p className="text-[15px] leading-[1.9] text-ink-soft dark:text-white/75">{paragraph}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* answer / practice line */}
+      <div className="mt-6 flex items-start gap-2 border-t border-[#dcebfc] pt-5 dark:border-blue-500/20">
+        <FileText className="mt-0.5 h-4 w-4 shrink-0 text-[#2b62e8] dark:text-blue-300" aria-hidden="true" />
+        <p className="text-[13px] leading-relaxed text-[#5a6b7c] dark:text-white/60">
+          {dict.resourcesPage.answerHere}: {article.body || article.excerpt}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function ResourceContent({ article }: { article: ResourceItem }) {
   const { dict } = useI18n();
   const type: ResourceType = normalizeResourceType(article.type ?? article.resourceType);
@@ -648,6 +730,7 @@ function ResourceContent({ article }: { article: ResourceItem }) {
         </>
       );
     case "exercise":
+      return <ExerciseSheet article={article} />;
     case "exercise_corrige":
       return (
         <>
@@ -693,7 +776,7 @@ export default function ResourceDetailView({
   const tone = TONE[article.audience] ?? "tutor";
   const type = normalizeResourceType(article.type ?? article.resourceType);
   const typeLabel = dict.resourcesPage.types[type] ?? dict.resourcesPage.types.article;
-  const isEditorial = type === "article" || type === "notes" || type === "guide";
+  const isEditorial = type === "article" || type === "notes" || type === "guide" || type === "exercise";
 
   return (
     <>

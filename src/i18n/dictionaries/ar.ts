@@ -429,6 +429,8 @@ export const ar: Dictionary = {
     pageLabel: "صفحة",
     partOne: "الجزء الأول",
     sectionOne: "القسم الأول",
+    exerciseInstruction: "التعليمة",
+    answerHere: "الجواب",
     practiceArea: "حان دورك",
     yourAnswer: "إجابتك",
     showSolution: "عرض الحل",
