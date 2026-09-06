@@ -1,23 +1,98 @@
 "use client";
 
 import Link from "next/link";
-import { Mail, MapPin, Phone, MessageSquare } from "lucide-react";
+import { ArrowRight, Check, Loader2, Moon, Sun } from "lucide-react";
+
+function InstagramIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
+      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
+      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
+    </svg>
+  );
+}
+
+function FacebookIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  );
+}
+import { useState } from "react";
 import { FALLBACK_SUBJECTS, CITIES, LEVELS } from "@/content/site";
-import { LogoLockup, MoroccoFlag, WhatsAppIcon } from "./icons";
+import { MoroccoFlag } from "./icons";
+import { useTheme } from "./site-header";
 import { useI18n } from "@/i18n";
 import { getLocalizedSubject } from "@/lib/subject-translations";
 
-const COLUMN_TONE = [
-  "text-tutor-300",
-  "text-student-300",
-  "text-parent-300",
-  "text-cream",
-];
-
 const LINK_CLASS = "transition-colors duration-200 hover:text-white";
+
+function FooterNewsletter() {
+  const { dict, isRTL } = useI18n();
+  const [email, setEmail] = useState("");
+  const [state, setState] = useState<"idle" | "loading" | "done" | "error">("idle");
+  const [message, setMessage] = useState("");
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setState("loading");
+    try {
+      const res = await fetch("/api/newsletter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = (await res.json()) as { ok?: boolean; error?: string };
+      if (!res.ok || !data.ok) throw new Error(data.error || "Erreur");
+      setState("done");
+      setMessage(dict.footer.newsletterSuccess);
+      setEmail("");
+    } catch {
+      setState("error");
+      setMessage("Une erreur est survenue.");
+    }
+  }
+
+  return (
+    <form onSubmit={onSubmit} className="w-full">
+      <div className="flex items-center gap-3 border-b border-white/20 pb-2 transition-colors focus-within:border-white">
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder={dict.footer.newsletterPlaceholder}
+          className="h-11 w-full bg-transparent text-sm text-white placeholder:text-white/35 focus:outline-none"
+        />
+        <button
+          type="submit"
+          disabled={state === "loading"}
+          aria-label={dict.footer.newsletterBtn}
+          className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-white transition-transform hover:scale-105 disabled:opacity-60"
+        >
+          {state === "loading" ? (
+            <Loader2 className="h-4 w-4 animate-spin" />
+          ) : state === "done" ? (
+            <Check className="h-4 w-4" />
+          ) : (
+            <ArrowRight className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`} />
+          )}
+        </button>
+      </div>
+      {message ? (
+        <p className={`mt-2 text-xs ${state === "error" ? "text-red-300" : "text-student-200"}`}>
+          {message}
+        </p>
+      ) : null}
+    </form>
+  );
+}
 
 export default function SiteFooter() {
   const { dict, locale } = useI18n();
+  const { theme, toggle } = useTheme();
 
   const subjectGroups = [
     {
@@ -202,62 +277,70 @@ export default function SiteFooter() {
       </section>
 
       {/* =========================================================
-          MAIN BRAND FOOTER (DARK SURFACE)
+          MAIN BRAND FOOTER (DARK SURFACE — KOSBIOTIC-STYLE)
          ========================================================= */}
-      <section className="relative overflow-hidden bg-ink px-4 py-16 text-cream dark:bg-black sm:px-6 lg:px-8">
-        <div className="relative mx-auto w-full max-w-7xl">
-          <div className="grid gap-12 lg:grid-cols-[1.3fr_2fr]">
-            {/* BRAND COLUMN */}
-            <div className="flex flex-col justify-between">
-              <Link href="/" className="inline-block">
-                <LogoLockup
-                  markClassName="h-10 w-10 text-white"
-                  textClassName="text-2xl font-extrabold tracking-tight"
-                />
-              </Link>
+      <section className="relative overflow-hidden bg-[#070707] text-white">
+        <div className="relative mx-auto w-full max-w-[1600px] px-5 sm:px-8 lg:px-12">
+          {/* Giant brand wordmark */}
+          <div className="border-b border-white/10 pt-16 sm:pt-20">
+            <Link href="/" aria-label={dict.common.brandName} className="block">
+              <span className="block break-all text-[clamp(4.2rem,15.5vw,15rem)] font-extrabold leading-[0.82] tracking-[-0.07em] text-white transition-opacity hover:opacity-80">
+                inclass
+              </span>
+            </Link>
+          </div>
 
-              <p className="mt-5 text-sm leading-7 text-cream/65">
+          {/* Content grid: newsletter + columns */}
+          <div className="grid gap-12 py-14 sm:py-16 lg:grid-cols-[minmax(260px,1fr)_2.3fr] lg:gap-24 lg:py-20">
+            {/* Newsletter + socials */}
+            <div className="min-w-0">
+              <h3 className="text-sm font-bold tracking-tight">Newsletter</h3>
+              <p className="mt-2 text-sm leading-relaxed text-white/45">
                 {dict.footer.tagline}
               </p>
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                <Link
-                  href="/contact"
-                  className="inline-flex items-center gap-2 rounded-full bg-student-600 px-5 py-2.5 text-xs font-bold text-white transition-transform hover:scale-[1.02]"
-                >
-                  <MessageSquare className="h-4 w-4" />
-                  <span>{dict.common.requestTutor}</span>
-                </Link>
+              <div className="mt-6 max-w-sm">
+                <FooterNewsletter />
+              </div>
+
+              <label className="mt-4 flex items-center gap-2 text-[10px] uppercase tracking-[0.16em] text-white/40">
+                <input type="checkbox" className="accent-white" />
+                <span>J&apos;accepte les conditions</span>
+              </label>
+
+              <div className="mt-6 flex items-center gap-3">
                 <a
-                  href="https://wa.me/212600000000"
+                  href="https://instagram.com"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2.5 text-xs font-bold text-white transition-colors hover:bg-white/20"
+                  aria-label="Instagram"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-white hover:text-white"
                 >
-                  <WhatsAppIcon className="h-4 w-4" />
-                  <span>{dict.common.whatsappSupport}</span>
+                  <InstagramIcon className="h-4 w-4" />
+                </a>
+                <a
+                  href="https://facebook.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Facebook"
+                  className="grid h-9 w-9 place-items-center rounded-full border border-white/15 text-white/70 transition-colors hover:border-white hover:text-white"
+                >
+                  <FacebookIcon className="h-4 w-4" />
                 </a>
               </div>
             </div>
 
-            {/* FOOTER LINKS */}
-            <div className="grid w-full gap-8 sm:grid-cols-2 lg:grid-cols-4">
-              {footerColumns.map((col, idx) => (
-                <div key={col.title}>
-                  <p
-                    className={`text-xs font-bold uppercase tracking-[0.2em] ${
-                      COLUMN_TONE[idx % COLUMN_TONE.length]
-                    }`}
-                  >
-                    {col.title}
-                  </p>
-
-                  <ul className="mt-4 space-y-2.5 text-sm">
+            {/* Link columns */}
+            <div className="grid min-w-0 grid-cols-2 gap-x-8 gap-y-10 sm:grid-cols-4">
+              {footerColumns.map((col) => (
+                <div key={col.title} className="min-w-0">
+                  <p className="text-sm font-bold tracking-tight">{col.title}</p>
+                  <ul className="mt-5 space-y-3 text-[13px] text-white/50">
                     {col.links.map((link) => (
                       <li key={link.label}>
                         <Link
                           href={link.href}
-                          className="text-cream/70 transition-colors hover:text-cream"
+                          className="transition-colors hover:text-white"
                         >
                           {link.label}
                         </Link>
@@ -269,52 +352,36 @@ export default function SiteFooter() {
             </div>
           </div>
 
-          {/* CONTACT & OFFICE ROW */}
-          <div className="mt-14 flex flex-wrap items-center justify-between gap-6 border-t border-white/10 pt-10 text-xs text-cream/70">
-            <div className="flex flex-wrap items-center gap-6">
-              <span className="flex items-center gap-2">
-                <MapPin className="h-4 w-4 text-student-300" />
-                <span>{dict.footer.officeAgadir}</span>
-              </span>
-              <a
-                href="tel:+212528000000"
-                className="flex items-center gap-2 transition-colors hover:text-white"
-              >
-                <Phone className="h-4 w-4 text-tutor-300" />
-                <span>+212 5 28 00 00 00</span>
-              </a>
-              <a
-                href="mailto:salam@inclass.app"
-                className="flex items-center gap-2 transition-colors hover:text-white"
-              >
-                <Mail className="h-4 w-4 text-parent-300" />
-                <span>salam@inclass.app</span>
-              </a>
-            </div>
-
-            <div className="flex items-center gap-3">
-              <MoroccoFlag className="h-4 w-6 rounded-sm shadow-sm" />
-              <span>{dict.footer.marocAll}</span>
-            </div>
-          </div>
-
-          {/* BOTTOM COPYRIGHT */}
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-white/5 pt-8 text-[11px] text-cream/50">
-            <p>{dict.footer.copyright}</p>
-
-            <div className="flex gap-5">
-              <Link href="/a-propos" className="hover:underline">
+          {/* Bottom bar */}
+          <div className="flex flex-wrap items-center justify-between gap-4 border-t border-white/10 py-7 text-[10px] uppercase tracking-[0.18em] text-white/35">
+            <p className="flex items-center gap-2">
+              <MoroccoFlag className="h-4 w-6 rounded-sm opacity-80" />
+              <span>COPYRIGHT INCLASS 2026</span>
+            </p>
+            <p className="text-white/35">{dict.footer.marocAll}</p>
+            <div className="flex gap-6">
+              <Link href="/a-propos" className="transition-colors hover:text-white">
                 {dict.footer.legalNotice}
               </Link>
-              <Link href="/a-propos" className="hover:underline">
+              <Link href="/a-propos" className="transition-colors hover:text-white">
                 {dict.footer.privacy}
               </Link>
-              <Link href="/a-propos" className="hover:underline">
+              <Link href="/a-propos" className="transition-colors hover:text-white">
                 {dict.footer.terms}
               </Link>
             </div>
           </div>
         </div>
+
+        {/* Floating theme toggle (bottom-right, like reference) */}
+        <button
+          type="button"
+          onClick={toggle}
+          aria-label="Basculer le thème"
+          className="absolute bottom-6 right-6 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-white/5 text-white backdrop-blur-md transition-all hover:bg-white/15"
+        >
+          {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+        </button>
       </section>
     </footer>
   );
