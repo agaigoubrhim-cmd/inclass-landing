@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import {
   BookOpen,
@@ -245,6 +246,19 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
               {article.readMinutes} MIN
             </span>
           </div>
+
+          {article.cover ? (
+            <div className="relative -mx-6 mt-5 h-44 overflow-hidden bg-sand dark:bg-ink-900 sm:-mx-7">
+              <Image
+                src={article.cover}
+                alt={article.title}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10" aria-hidden="true" />
+            </div>
+          ) : null}
 
           <div className="relative z-10 mt-5">
             <h3 className="text-xl font-extrabold leading-snug transition-colors group-hover:text-tutor-700 dark:text-white dark:group-hover:text-tutor-300">
