@@ -1,7 +1,49 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Check, Loader2, Moon, Sun } from "lucide-react";
+import { useState } from "react";
+
+function ArrowRightIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M5 12h14" />
+      <path d="m12 5 7 7-7 7" />
+    </svg>
+  );
+}
+
+function CheckIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M20 6 9 17l-5-5" />
+    </svg>
+  );
+}
+
+function LoaderIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M21 12a9 9 0 1 1-6.219-8.56" />
+    </svg>
+  );
+}
+
+function SunIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <circle cx="12" cy="12" r="4" />
+      <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" />
+    </svg>
+  );
+}
+
+function MoonIcon({ className = "" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" className={className} aria-hidden="true">
+      <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" />
+    </svg>
+  );
+}
 
 function InstagramIcon({ className = "" }: { className?: string }) {
   return (
@@ -20,7 +62,6 @@ function FacebookIcon({ className = "" }: { className?: string }) {
     </svg>
   );
 }
-import { useState } from "react";
 import { FALLBACK_SUBJECTS, CITIES, LEVELS } from "@/content/site";
 import { MoroccoFlag } from "./icons";
 import { useTheme } from "./site-header";
@@ -75,11 +116,11 @@ function FooterNewsletter() {
         className="group inline-flex h-14 w-full items-center justify-center gap-3 rounded-full bg-tutor-500 px-8 text-[15px] font-bold text-white transition-all duration-300 hover:bg-tutor-600 hover:shadow-lg hover:shadow-tutor-500/25 disabled:opacity-60"
       >
         {state === "loading" ? (
-          <Loader2 className="h-5 w-5 animate-spin" />
+          <LoaderIcon className="h-5 w-5 animate-spin" />
         ) : state === "done" ? (
-          <Check className="h-5 w-5" />
+          <CheckIcon className="h-5 w-5" />
         ) : (
-          <ArrowRight
+          <ArrowRightIcon
             className={`h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 ${
               isRTL ? "rotate-180 group-hover:-translate-x-1" : ""
             }`}
@@ -387,7 +428,7 @@ export default function SiteFooter() {
           aria-label="Basculer le thème"
           className="absolute bottom-6 right-6 grid h-11 w-11 place-items-center rounded-full border border-white/20 bg-white/5 text-white backdrop-blur-md transition-all hover:bg-white/15"
         >
-          {theme === "dark" ? <Sun className="h-4 w-4" /> : <Moon className="h-4 w-4" />}
+          {theme === "dark" ? <SunIcon className="h-4 w-4" /> : <MoonIcon className="h-4 w-4" />}
         </button>
       </section>
     </footer>
