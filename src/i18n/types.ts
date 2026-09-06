@@ -309,6 +309,7 @@ export interface Dictionary {
     listenAudio: string;
     comments: string;
     likes: string;
+    imageNotFound: string;
     types: {
       article: string;
       guide: string;

@@ -293,7 +293,8 @@ function EditorialArticle({ article }: { article: ResourceItem }) {
     fontFamily:
       "Georgia, 'Times New Roman', 'Noto Serif', serif",
   };
-  const rightImg = article.cover || "/images/banner-resources.jpg";
+  const rightImg = article.coverImageUrl || (article.cover && /^https?:/i.test(article.cover) ? article.cover : null);
+  const hasImage = Boolean(rightImg);
 
   return (
     <div data-anim="up" className="border-b-4 border-ink dark:border-white">
@@ -342,13 +343,21 @@ function EditorialArticle({ article }: { article: ResourceItem }) {
 
         <figure className="md:pt-2">
           <div className="relative aspect-[4/3] overflow-hidden bg-sand dark:bg-ink-900">
-            <Image
-              src={rightImg}
-              alt={article.title}
-              fill
-              sizes="(max-width: 768px) 100vw, 50vw"
-              className="object-cover"
-            />
+            {hasImage && rightImg ? (
+              <Image
+                src={rightImg}
+                alt={article.title}
+                fill
+                sizes="(max-width: 768px) 100vw, 50vw"
+                className="object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 grid place-items-center bg-[repeating-linear-gradient(45deg,#f1f2f6,#f1f2f6_8px,#e9ebf2_8px,#e9ebf2_16px)] dark:bg-[repeating-linear-gradient(45deg,#141a2e,#141a2e_8px,#0d111f_8px,#0d111f_16px)]">
+                <span className="text-[13px] font-bold uppercase tracking-[0.22em] text-ink-soft dark:text-white/60" style={serif}>
+                  {dict.resourcesPage.imageNotFound}
+                </span>
+              </div>
+            )}
           </div>
           <figcaption
             className="mt-2 text-xs italic text-ink-soft dark:text-white/50"

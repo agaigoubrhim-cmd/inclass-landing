@@ -243,7 +243,10 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
       const leadHeading = paragraphs[0] || article.category;
       const leadBody = paragraphs.slice(1, 3).join(" ");
       const restBody = paragraphs.slice(3);
-      const imageUrl = article.cover || "/images/banner-resources.jpg";
+      // Real API image only (`cover_image_url`). Local default banners are not
+      // treated as a real photo so a missing API image shows the placeholder.
+      const imageUrl = article.coverImageUrl || (article.cover && /^https?:/i.test(article.cover) ? article.cover : null);
+      const hasImage = Boolean(imageUrl);
 
       return (
         <Link
@@ -293,14 +296,25 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
             </div>
 
             <figure className="order-1 md:order-2">
-              <div className="relative aspect-[4/3] overflow-hidden bg-sand">
-                <Image
-                  src={imageUrl}
-                  alt={article.title}
-                  fill
-                  sizes="(max-width: 767px) 100vw, 50vw"
-                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                />
+              <div className="relative aspect-[4/3] overflow-hidden border border-ink/20 bg-sand">
+                {hasImage && imageUrl ? (
+                  <Image
+                    src={imageUrl}
+                    alt={article.title}
+                    fill
+                    sizes="(max-width: 767px) 100vw, 50vw"
+                    className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                  />
+                ) : (
+                  <div className="absolute inset-0 grid place-items-center bg-[repeating-linear-gradient(45deg,#f1f2f6,#f1f2f6_8px,#e9ebf2_8px,#e9ebf2_16px)]">
+                    <span
+                      className="text-[13px] font-bold uppercase tracking-[0.22em] text-ink-soft"
+                      style={serif}
+                    >
+                      {dict.resourcesPage.imageNotFound}
+                    </span>
+                  </div>
+                )}
               </div>
               <figcaption className="mt-2 text-xs italic text-ink-soft" style={serif}>
                 {dict.common.brandName} — {article.category}
