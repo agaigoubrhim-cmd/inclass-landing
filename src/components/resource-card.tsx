@@ -168,7 +168,7 @@ function FoldedCorner() {
 }
 
 function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type: ResourceType; href: string }) {
-  const { dict, isRTL } = useI18n();
+  const { dict } = useI18n();
 
   switch (type) {
     case "notes": {
@@ -232,45 +232,105 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
     }
 
     case "article": {
+      const serif = {
+        fontFamily: "Georgia, 'Times New Roman', 'Noto Serif', serif",
+        letterSpacing: "-0.01em",
+      };
+      const paragraphs = (article.excerpt ? article.excerpt : article.body || "")
+        .split(/(?<=\.)\s+/)
+        .map((p) => p.trim())
+        .filter(Boolean);
+      const leadHeading = paragraphs[0] || article.category;
+      const leadBody = paragraphs.slice(1, 3).join(" ");
+      const restBody = paragraphs.slice(3);
+      const imageUrl = article.cover || "/images/banner-resources.jpg";
+
       return (
         <Link
           href={href}
-          className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[26px] border border-line bg-white p-6 text-ink transition-all duration-300 hover:-translate-y-1.5 dark:border-white/10 dark:bg-ink-800 dark:text-white sm:p-7"
+          className="group relative flex flex-col overflow-hidden rounded-[6px] border-2 border-ink bg-white text-ink transition-all duration-300 hover:-translate-y-1.5 dark:border-white dark:bg-white dark:text-ink"
         >
-          <div className="flex items-center justify-between gap-3 border-b border-line/70 pb-3 dark:border-white/10">
-            <span className={`inline-flex items-center gap-1.5 text-[11px] font-extrabold uppercase tracking-[0.14em] ${isRTL ? "rtl-flip" : ""} text-ink-soft dark:text-white/60`}>
-              <BookOpen className="h-3.5 w-3.5" aria-hidden="true" />
-              {dict.resourcesPage.types.article}
-            </span>
-            <span className="text-[11px] font-bold uppercase tracking-[0.1em] text-ink-soft dark:text-white/50">
-              {article.readMinutes} MIN
-            </span>
+          {/* Masthead */}
+          <div className="flex items-center justify-between border-b-2 border-ink px-5 py-2.5 sm:px-7">
+            <span className="text-[11px] font-bold uppercase tracking-[0.24em]">{dict.common.brandName}</span>
+            <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-ink-soft">{article.category}</span>
           </div>
 
-          {article.cover ? (
-            <div className="relative -mx-6 mt-5 h-44 overflow-hidden bg-sand dark:bg-ink-900 sm:-mx-7">
-              <Image
-                src={article.cover}
-                alt={article.title}
-                fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/45 via-transparent to-black/10" aria-hidden="true" />
-            </div>
-          ) : null}
-
-          <div className="relative z-10 mt-5">
-            <h3 className="text-xl font-extrabold leading-snug transition-colors group-hover:text-tutor-700 dark:text-white dark:group-hover:text-tutor-300">
+          {/* Headline */}
+          <div className="border-b-2 border-ink px-5 pb-5 pt-6 text-center sm:px-7 sm:pt-7">
+            <h3 className="text-[clamp(1.6rem,4vw,2.8rem)] font-black leading-[1.04] text-ink" style={serif}>
               {article.title}
             </h3>
-            <p className="mt-4 text-[15px] leading-[1.9] text-ink-soft first-letter:float-left first-letter:mr-2 first-letter:text-[44px] first-letter:font-serif first-letter:leading-[0.8] first-letter:text-ink dark:text-white/70 dark:first-letter:text-white line-clamp-[8]">
+            <p className="mt-3 text-sm italic text-ink-soft" style={serif}>
               {article.excerpt}
+            </p>
+            <p className="mt-2 text-[11px] font-bold uppercase tracking-[0.18em] text-ink-soft">
+              {article.author} · {article.readMinutes} MIN
             </p>
           </div>
 
-          <div className="relative z-10 mt-6">
-            <CardFooter article={article} skin="light" />
+          {/* Lead spread: text + media */}
+          <div className="grid gap-6 px-5 pt-6 sm:px-7 md:grid-cols-2">
+            <div className="order-2 md:order-1">
+              <h4 className="text-[17px] font-extrabold leading-snug text-ink" style={serif}>
+                {leadHeading}
+              </h4>
+              {leadBody ? (
+                <p
+                  className="mt-3 text-[15px] leading-[1.8] text-ink-soft first-letter:float-left first-letter:mr-2.5 first-letter:text-[52px] first-letter:font-black first-letter:leading-[0.72] first-letter:text-ink"
+                  style={serif}
+                >
+                  {leadBody}
+                </p>
+              ) : (
+                <p
+                  className="mt-3 text-[15px] leading-[1.8] text-ink-soft first-letter:float-left first-letter:mr-2.5 first-letter:text-[52px] first-letter:font-black first-letter:leading-[0.72] first-letter:text-ink"
+                  style={serif}
+                >
+                  {article.excerpt}
+                </p>
+              )}
+            </div>
+
+            <figure className="order-1 md:order-2">
+              <div className="relative aspect-[4/3] overflow-hidden bg-sand">
+                <Image
+                  src={imageUrl}
+                  alt={article.title}
+                  fill
+                  sizes="(max-width: 767px) 100vw, 50vw"
+                  className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+                />
+              </div>
+              <figcaption className="mt-2 text-xs italic text-ink-soft" style={serif}>
+                {dict.common.brandName} — {article.category}
+              </figcaption>
+            </figure>
+          </div>
+
+          {/* Body spread: continuing text + pull quote */}
+          {restBody.length > 0 ? (
+            <div className="mt-6 grid gap-6 px-5 sm:px-7 md:grid-cols-[1.4fr_1fr]">
+              <div className="space-y-4 text-[15px] leading-[1.8] text-ink-soft" style={serif}>
+                {restBody.map((paragraph, i) => (
+                  <p key={i}>{paragraph}</p>
+                ))}
+              </div>
+              <aside className="border-y border-ink py-5 text-center md:border-y-0 md:border-l md:py-0 md:pl-6">
+                <p className="text-lg font-bold italic leading-snug text-ink" style={serif}>
+                  « {article.tags?.[0] || article.category} »
+                </p>
+                <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-ink-soft">
+                  {dict.resourcesPage.keyPoints}
+                </p>
+              </aside>
+            </div>
+          ) : null}
+
+          {/* Page footer */}
+          <div className="mt-7 flex items-center justify-between border-t-2 border-ink px-5 py-2.5 text-[11px] font-bold uppercase tracking-[0.2em] text-ink-soft sm:px-7" style={serif}>
+            <span dir="ltr">www.inclass.app</span>
+            <span>01</span>
           </div>
         </Link>
       );
@@ -403,8 +463,9 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
 
 export default function ResourceCard({ article, basePath }: { article: ResourceItem; basePath: string }) {
   const type = normalizeResourceType(article.type ?? article.resourceType);
+  const isArticle = type === "article";
   return (
-    <div data-anim-child className="h-full">
+    <div data-anim-child className={isArticle ? "lg:col-span-3" : "h-full"}>
       <ResourceCardSkin article={article} type={type} href={`${basePath}/${article.slug}`} />
     </div>
   );
