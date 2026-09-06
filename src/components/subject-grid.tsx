@@ -96,6 +96,7 @@ export default function SubjectGrid({
               overflow-hidden
               rounded-[22px]
               border
+              border-line/80
               bg-white
               px-4
               py-6
@@ -104,9 +105,10 @@ export default function SubjectGrid({
               duration-300
               hover:-translate-y-1.5
               hover:border-ink/10
+              hover:bg-sand/30
               dark:bg-ink-800
               dark:hover:border-white/20
-              dark:
+              dark:hover:bg-ink-700/40
               ${accent.hoverBorder}
               
 

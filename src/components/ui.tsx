@@ -126,7 +126,7 @@ export function SectionHead({
       ) : null}
       <h2
         data-anim="up"
-        className="font-display text-[clamp(1.9rem,4.4vw,3.1rem)] font-extrabold leading-[1.06] text-ink dark:text-white"
+        className="font-display text-[clamp(1.9rem,4.4vw,3.1rem)] font-extrabold leading-[1.06] tracking-[-0.02em] text-ink dark:text-white"
       >
         {title}
         {highlight ? (

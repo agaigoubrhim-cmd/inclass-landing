@@ -39,14 +39,17 @@ export default function Hero() {
           <div className="max-w-3xl">
             {/* Badge */}
             <div className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-bold text-white backdrop-blur-md">
-              <span className="h-2 w-2 rounded-full bg-tutor-400" />
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-tutor-400 opacity-75" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-tutor-300" />
+              </span>
               <span className="font-brand uppercase tracking-[0.14em] text-tutor-200">
                 {dict.common.tagline}
               </span>
             </div>
 
             {/* Title */}
-            <h1 className="text-[clamp(2.5rem,6.5vw,4.8rem)] font-extrabold leading-[1.04] text-white">
+            <h1 className="text-[clamp(2.35rem,6.5vw,4.8rem)] font-extrabold leading-[1.04] tracking-[-0.02em] text-white">
               {dict.hero.titlePrefix}{" "}
               <span className="relative inline-block font-brand text-tutor-300">
                 {dict.hero.highlight}
