@@ -275,6 +275,135 @@ function MediaFrame({ article, type }: { article: ResourceItem; type: "video" | 
   );
 }
 
+function EditorialArticle({ article }: { article: ResourceItem }) {
+  const { dict, isRTL } = useI18n();
+
+  const paragraphs = (article.body ? article.body.split("\n\n").filter(Boolean) : []).map((p) =>
+    p.replace(/\s+/g, " ").trim(),
+  );
+  const fallback = getDefaultArticleSections()
+    .flatMap((s) => [s.heading, ...s.paragraphs])
+    .filter(Boolean);
+  const body = paragraphs.length ? paragraphs : fallback;
+
+  const lead = body.slice(0, 2);
+  const rest = body.slice(2);
+
+  const serif = {
+    fontFamily:
+      "Georgia, 'Times New Roman', 'Noto Serif', serif",
+  };
+  const rightImg = article.cover || "/images/banner-resources.jpg";
+
+  return (
+    <div data-anim="up" className="border-b-4 border-ink dark:border-white">
+      {/* Masthead */}
+      <div className="border-y border-ink pt-4 pb-5 text-center dark:border-white">
+        <div className="flex items-center justify-between border-b border-ink pb-2 text-[11px] font-bold uppercase tracking-[0.22em] dark:border-white/60">
+          <span className="text-ink dark:text-white">{dict.common.brandName}</span>
+          <span className="text-ink-soft dark:text-white/60">{article.category}</span>
+        </div>
+        <h1
+          className="mt-5 text-[clamp(2.1rem,6vw,3.6rem)] font-black leading-[1.02] text-ink dark:text-white"
+          style={serif}
+        >
+          {article.title}
+        </h1>
+        <p
+          className="mx-auto mt-3 max-w-2xl text-[18px] italic text-ink-soft dark:text-white/70"
+          style={serif}
+        >
+          {article.excerpt}
+        </p>
+        <p className="mt-4 text-[11px] font-semibold uppercase tracking-[0.18em] text-ink-soft dark:text-white/50">
+          {article.author} · {formatDate(article.publishedAt, "fr")}
+        </p>
+      </div>
+
+      {/* Lead spread: drop-cap text + featured image */}
+      <div className="grid gap-8 pt-8 md:grid-cols-2 md:items-start">
+        <div className="space-y-5 text-[17px] leading-[1.85] text-ink-soft dark:text-white/80" style={serif}>
+          {lead.map((paragraph, i) => (
+            <p
+              key={i}
+              className={
+                i === 0
+                  ? "first-letter:float-left first-letter:mr-3 first-letter:text-[58px] first-letter:font-black first-letter:leading-[0.75] first-letter:text-ink dark:first-letter:text-white"
+                  : ""
+              }
+            >
+              {paragraph}
+            </p>
+          ))}
+          <div className="border-l-4 border-ink pl-4 text-[15px] italic leading-relaxed text-ink dark:text-white/80 dark:border-white">
+            {article.tags?.length ? article.tags.slice(0, 3).join(" · ") : article.category}
+          </div>
+        </div>
+
+        <figure className="md:pt-2">
+          <div className="relative aspect-[4/3] overflow-hidden bg-sand dark:bg-ink-900">
+            <Image
+              src={rightImg}
+              alt={article.title}
+              fill
+              sizes="(max-width: 768px) 100vw, 50vw"
+              className="object-cover"
+            />
+          </div>
+          <figcaption
+            className="mt-2 text-xs italic text-ink-soft dark:text-white/50"
+            style={serif}
+          >
+            {dict.common.brandName} — {article.category}
+          </figcaption>
+        </figure>
+      </div>
+
+      {/* Body spread: text + supporting pull-quote / detail */}
+      <div className="mt-10 grid gap-8 md:grid-cols-[1.5fr_1fr]">
+        <div className="space-y-5 text-[16px] leading-[1.9] text-ink-soft dark:text-white/75" style={serif}>
+          {rest.map((paragraph, i) => (
+            <p key={i}>{paragraph}</p>
+          ))}
+        </div>
+
+        <aside className="space-y-6">
+          <div className="border-y border-ink py-5 text-center dark:border-white">
+            <p
+              className="text-[22px] font-bold italic leading-snug text-ink dark:text-white"
+              style={serif}
+            >
+              « {article.excerpt.slice(0, 90) || article.category} »
+            </p>
+            <p className="mt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-ink-soft dark:text-white/50">
+              {dict.resourcesPage.keyPoints}
+            </p>
+          </div>
+          <ul className="space-y-2.5 text-sm leading-relaxed text-ink-soft dark:text-white/70" style={serif}>
+            {(article.tags?.length
+              ? article.tags
+              : [article.category, article.subject, article.educationLevel].filter(Boolean)
+            )
+              .slice(0, 6)
+              .map((tag, i) => (
+                <li key={i} className="flex items-start gap-2">
+                  <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-ink dark:bg-white" aria-hidden="true" />
+                  <span>{tag}</span>
+                </li>
+              ))}
+          </ul>
+        </aside>
+      </div>
+
+      {/* Page footer */}
+      <div className="mt-10 flex items-center justify-between border-t border-ink pt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-ink-soft dark:border-white/60 dark:text-white/50">
+        <span dir={isRTL ? "rtl" : "ltr"}>www.inclass.app</span>
+        <span>01</span>
+      </div>
+    </div>
+  );
+}
+
 function ResourceContent({ article }: { article: ResourceItem }) {
   const { dict } = useI18n();
   const type: ResourceType = normalizeResourceType(article.type ?? article.resourceType);
@@ -329,6 +458,7 @@ function ResourceContent({ article }: { article: ResourceItem }) {
         </>
       );
     case "article":
+      return <EditorialArticle article={article} />;
     default:
       return (
         <>
@@ -352,18 +482,20 @@ export default function ResourceDetailView({
   const tone = TONE[article.audience] ?? "tutor";
   const type = normalizeResourceType(article.type ?? article.resourceType);
   const typeLabel = dict.resourcesPage.types[type] ?? dict.resourcesPage.types.article;
+  const isEditorial = type === "article";
 
   return (
     <>
-      <PageHero
-        eyebrow={article.category}
-        title={article.title}
-        tone={tone}
-        image={article.cover}
-        imageAlt={article.title}
-        crumbs={[{ label: dict.nav.resources, href: basePath }, { label: article.category }]}
-        sub={article.excerpt}
-      >
+      {isEditorial ? null : (
+        <PageHero
+          eyebrow={article.category}
+          title={article.title}
+          tone={tone}
+          image={article.cover}
+          imageAlt={article.title}
+          crumbs={[{ label: dict.nav.resources, href: basePath }, { label: article.category }]}
+          sub={article.excerpt}
+        >
         <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-3 text-sm text-white/85">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
             <ResourceTypeIcon type={type} className="h-3.5 w-3.5" />
@@ -380,9 +512,14 @@ export default function ResourceDetailView({
             <RollingNumber targetNumber={article.readMinutes} height={18} /> {dict.resourcesPage.minRead}
           </span>
         </div>
-      </PageHero>
+        </PageHero>
+      )}
 
-      <article className="mx-auto max-w-4xl px-4 py-16 sm:px-6 lg:px-8">
+      <article
+        className={`mx-auto px-4 py-14 sm:px-6 lg:px-8 ${
+          isEditorial ? "max-w-3xl" : "max-w-4xl py-16"
+        }`}
+      >
         {/* Navigation & Share Row */}
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-6 dark:border-white/10">
           <Link
