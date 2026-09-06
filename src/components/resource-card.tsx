@@ -149,27 +149,20 @@ function CardCover({
   heightClass?: string;
   className?: string;
 }) {
-  const { dict } = useI18n();
   const image =
     article.coverImageUrl || (article.cover && /^https?:/i.test(article.cover) ? article.cover : null);
 
+  if (!image) return null;
+
   return (
     <div className={`relative w-full overflow-hidden ${heightClass} ${className}`}>
-      {image ? (
-        <Image
-          src={image}
-          alt={article.title}
-          fill
-          sizes="(max-width: 767px) 100vw, 50vw"
-          className="object-cover"
-        />
-      ) : (
-        <div className="absolute inset-0 grid place-items-center bg-[repeating-linear-gradient(45deg,#f1f2f6,#f1f2f6_8px,#e9ebf2_8px,#e9ebf2_16px)] dark:bg-[repeating-linear-gradient(45deg,#141a2e,#141a2e_8px,#0d111f_8px,#0d111f_16px)]">
-          <span className="px-4 text-center text-[11px] font-bold uppercase tracking-[0.2em] text-ink-soft dark:text-white/60">
-            {dict.resourcesPage.imageNotFound}
-          </span>
-        </div>
-      )}
+      <Image
+        src={image}
+        alt={article.title}
+        fill
+        sizes="(max-width: 767px) 100vw, 50vw"
+        className="object-cover"
+      />
     </div>
   );
 }
@@ -384,8 +377,14 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
           </div>
 
           {/* Lead spread: text + media */}
-          <div className="grid gap-6 px-5 pt-6 sm:px-7 md:grid-cols-2">
-            <div className="order-2 md:order-1">
+          <div
+            className={
+              hasImage
+                ? "grid gap-6 px-5 pt-6 sm:px-7 md:grid-cols-2"
+                : "px-5 pt-6 sm:px-7"
+            }
+          >
+            <div className={hasImage ? "order-2 md:order-1" : ""}>
               <h4 className="text-[17px] font-extrabold leading-snug text-ink" style={serif}>
                 {leadHeading}
               </h4>
@@ -406,9 +405,9 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
               )}
             </div>
 
-            <figure className="order-1 md:order-2">
-              <div className="relative aspect-[4/3] overflow-hidden border border-ink/20 bg-sand">
-                {hasImage && imageUrl ? (
+            {hasImage && imageUrl ? (
+              <figure className="order-1 md:order-2">
+                <div className="relative aspect-[4/3] overflow-hidden border border-ink/20 bg-sand">
                   <Image
                     src={imageUrl}
                     alt={article.title}
@@ -416,21 +415,12 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
                     sizes="(max-width: 767px) 100vw, 50vw"
                     className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                   />
-                ) : (
-                  <div className="absolute inset-0 grid place-items-center bg-[repeating-linear-gradient(45deg,#f1f2f6,#f1f2f6_8px,#e9ebf2_8px,#e9ebf2_16px)]">
-                    <span
-                      className="text-[13px] font-bold uppercase tracking-[0.22em] text-ink-soft"
-                      style={serif}
-                    >
-                      {dict.resourcesPage.imageNotFound}
-                    </span>
-                  </div>
-                )}
-              </div>
-              <figcaption className="mt-2 text-xs italic text-ink-soft" style={serif}>
-                {dict.common.brandName} — {article.category}
-              </figcaption>
-            </figure>
+                </div>
+                <figcaption className="mt-2 text-xs italic text-ink-soft" style={serif}>
+                  {dict.common.brandName} — {article.category}
+                </figcaption>
+              </figure>
+            ) : null}
           </div>
 
           {/* Body spread: continuing text + pull quote */}

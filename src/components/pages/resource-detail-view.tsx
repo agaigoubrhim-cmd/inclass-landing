@@ -331,7 +331,7 @@ function EditorialArticle({ article }: { article: ResourceItem }) {
       </div>
 
       {/* Lead spread: drop-cap text + featured image */}
-      <div className="grid gap-8 pt-8 md:grid-cols-2 md:items-start">
+      <div className={hasImage ? "grid gap-8 pt-8 md:grid-cols-2 md:items-start" : "pt-8"}>
         <div className="space-y-5 text-[17px] leading-[1.85] text-ink-soft dark:text-white/80" style={serif}>
           {lead.map((paragraph, i) => (
             <p
@@ -350,9 +350,9 @@ function EditorialArticle({ article }: { article: ResourceItem }) {
           </div>
         </div>
 
-        <figure className="md:pt-2">
-          <div className="relative aspect-[4/3] overflow-hidden bg-sand dark:bg-ink-900">
-            {hasImage && rightImg ? (
+        {hasImage && rightImg ? (
+          <figure className="md:pt-2">
+            <div className="relative aspect-[4/3] overflow-hidden bg-sand dark:bg-ink-900">
               <Image
                 src={rightImg}
                 alt={article.title}
@@ -360,21 +360,15 @@ function EditorialArticle({ article }: { article: ResourceItem }) {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover"
               />
-            ) : (
-              <div className="absolute inset-0 grid place-items-center bg-[repeating-linear-gradient(45deg,#f1f2f6,#f1f2f6_8px,#e9ebf2_8px,#e9ebf2_16px)] dark:bg-[repeating-linear-gradient(45deg,#141a2e,#141a2e_8px,#0d111f_8px,#0d111f_16px)]">
-                <span className="text-[13px] font-bold uppercase tracking-[0.22em] text-ink-soft dark:text-white/60" style={serif}>
-                  {dict.resourcesPage.imageNotFound}
-                </span>
-              </div>
-            )}
-          </div>
-          <figcaption
-            className="mt-2 text-xs italic text-ink-soft dark:text-white/50"
-            style={serif}
-          >
-            {dict.common.brandName} — {article.category}
-          </figcaption>
-        </figure>
+            </div>
+            <figcaption
+              className="mt-2 text-xs italic text-ink-soft dark:text-white/50"
+              style={serif}
+            >
+              {dict.common.brandName} — {article.category}
+            </figcaption>
+          </figure>
+        ) : null}
       </div>
 
       {/* Body spread: text + supporting pull-quote / detail */}

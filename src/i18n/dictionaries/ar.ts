@@ -441,7 +441,6 @@ export const ar: Dictionary = {
     listenAudio: "استمع إلى الصوت",
     comments: "تعليقات",
     likes: "إعجاب",
-    imageNotFound: "الصورة غير موجودة",
     types: {
       article: "مقال",
       guide: "دليل",

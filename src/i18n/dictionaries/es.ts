@@ -441,7 +441,6 @@ export const es: Dictionary = {
     listenAudio: "Escuchar audio",
     comments: "comentarios",
     likes: "me gusta",
-    imageNotFound: "Imagen no encontrada",
     types: {
       article: "Artículo",
       guide: "Guía",
