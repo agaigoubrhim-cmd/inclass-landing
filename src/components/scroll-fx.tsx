@@ -37,6 +37,7 @@ export default function ScrollFX() {
   const pathname = usePathname();
   const root = useRef<HTMLDivElement>(null);
   const lenisRef = useRef<Lenis | null>(null);
+  const ctxRef = useRef<gsap.Context | null>(null);
 
   // 1. Initialize Lenis Inertial Smooth Scroll
   useEffect(() => {
@@ -105,145 +106,158 @@ export default function ScrollFX() {
   }, [pathname]);
 
   // 3. GSAP Scroll Choreography
-  useGSAP(
-    () => {
-      const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      document.documentElement.classList.add("gsap-ready");
-      if (reduced) return;
+  // Deferred one frame after hydration so GSAP never fights React during the
+  // hydration pass (its inline opacity/transform styles caused mismatch diffs).
+  useEffect(() => {
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.documentElement.classList.add("gsap-ready");
+    if (reduced) return;
 
-      const all = (selector: string) =>
-        Array.from(document.querySelectorAll<HTMLElement>(selector));
+    let cleanupLoad: (() => void) | undefined;
+    const raf = requestAnimationFrame(() => {
+      const ctx = gsap.context(() => {
+        const all = (selector: string) =>
+          Array.from(document.querySelectorAll<HTMLElement>(selector));
 
-      // A. Reveal elements on enter, rewind smoothly on leave-back
-      all("[data-anim]").forEach((el) => {
-        const dir = (el.dataset.anim || "up") as Direction;
-        const delay = Number(el.dataset.animDelay || 0);
-        gsap.fromTo(
-          el,
-          FROM[dir] ?? FROM.up,
-          {
-            y: 0,
-            x: 0,
-            scale: 1,
-            rotate: 0,
-            opacity: 1,
-            duration: 0.9,
-            delay,
-            ease: "power3.out",
+        // A. Reveal elements on enter, rewind smoothly on leave-back
+        all("[data-anim]").forEach((el) => {
+          const dir = (el.dataset.anim || "up") as Direction;
+          const delay = Number(el.dataset.animDelay || 0);
+          gsap.fromTo(
+            el,
+            FROM[dir] ?? FROM.up,
+            {
+              y: 0,
+              x: 0,
+              scale: 1,
+              rotate: 0,
+              opacity: 1,
+              duration: 0.9,
+              delay,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: el,
+                start: "top 90%",
+                toggleActions: "play none none reverse",
+              },
+            },
+          );
+        });
+
+        // B. Staggered groups
+        all("[data-anim-stagger]").forEach((group) => {
+          const items = group.querySelectorAll<HTMLElement>("[data-anim-child]");
+          if (!items.length) return;
+          gsap.fromTo(
+            items,
+            { y: 48, opacity: 0, scale: 0.98 },
+            {
+              y: 0,
+              opacity: 1,
+              scale: 1,
+              duration: 0.8,
+              ease: "power3.out",
+              stagger: 0.08,
+              scrollTrigger: {
+                trigger: group,
+                start: "top 88%",
+                toggleActions: "play none none reverse",
+              },
+            },
+          );
+        });
+
+        // C. Multi-depth Parallax drift (Scrubbed with smooth interpolation)
+        all("[data-parallax]").forEach((el) => {
+          const strength = Number(el.dataset.parallax || 0.18);
+          gsap.fromTo(
+            el,
+            { yPercent: -strength * 50 },
+            {
+              yPercent: strength * 50,
+              ease: "none",
+              scrollTrigger: {
+                trigger: el.parentElement ?? el,
+                start: "top bottom",
+                end: "bottom top",
+                scrub: 1.2,
+              },
+            },
+          );
+        });
+
+        // D. Continuous rotational parallax for decorative background stars
+        all(".zellige-rotate, [data-rotate-parallax]").forEach((el) => {
+          const speed = Number(el.dataset.rotateParallax || 90);
+          gsap.to(el, {
+            rotate: speed,
+            ease: "none",
             scrollTrigger: {
               trigger: el,
-              start: "top 90%",
-              toggleActions: "play none none reverse",
-            },
-          },
-        );
-      });
-
-      // B. Staggered groups
-      all("[data-anim-stagger]").forEach((group) => {
-        const items = group.querySelectorAll<HTMLElement>("[data-anim-child]");
-        if (!items.length) return;
-        gsap.fromTo(
-          items,
-          { y: 48, opacity: 0, scale: 0.98 },
-          {
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
-            ease: "power3.out",
-            stagger: 0.08,
-            scrollTrigger: {
-              trigger: group,
-              start: "top 88%",
-              toggleActions: "play none none reverse",
-            },
-          },
-        );
-      });
-
-      // C. Multi-depth Parallax drift (Scrubbed with smooth interpolation)
-      all("[data-parallax]").forEach((el) => {
-        const strength = Number(el.dataset.parallax || 0.18);
-        gsap.fromTo(
-          el,
-          { yPercent: -strength * 50 },
-          {
-            yPercent: strength * 50,
-            ease: "none",
-            scrollTrigger: {
-              trigger: el.parentElement ?? el,
               start: "top bottom",
               end: "bottom top",
-              scrub: 1.2,
+              scrub: 1.5,
             },
-          },
-        );
+          });
+        });
+
+        // E. Velocity-aware scroll dynamics (Like gsap.com/scroll showcase)
+        const drifters = all("[data-drift]");
+        if (drifters.length) {
+          const setters = drifters.map((el) => ({
+            y: gsap.quickTo(el, "y", { duration: 0.6, ease: "power3.out" }),
+            skewY: gsap.quickTo(el, "skewY", { duration: 0.7, ease: "power3.out" }),
+            rot: gsap.quickTo(el, "rotation", { duration: 0.7, ease: "power3.out" }),
+            amount: Number(el.dataset.drift || 1),
+          }));
+          ScrollTrigger.create({
+            start: 0,
+            end: "max",
+            onUpdate: (self) => {
+              const v = gsap.utils.clamp(-100, 100, self.getVelocity() / 35);
+              setters.forEach(({ y, skewY, rot, amount }) => {
+                y(v * amount * 0.3);
+                skewY(v * amount * 0.025);
+                rot(v * amount * 0.03);
+              });
+            },
+          });
+        }
+
+        // F. Smooth Scroll Progress Bar
+        const bar = document.querySelector<HTMLElement>("[data-scroll-progress]");
+        if (bar) {
+          gsap.fromTo(
+            bar,
+            { scaleX: 0 },
+            {
+              scaleX: 1,
+              transformOrigin: "left center",
+              ease: "none",
+              scrollTrigger: { start: 0, end: "max", scrub: 0.05 },
+            },
+          );
+        }
+
+        const refresh = () => ScrollTrigger.refresh();
+        window.addEventListener("load", refresh);
+        const t = window.setTimeout(refresh, 600);
+        cleanupLoad = () => {
+          window.removeEventListener("load", refresh);
+          window.clearTimeout(t);
+        };
       });
 
-      // D. Continuous rotational parallax for decorative background stars
-      all(".zellige-rotate, [data-rotate-parallax]").forEach((el) => {
-        const speed = Number(el.dataset.rotateParallax || 90);
-        gsap.to(el, {
-          rotate: speed,
-          ease: "none",
-          scrollTrigger: {
-            trigger: el,
-            start: "top bottom",
-            end: "bottom top",
-            scrub: 1.5,
-          },
-        });
-      });
+      ctxRef.current = ctx;
+    });
 
-      // E. Velocity-aware scroll dynamics (Like gsap.com/scroll showcase)
-      const drifters = all("[data-drift]");
-      if (drifters.length) {
-        const setters = drifters.map((el) => ({
-          y: gsap.quickTo(el, "y", { duration: 0.6, ease: "power3.out" }),
-          skewY: gsap.quickTo(el, "skewY", { duration: 0.7, ease: "power3.out" }),
-          rot: gsap.quickTo(el, "rotation", { duration: 0.7, ease: "power3.out" }),
-          amount: Number(el.dataset.drift || 1),
-        }));
-        ScrollTrigger.create({
-          start: 0,
-          end: "max",
-          onUpdate: (self) => {
-            const v = gsap.utils.clamp(-100, 100, self.getVelocity() / 35);
-            setters.forEach(({ y, skewY, rot, amount }) => {
-              y(v * amount * 0.3);
-              skewY(v * amount * 0.025);
-              rot(v * amount * 0.03);
-            });
-          },
-        });
-      }
-
-      // F. Smooth Scroll Progress Bar
-      const bar = document.querySelector<HTMLElement>("[data-scroll-progress]");
-      if (bar) {
-        gsap.fromTo(
-          bar,
-          { scaleX: 0 },
-          {
-            scaleX: 1,
-            transformOrigin: "left center",
-            ease: "none",
-            scrollTrigger: { start: 0, end: "max", scrub: 0.05 },
-          },
-        );
-      }
-
-      const refresh = () => ScrollTrigger.refresh();
-      window.addEventListener("load", refresh);
-      const t = window.setTimeout(refresh, 600);
-      return () => {
-        window.removeEventListener("load", refresh);
-        window.clearTimeout(t);
-      };
-    },
-    { dependencies: [pathname], revertOnUpdate: true },
-  );
+    return () => {
+      cancelAnimationFrame(raf);
+      cleanupLoad?.();
+      ctxRef.current?.revert();
+      ctxRef.current = null;
+    };
+  }, [pathname]);
 
   return <div ref={root} aria-hidden="true" className="hidden" />;
 }

@@ -952,7 +952,7 @@ export default function SiteHeader() {
             </div>
 
             {/* Navigation Body */}
-            <nav className="flex-1 overflow-y-auto px-5 py-4">
+            <nav className="no-scrollbar flex-1 overflow-y-auto px-5 py-4">
               {/* Selected Role Sublinks */}
               {mobileMega && (
                 <div className="mobile-anim-item mb-5 rounded-2xl border border-line bg-white p-3.5 dark:border-white/10 dark:bg-white/5">
