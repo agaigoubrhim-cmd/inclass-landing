@@ -7,6 +7,20 @@ const nextConfig: NextConfig = {
   },
   // Allow the Arena live-preview subdomains (e.g. 3000-*.e2b.app) during dev.
   allowedDevOrigins: ["*.e2b.app"],
+  async headers() {
+    if (process.env.NODE_ENV !== "development") return [];
+    return [
+      {
+        source: "/_next/static/:path*",
+        headers: [
+          {
+            key: "Cache-Control",
+            value: "no-store, no-cache, must-revalidate, max-age=0",
+          },
+        ],
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
