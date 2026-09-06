@@ -222,12 +222,15 @@ function MediaFrame({ article, type }: { article: ResourceItem; type: "video" | 
   const url = article.mediaUrl;
   const isVideo = type === "video";
   const label = isVideo ? dict.resourcesPage.playVideo : dict.resourcesPage.listenAudio;
+  // API `cover_image_url` is the single source of truth for the poster/cover.
+  const poster =
+    article.coverImageUrl || (article.cover && /^https?:/i.test(article.cover) ? article.cover : null);
 
   return (
     <div data-anim="up" className="mt-8 overflow-hidden rounded-3xl border border-line bg-ink-950 dark:border-white/10">
       {url ? (
         isVideo ? (
-          <video src={url} poster={article.cover} controls className="aspect-video w-full bg-ink-950 object-cover" />
+          <video src={url} poster={poster ?? undefined} controls className="aspect-video w-full bg-ink-950 object-cover" />
         ) : (
           <div className="p-6 sm:p-8">
             <div className="flex items-center gap-5">
@@ -252,7 +255,11 @@ function MediaFrame({ article, type }: { article: ResourceItem; type: "video" | 
         )
       ) : (
         <div className="relative aspect-video">
-          <Image src={article.cover} alt={article.title} fill sizes="100vw" className="object-cover opacity-80" />
+          {poster ? (
+            <Image src={poster} alt={article.title} fill sizes="100vw" className="object-cover opacity-80" />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-tutor-900 via-ink-900 to-ink-950" />
+          )}
           <div className="absolute inset-0 bg-gradient-to-t from-ink-950/95 via-ink-950/55 to-ink-950/20" />
           <div className="absolute inset-0 grid place-items-center">
             <button
@@ -777,6 +784,9 @@ export default function ResourceDetailView({
   const type = normalizeResourceType(article.type ?? article.resourceType);
   const typeLabel = dict.resourcesPage.types[type] ?? dict.resourcesPage.types.article;
   const isEditorial = type === "article" || type === "notes" || type === "guide" || type === "exercise";
+  // API `cover_image_url` is the single source of truth for the hero image.
+  const heroImage =
+    article.coverImageUrl || (article.cover && /^https?:/i.test(article.cover) ? article.cover : null);
 
   return (
     <>
@@ -785,7 +795,7 @@ export default function ResourceDetailView({
           eyebrow={article.category}
           title={article.title}
           tone={tone}
-          image={article.cover}
+          image={heroImage}
           imageAlt={article.title}
           crumbs={[{ label: dict.nav.resources, href: basePath }, { label: article.category }]}
           sub={article.excerpt}

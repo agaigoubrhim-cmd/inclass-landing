@@ -40,7 +40,7 @@ export default function PageHero({
   highlight?: string;
   sub?: string;
   tone?: Tone;
-  image?: string;
+  image?: string | null;
   imageAlt?: string;
   crumbs?: Crumb[];
   children?: ReactNode;
@@ -51,14 +51,18 @@ export default function PageHero({
     <section className="w-full max-w-full overflow-hidden px-[10px] py-[10px]">
       <div className="relative flex min-h-[54svh] items-center overflow-hidden rounded-[40px] bg-ink">
         <div className="absolute inset-0">
-          <Image
-            src={image}
-            alt={imageAlt}
-            fill
-            priority
-            sizes="100vw"
-            className="object-cover object-center"
-          />
+          {image ? (
+            <Image
+              src={image}
+              alt={imageAlt}
+              fill
+              priority
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          ) : (
+            <div className="absolute inset-0 bg-gradient-to-br from-tutor-900 via-ink-900 to-ink-950" />
+          )}
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-ink/85 via-ink/70 to-ink/85" />
 
