@@ -486,38 +486,63 @@ export function resourceTypeLabel(type: ResourceType | string): string {
   return TYPE_LABEL_BY_RESOURCE[type as ResourceType] ?? "Article";
 }
 
-export async function getArticles(category?: string): Promise<ResourceItem[]> {
+/**
+ * Content languages supported by the resources API.
+ * `language` is the single source of truth: an item is shown in a locale
+ * only when its `language` field matches the requested locale.
+ */
+export const RESOURCE_LANGUAGES = ["fr", "ar", "en"] as const;
+
+export type ResourceLanguage = (typeof RESOURCE_LANGUAGES)[number];
+
+function normalizeLanguage(value?: string | null): string {
+  const lang = (value || "").trim().toLowerCase();
+  if (lang.startsWith("ar")) return "ar";
+  if (lang.startsWith("en")) return "en";
+  if (lang.startsWith("fr")) return "fr";
+  return lang;
+}
+
+export async function getArticles(category?: string, language?: string): Promise<ResourceItem[]> {
+  const requestedLanguage = language ? normalizeLanguage(language) : "";
+  const filterByCategory = (list: ResourceItem[]) =>
+    category ? list.filter((a: ArticleItem) => a.category.toLowerCase() === category.toLowerCase()) : list;
+
   try {
-    const res = await fetch("https://api.inclass.app/api/resources", {
-      next: { revalidate: 300 },
-    });
+    // Prefer server-side language filtering when the backend supports it.
+    const apiUrl = new URL("https://api.inclass.app/api/resources");
+    if (requestedLanguage) apiUrl.searchParams.set("language", requestedLanguage);
+    const res = await fetch(apiUrl.toString(), { next: { revalidate: 300 } });
     if (res.ok) {
       const json = await res.json();
       if (Array.isArray(json?.data) && json.data.length > 0) {
         const list: ResourceItem[] = json.data.map(mapApiResourceToResource);
-        return category
-          ? list.filter((a: ArticleItem) => a.category.toLowerCase() === category.toLowerCase())
+        // The `language` field is the ONLY source of truth, so filter again
+        // even when the backend accepted the ?language= parameter.
+        const byLang = requestedLanguage
+          ? list.filter((a) => normalizeLanguage(a.language) === requestedLanguage)
           : list;
+        return filterByCategory(byLang);
       }
     }
   } catch {
     // API fallback
   }
 
+  // The local DB/fallback content is French only. Never fall back to another
+  // language: for ar/en there is no matching content, so return an empty list.
+  if (requestedLanguage && requestedLanguage !== "fr") return [];
+
   try {
     const rows = await db.select().from(articles).orderBy(desc(articles.publishedAt));
     if (rows.length) {
       const list = rows.map(toResourceItem);
-      return category
-        ? list.filter((r) => r.category.toLowerCase() === category.toLowerCase())
-        : list;
+      return filterByCategory(list);
     }
   } catch {
     // table not migrated yet
   }
-  return category
-    ? FALLBACK.filter((a) => a.category.toLowerCase() === category.toLowerCase())
-    : FALLBACK;
+  return filterByCategory(FALLBACK);
 }
 
 export async function getArticle(slug: string): Promise<ResourceItem | null> {

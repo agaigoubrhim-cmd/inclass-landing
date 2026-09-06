@@ -6,6 +6,7 @@ import SiteHeader, { ThemeProvider } from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
 import ScrollFX from "@/components/scroll-fx";
 import { I18nProvider } from "@/i18n";
+import { getResourceLocale } from "@/lib/locale";
 
 const instagramSansScript = localFont({
   src: [
@@ -68,10 +69,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: ReactNode }) {
+export default async function RootLayout({ children }: { children: ReactNode }) {
+  const locale = await getResourceLocale();
   return (
     <html
-      lang="fr"
+      lang={locale}
+      dir={locale === "ar" ? "rtl" : "ltr"}
       className={`${instagramSansScript.variable} ${elMessiri.variable}`}
       suppressHydrationWarning
     >
@@ -107,7 +110,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
         <ThemeProvider>
-          <I18nProvider>
+          <I18nProvider defaultLocale={locale}>
             <ScrollFX />
             <SiteHeader />
             <main>{children}</main>

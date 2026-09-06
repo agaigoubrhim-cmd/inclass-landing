@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getArticles } from "@/lib/articles";
+import { getResourceLocale } from "@/lib/locale";
 import { normalizeResourceType } from "@/lib/article-types";
 import ResourcesView from "@/components/pages/resources-view";
 import type { ResourceItem } from "@/lib/article-types";
@@ -21,11 +22,13 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Se
   const category = (Array.isArray(rawCat) ? rawCat[0] : rawCat) ?? "";
   const selectedType = (Array.isArray(rawType) ? rawType[0] : rawType) ?? "";
   const typeKey = normalizeResourceType(selectedType);
+  const locale = await getResourceLocale();
 
   let articles: ResourceItem[] = [];
   let error = false;
   try {
-    articles = await getArticles();
+    // Server-side language filter first; the `language` field is the source of truth.
+    articles = await getArticles(undefined, locale);
   } catch {
     error = true;
   }
@@ -39,6 +42,7 @@ export default async function ResourcesPage({ searchParams }: { searchParams: Se
   return (
     <ResourcesView
       articles={list}
+      initialLocale={locale}
       selectedCategory={category}
       selectedType={selectedType ? typeKey : ""}
       basePath="/resources"

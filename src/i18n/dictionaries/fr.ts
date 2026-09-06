@@ -421,6 +421,7 @@ export const fr: Dictionary = {
     shareArticle: "Partager l'article",
     searchPlaceholder: "Rechercher un article, une catégorie ou un auteur...",
     noResults: "Aucun article ne correspond à ta recherche.",
+    noContentInLanguage: "Aucun contenu disponible dans cette langue.",
     typeOfResource: "Type de ressource",
     typeAll: "Tous les types",
     resourceTypeLabel: "Type",

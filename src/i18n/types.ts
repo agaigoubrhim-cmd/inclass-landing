@@ -296,6 +296,7 @@ export interface Dictionary {
     shareArticle: string;
     searchPlaceholder: string;
     noResults: string;
+    noContentInLanguage: string;
     typeOfResource: string;
     typeAll: string;
     resourceTypeLabel: string;

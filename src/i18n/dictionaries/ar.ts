@@ -421,6 +421,7 @@ export const ar: Dictionary = {
     shareArticle: "مشاركة المقال",
     searchPlaceholder: "ابحث عن مقال أو تصنيف أو كاتب...",
     noResults: "لا توجد مقالات مطابقة لبحثك.",
+    noContentInLanguage: "لا يوجد محتوى متاح بهذه اللغة.",
     typeOfResource: "نوع المورد",
     typeAll: "كل الأنواع",
     resourceTypeLabel: "النوع",

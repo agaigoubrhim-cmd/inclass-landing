@@ -4,7 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
+  useLayoutEffect,
   useState,
   type ReactNode,
 } from "react";
@@ -27,6 +27,7 @@ interface I18nContextType {
   setLocale: (nextLocale: Locale) => void;
   dir: Direction;
   isRTL: boolean;
+  mounted: boolean;
   dict: Dictionary;
   t: (path: string) => string;
   languages: LanguageMeta[];
@@ -60,10 +61,11 @@ export function I18nProvider({
     }
   };
 
-  // Initialize from localStorage or cookie on mount
-  useEffect(() => {
+  // Initialize from localStorage, cookie, or navigator language on mount.
+  // useLayoutEffect resolves the stored locale before the browser paints, so a
+  // language-switch never flashes the server locale's content.
+  useLayoutEffect(() => {
     /* eslint-disable react-hooks/set-state-in-effect -- Hydration-safe locale init from storage */
-    setMounted(true);
     try {
       const stored = localStorage.getItem(STORAGE_KEY) as Locale | null;
       if (stored && (stored === "fr" || stored === "en" || stored === "es" || stored === "ar")) {
@@ -71,6 +73,20 @@ export function I18nProvider({
         applyLocaleToDOM(stored);
         return;
       }
+
+      // Restore from the cookie written when the user last chose a language.
+      const cookieLocale = document.cookie
+        .split(";")
+        .map((part) => part.trim().split("="))
+        .find(([key]) => key === COOKIE_NAME)?.[1];
+      if (cookieLocale && (cookieLocale === "fr" || cookieLocale === "en" || cookieLocale === "es" || cookieLocale === "ar")) {
+        const loc = cookieLocale as Locale;
+        localStorage.setItem(STORAGE_KEY, loc);
+        setLocaleState(loc);
+        applyLocaleToDOM(loc);
+        return;
+      }
+
       // Check navigator language
       const navLang = navigator.language.slice(0, 2).toLowerCase();
       if (navLang === "ar" || navLang === "en" || navLang === "es") {
@@ -81,6 +97,8 @@ export function I18nProvider({
       }
     } catch {
       applyLocaleToDOM(defaultLocale);
+    } finally {
+      setMounted(true);
     }
     /* eslint-enable react-hooks/set-state-in-effect */
   }, [defaultLocale]);
@@ -131,6 +149,7 @@ export function I18nProvider({
         setLocale,
         dir,
         isRTL,
+        mounted,
         dict: currentDict,
         t,
         languages: LANGUAGES,
@@ -152,6 +171,7 @@ export function useI18n() {
       setLocale: () => {},
       dir: "ltr" as Direction,
       isRTL: false,
+      mounted: true,
       dict: fallbackDict,
       t: (path: string) => path,
       languages: LANGUAGES,

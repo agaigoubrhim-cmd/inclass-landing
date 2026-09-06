@@ -7,18 +7,39 @@ import PageHero from "@/components/page-hero";
 import { CtaBand } from "@/components/sections";
 import { RollingNumber } from "@/components/gsap/rolling-number";
 import { ARTICLE_CATEGORIES, RESOURCE_TYPES, type ResourceItem } from "@/lib/article-types";
+import { useLanguageResources } from "@/lib/use-language-resources";
 import { ResourceTypeIcon } from "@/components/resource-type";
 import ResourceCard from "@/components/resource-card";
 import { useI18n } from "@/i18n";
 
+function ResourcesSkeleton() {
+  return (
+    <div className="mt-8 grid animate-pulse items-stretch gap-7 md:grid-cols-2 lg:grid-cols-3" aria-busy="true" role="status">
+      {Array.from({ length: 6 }).map((_, i) => (
+        <div key={i} className="h-[360px] rounded-[26px] border border-line bg-white dark:border-white/10 dark:bg-ink-800">
+          <div className="h-40 rounded-t-[26px] bg-sand dark:bg-ink-900" />
+          <div className="space-y-3 p-6">
+            <div className="h-4 w-3/4 rounded-full bg-ink/10 dark:bg-white/15" />
+            <div className="h-3 w-full rounded-full bg-ink/5 dark:bg-white/10" />
+            <div className="h-3 w-5/6 rounded-full bg-ink/5 dark:bg-white/10" />
+          </div>
+        </div>
+      ))}
+      <span className="sr-only">Chargement…</span>
+    </div>
+  );
+}
+
 export default function ResourcesView({
   articles,
+  initialLocale = "fr",
   selectedCategory = "",
   selectedType = "",
   basePath = "/ressources",
   initialError = false,
 }: {
   articles: ResourceItem[];
+  initialLocale?: string;
   selectedCategory?: string;
   selectedType?: string;
   basePath?: string;
@@ -26,9 +47,13 @@ export default function ResourcesView({
 }) {
   const { dict } = useI18n();
   const [query, setQuery] = useState("");
+  const { articles: langArticles, total: languageTotal, loading, error } = useLanguageResources(
+    articles,
+    initialLocale,
+  );
 
   const normalizedQuery = query.trim().toLowerCase();
-  const filtered = articles.filter((article) => {
+  const filtered = langArticles.filter((article) => {
     if (normalizedQuery) {
       const typeLabel = dict.resourcesPage.types[article.resourceType] ?? "";
       const haystack = `${article.title} ${article.excerpt} ${article.category} ${article.author} ${
@@ -40,6 +65,7 @@ export default function ResourcesView({
   });
 
   const hasActiveFilter = Boolean(normalizedQuery || selectedCategory || selectedType);
+  const languageEmpty = languageTotal === 0 && !hasActiveFilter;
 
   return (
     <>
@@ -177,7 +203,9 @@ export default function ResourcesView({
         </p>
 
         {/* Unified Premium Resource Cards Grid */}
-        {initialError && articles.length === 0 ? (
+        {loading ? (
+          <ResourcesSkeleton />
+        ) : initialError || error ? (
           <div className="mt-12 rounded-[32px] border border-amber-200 bg-amber-50/80 p-10 text-center dark:border-amber-500/25 dark:bg-amber-950/30 sm:p-14">
             <AlertTriangle className="mx-auto h-10 w-10 text-amber-600 dark:text-amber-400" aria-hidden="true" />
             <p className="mt-4 text-lg font-extrabold text-ink dark:text-white">{dict.errorState.title}</p>
@@ -202,10 +230,18 @@ export default function ResourcesView({
           <div className="mt-12 rounded-[32px] border border-dashed border-line bg-white p-14 text-center dark:border-white/10 dark:bg-ink-800">
             <BookOpen className="mx-auto h-10 w-10 text-ink-soft dark:text-white/40" aria-hidden="true" />
             <p className="mt-4 text-lg font-extrabold text-ink dark:text-white">
-              {hasActiveFilter ? dict.resourcesPage.noResults : dict.resourcesPage.allArticles}
+              {languageEmpty
+                ? dict.resourcesPage.noContentInLanguage
+                : hasActiveFilter
+                  ? dict.resourcesPage.noResults
+                  : dict.resourcesPage.allArticles}
             </p>
             <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft dark:text-white/70">
-              {hasActiveFilter ? dict.common.search : dict.resourcesPage.sub}
+              {languageEmpty
+                ? dict.resourcesPage.sub
+                : hasActiveFilter
+                  ? dict.common.search
+                  : dict.resourcesPage.sub}
             </p>
             <Link href={basePath} className="btn-duo mt-6 inline-flex h-11 items-center rounded-2xl px-6 text-sm font-extrabold">
               {dict.resourcesPage.allArticles}
