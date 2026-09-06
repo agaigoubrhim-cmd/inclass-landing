@@ -12,47 +12,41 @@ import { getLocalizedSubject } from "@/lib/subject-translations";
 
 const CATEGORY_ACCENT: Record<
   string,
-  { chip: string; hoverBorder: string; hoverShadow: string; icon: string; text: string }
+  { chip: string; hoverBorder: string; icon: string; text: string }
 > = {
   Scientifique: {
     chip: "bg-tutor-100 text-tutor-700 dark:bg-tutor-950/70 dark:text-tutor-300",
     hoverBorder: "hover:border-tutor-300 dark:hover:border-tutor-500/50",
-    hoverShadow: "hover:shadow-[0_18px_44px_rgba(43,98,232,0.16)]",
     icon: "text-tutor-600 dark:text-tutor-300",
     text: "text-tutor-700 dark:text-tutor-300",
   },
   Langues: {
     chip: "bg-student-100 text-student-700 dark:bg-student-950/70 dark:text-student-300",
     hoverBorder: "hover:border-student-300 dark:hover:border-student-500/50",
-    hoverShadow: "hover:shadow-[0_18px_44px_rgba(233,83,13,0.16)]",
     icon: "text-student-600 dark:text-student-300",
     text: "text-student-700 dark:text-student-300",
   },
   "Numérique": {
     chip: "bg-parent-100 text-parent-700 dark:bg-parent-950/70 dark:text-parent-300",
     hoverBorder: "hover:border-parent-300 dark:hover:border-parent-500/50",
-    hoverShadow: "hover:shadow-[0_18px_44px_rgba(113,72,228,0.16)]",
     icon: "text-parent-600 dark:text-parent-300",
     text: "text-parent-700 dark:text-parent-300",
   },
   "Scolaire": {
     chip: "bg-emerald-100 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300",
     hoverBorder: "hover:border-emerald-300 dark:hover:border-emerald-500/50",
-    hoverShadow: "hover:shadow-[0_18px_44px_rgba(16,185,129,0.16)]",
     icon: "text-emerald-600 dark:text-emerald-300",
     text: "text-emerald-700 dark:text-emerald-300",
   },
   "Supérieur": {
     chip: "bg-sky-100 text-sky-700 dark:bg-sky-950/70 dark:text-sky-300",
     hoverBorder: "hover:border-sky-300 dark:hover:border-sky-500/50",
-    hoverShadow: "hover:shadow-[0_18px_44px_rgba(14,165,233,0.16)]",
     icon: "text-sky-600 dark:text-sky-300",
     text: "text-sky-700 dark:text-sky-300",
   },
   "Littéraire": {
     chip: "bg-rose-100 text-rose-700 dark:bg-rose-950/70 dark:text-rose-300",
     hoverBorder: "hover:border-rose-300 dark:hover:border-rose-500/50",
-    hoverShadow: "hover:shadow-[0_18px_44px_rgba(244,63,94,0.16)]",
     icon: "text-rose-600 dark:text-rose-300",
     text: "text-rose-700 dark:text-rose-300",
   },
@@ -110,12 +104,11 @@ export default function SubjectGrid({
               duration-300
               hover:-translate-y-1.5
               hover:border-ink/10
-              hover:shadow-[0_16px_40px_rgba(0,0,0,0.09)]
               dark:bg-ink-800
               dark:hover:border-white/20
-              dark:hover:shadow-[0_16px_40px_rgba(0,0,0,0.28)]
+              dark:
               ${accent.hoverBorder}
-              ${accent.hoverShadow}
+              
 
               sm:min-h-[130px]
               sm:flex-row
@@ -300,12 +293,12 @@ export default function SubjectGrid({
               text-sm
               font-bold
               text-ink
-              shadow-sm
+             
               transition-all
               duration-200
               hover:-translate-y-0.5
               hover:bg-sand
-              hover:shadow-md
+             
               dark:border-white/15
               dark:bg-white/[0.06]
               dark:text-white

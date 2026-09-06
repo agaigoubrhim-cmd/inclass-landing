@@ -43,7 +43,7 @@ export default function TutorBookingWidget({ tutor }: { tutor: Tutor }) {
   return (
     <aside
       data-anim="right"
-      className="sticky top-28 h-fit overflow-hidden rounded-[32px] border border-line bg-white p-6 shadow-card dark:border-white/10 dark:bg-ink-800 sm:p-7"
+      className="sticky top-28 h-fit overflow-hidden rounded-[32px] border border-line bg-white p-6 dark:border-white/10 dark:bg-ink-800 sm:p-7"
     >
       {confirmed ? (
         <div className="py-8 text-center">
@@ -98,7 +98,7 @@ export default function TutorBookingWidget({ tutor }: { tutor: Tutor }) {
                 onClick={() => setMode("online")}
                 className={`flex items-center justify-center gap-2 rounded-2xl border p-2.5 text-xs font-bold transition-all ${
                   mode === "online"
-                    ? "border-tutor-500 bg-tutor-50 text-tutor-700 shadow-sm dark:bg-tutor-950/70 dark:text-tutor-300"
+                    ? "border-tutor-500 bg-tutor-50 text-tutor-700 dark:bg-tutor-950/70 dark:text-tutor-300"
                     : "border-line bg-white text-ink-soft hover:bg-sand dark:border-white/10 dark:bg-white/5 dark:text-white/70"
                 }`}
               >
@@ -110,7 +110,7 @@ export default function TutorBookingWidget({ tutor }: { tutor: Tutor }) {
                 onClick={() => setMode("home")}
                 className={`flex items-center justify-center gap-2 rounded-2xl border p-2.5 text-xs font-bold transition-all ${
                   mode === "home"
-                    ? "border-student-500 bg-student-50 text-student-700 shadow-sm dark:bg-student-950/70 dark:text-student-300"
+                    ? "border-student-500 bg-student-50 text-student-700 dark:bg-student-950/70 dark:text-student-300"
                     : "border-line bg-white text-ink-soft hover:bg-sand dark:border-white/10 dark:bg-white/5 dark:text-white/70"
                 }`}
               >
@@ -136,7 +136,7 @@ export default function TutorBookingWidget({ tutor }: { tutor: Tutor }) {
                     onClick={() => setSelectedPack(p.id)}
                     className={`flex w-full items-center justify-between rounded-2xl border p-3 text-left transition-all ${
                       active
-                        ? "border-student-500 bg-student-50/70 shadow-sm dark:border-student-500/50 dark:bg-student-950/50"
+                        ? "border-student-500 bg-student-50/70 dark:border-student-500/50 dark:bg-student-950/50"
                         : "border-line bg-white hover:bg-sand dark:border-white/10 dark:bg-white/5"
                     }`}
                   >
@@ -175,7 +175,7 @@ export default function TutorBookingWidget({ tutor }: { tutor: Tutor }) {
                   onClick={() => setSelectedDay(d)}
                   className={`flex h-9 min-w-9 shrink-0 items-center justify-center rounded-xl text-xs font-bold transition-all ${
                     selectedDay === d
-                      ? "bg-ink text-cream shadow-sm dark:bg-white dark:text-ink"
+                      ? "bg-ink text-cream dark:bg-white dark:text-ink"
                       : "bg-sand text-ink-soft hover:bg-line dark:bg-white/10 dark:text-white/70"
                   }`}
                 >
@@ -214,7 +214,7 @@ export default function TutorBookingWidget({ tutor }: { tutor: Tutor }) {
             <button
               type="button"
               onClick={() => setConfirmed(true)}
-              className="group mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-full bg-student-600 font-bold text-student-50 shadow-md transition-all hover:bg-student-700 active:scale-[0.98]"
+              className="btn-duo group mt-4 flex h-12 w-full items-center justify-center gap-2 rounded-2xl font-extrabold"
             >
               <RollingText text="Réserver ce cours" />
             </button>

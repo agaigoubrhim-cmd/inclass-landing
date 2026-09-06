@@ -184,7 +184,7 @@ function LanguageSwitcher() {
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
-          className="inline-flex h-9 items-center gap-1.5 rounded-full border border-black/[0.08] bg-white/70 px-3 text-xs font-bold text-ink shadow-sm backdrop-blur-md transition-all hover:bg-sand hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-white/8 dark:text-white dark:hover:bg-white/15"
+          className="inline-flex h-9 items-center gap-1.5 rounded-full border border-black/[0.08] bg-white/70 px-3 text-xs font-bold text-ink backdrop-blur-md transition-all hover:bg-sand hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-white/8 dark:text-white dark:hover:bg-white/15"
           aria-label="Changer de langue"
         >
           <span className="text-sm">{currentLanguage.flag}</span>
@@ -200,7 +200,7 @@ function LanguageSwitcher() {
       {open ? (
         <div
           ref={dropdownRef}
-          className={`absolute ${isRTL ? "left-0" : "right-0"} top-full z-50 mt-2 w-44 overflow-hidden rounded-2xl border border-line/80 bg-white/95 p-1.5 shadow-2xl backdrop-blur-xl dark:border-white/15 dark:bg-ink-900/95`}
+          className={`absolute ${isRTL ? "left-0" : "right-0"} top-full z-50 mt-2 w-44 overflow-hidden rounded-2xl border border-line/80 bg-white/95 p-1.5 backdrop-blur-xl dark:border-white/15 dark:bg-ink-900/95`}
         >
           {languages.map((lang) => (
             <button
@@ -253,7 +253,7 @@ function ThemeToggle() {
       <button
         type="button"
         onClick={handleToggle}
-        className="group relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.08] bg-white/70 shadow-sm backdrop-blur-md transition-all hover:bg-sand hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-white/8 dark:hover:bg-white/15"
+        className="group relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.08] bg-white/70 backdrop-blur-md transition-all hover:bg-sand hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-white/8 dark:hover:bg-white/15"
         aria-label="Basculer le mode sombre"
       >
         <div ref={iconRef} className="grid place-items-center">
@@ -343,7 +343,7 @@ function SearchPaletteModal({
 
       <div
         ref={modalRef}
-        className="relative w-full max-w-xl overflow-hidden rounded-[28px] border border-line/80 bg-white/95 shadow-2xl backdrop-blur-2xl dark:border-white/15 dark:bg-ink-900/95"
+        className="relative w-full max-w-xl overflow-hidden rounded-[28px] border border-line/80 bg-white/95 backdrop-blur-2xl dark:border-white/15 dark:bg-ink-900/95"
       >
         {/* Search Input Bar */}
         <div className="flex items-center gap-3 border-b border-line px-5 py-4 dark:border-white/10">
@@ -651,47 +651,14 @@ export default function SiteHeader() {
         className="sticky top-2.5 z-50 w-full px-3 sm:px-6 lg:px-8"
       >
         {/* Floating Capsule Container */}
-<div
-  className={`
-    relative isolate overflow-hidden transform-gpu
-    mx-auto flex max-w-7xl items-center justify-between gap-3
-    rounded-full transition-all duration-300 ease-out
+        <div
+          className={`relative mx-auto flex max-w-7xl items-center justify-between gap-3 rounded-full border border-black/[0.07] bg-white/80 backdrop-blur-xl transition-all duration-300 ease-out dark:border-white/10 dark:bg-ink-900/90 [&>*]:relative [&>*]:z-[3] ${
+            scrolled
+              ? "px-4 py-2 sm:px-6 sm:py-2.5"
+              : "px-4 py-2.5 sm:px-6 sm:py-3"
+          }`}
+        >
 
-    /* glass background + color tint (2 gradients stacked) */
-    bg-[image:linear-gradient(135deg,rgba(255,255,255,0.42)_0%,rgba(255,255,255,0.20)_28%,rgba(255,255,255,0.10)_55%,rgba(255,255,255,0.26)_100%),linear-gradient(120deg,rgba(125,211,252,0.16)_0%,rgba(196,181,253,0.14)_35%,rgba(249,168,212,0.12)_65%,rgba(253,224,71,0.10)_100%)]
-
-    /* backdrop blur/saturate/brightness/hue */
-    backdrop-blur-[30px] backdrop-saturate-[2.2] backdrop-brightness-[1.1] backdrop-hue-rotate-[2deg]
-
-    /* pseudo-element glow blobs (::before) */
-    before:content-[''] before:absolute before:inset-0 before:z-0 before:pointer-events-none
-    before:rounded-[inherit] before:mix-blend-screen
-    before:bg-[image:radial-gradient(ellipse_90%_130%_at_12%_-10%,rgba(255,255,255,0.52),transparent_48%),radial-gradient(ellipse_70%_100%_at_90%_100%,rgba(196,181,253,0.35),transparent_55%),radial-gradient(ellipse_70%_100%_at_10%_100%,rgba(125,211,252,0.30),transparent_55%),radial-gradient(ellipse_60%_90%_at_60%_0%,rgba(249,168,212,0.25),transparent_55%)]
-
-    /* specular sweep (::after) */
-    after:content-[''] after:absolute after:-top-[80%] after:-left-[65%] after:w-[45%] after:h-[260%]
-    after:z-10 after:pointer-events-none after:rounded-full after:blur-[12px] after:rotate-[14deg] after:opacity-0
-    after:bg-[image:linear-gradient(105deg,transparent_0%,rgba(125,211,252,0.10)_30%,rgba(255,255,255,0.70)_48%,rgba(249,168,212,0.18)_58%,transparent_70%)]
-    after:animate-ios-sweep
-
-    /* content stays above the glow layers */
-    [&>*]:relative [&>*]:z-[3]
-
-    /* hover */
-    hover:border-white/[0.62]
-
-    /* dark mode */
-    dark:bg-[image:linear-gradient(135deg,rgba(255,255,255,0.15)_0%,rgba(255,255,255,0.075)_35%,rgba(255,255,255,0.035)_65%,rgba(255,255,255,0.10)_100%),linear-gradient(120deg,rgba(99,102,241,0.22)_0%,rgba(168,85,247,0.18)_35%,rgba(236,72,153,0.16)_65%,rgba(56,189,248,0.18)_100%)]
-    dark:backdrop-blur-[32px] dark:backdrop-saturate-[2.2] dark:backdrop-brightness-[1.18] dark:border-white/[0.20]
-
-    /* scroll state (dynamic) */
-    ${
-      scrolled
-        ? "border border-black/[0.08] px-4 py-2 shadow-[0_14px_35px_-22px_rgba(99,102,241,0.20),0_8px_24px_-12px_rgba(236,72,153,0.12),inset_0_1px_0_rgba(255,255,255,0.82),inset_0_-1px_0_rgba(255,255,255,0.14)] sm:px-6 sm:py-2.5"
-        : "border border-black/[0.06] px-4 py-2.5 shadow-[0_8px_25px_-8px_rgba(0,0,0,0.06),inset_0_1px_0_rgba(255,255,255,0.80),inset_0_-1px_0_rgba(255,255,255,0.12)] sm:px-6 sm:py-3"
-    }
-  `}
->
           {/* Left Brand Logo */}
           <Link href="/" onClick={closeAll} className="nav-anim-item group relative shrink-0">
             <Magnetic strength={0.15}>
@@ -768,7 +735,7 @@ export default function SiteHeader() {
                 <button
                   type="button"
                   onClick={() => setSearchOpen(true)}
-                  className="group inline-flex h-9 items-center gap-2 rounded-full border border-black/[0.08] bg-white/70 px-3 text-xs font-bold text-ink-soft shadow-sm backdrop-blur-md transition-all hover:bg-sand hover:text-ink hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-white/8 dark:text-white/70 dark:hover:bg-white/15 dark:hover:text-white"
+                  className="group inline-flex h-9 items-center gap-2 rounded-full border border-black/[0.08] bg-white/70 px-3 text-xs font-bold text-ink-soft backdrop-blur-md transition-all hover:bg-sand hover:text-ink hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-white/8 dark:text-white/70 dark:hover:bg-white/15 dark:hover:text-white"
                   aria-label={dict.common.search}
                 >
                   <Search className="h-3.5 w-3.5 text-tutor-500 transition-transform duration-300 group-hover:scale-110" />
@@ -793,7 +760,7 @@ export default function SiteHeader() {
               <Magnetic strength={0.3}>
                 <Link
                   href="/contact"
-                  className="group relative inline-flex h-9 items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-tutor-600 via-tutor-500 to-tutor-600 px-4 text-xs font-extrabold text-white shadow-md shadow-tutor-500/25 transition-all duration-300 hover:shadow-lg hover:shadow-tutor-500/35 hover:scale-105 active:scale-95"
+                  className="btn-duo group relative inline-flex h-9 items-center gap-2 overflow-hidden rounded-2xl px-4 text-xs font-extrabold"
                 >
                   <Sparkles className="h-3.5 w-3.5 text-tutor-200 transition-transform duration-300 group-hover:rotate-12" />
                   <RollingText text={dict.common.findTutor} />
@@ -807,7 +774,7 @@ export default function SiteHeader() {
             <button
               type="button"
               onClick={() => setSearchOpen(true)}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.08] bg-white/80 text-ink shadow-sm backdrop-blur-md transition-all active:scale-90 dark:border-white/15 dark:bg-white/8 dark:text-white"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.08] bg-white/80 text-ink backdrop-blur-md transition-all active:scale-90 dark:border-white/15 dark:bg-white/8 dark:text-white"
               aria-label={dict.common.search}
             >
               <Search className="h-4 w-4 text-tutor-500" />
@@ -820,7 +787,7 @@ export default function SiteHeader() {
                 type="button"
                 onClick={() => setMenuOpen(true)}
                 aria-label="Ouvrir le menu"
-                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.08] bg-white/90 text-ink shadow-sm backdrop-blur-md transition-all active:scale-90 dark:border-white/15 dark:bg-white/8 dark:text-white"
+                className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-black/[0.08] bg-white/90 text-ink backdrop-blur-md transition-all active:scale-90 dark:border-white/15 dark:bg-white/8 dark:text-white"
               >
                 <Menu className="h-4.5 w-4.5" />
               </button>
@@ -834,7 +801,7 @@ export default function SiteHeader() {
             ref={megaMenuRef}
             onMouseEnter={openMega}
             onMouseLeave={scheduleClose}
-            className="absolute inset-x-3 top-full mt-3 hidden max-w-7xl overflow-hidden rounded-[32px] border border-black/[0.08] bg-cream/95 shadow-2xl backdrop-blur-2xl dark:border-white/10 dark:bg-ink-950/95 sm:inset-x-6 lg:block lg:inset-x-8 mx-auto"
+            className="absolute inset-x-3 top-full mt-3 hidden max-w-7xl overflow-hidden rounded-[32px] border border-black/[0.08] bg-cream/95 backdrop-blur-2xl dark:border-white/10 dark:bg-ink-950/95 sm:inset-x-6 lg:block lg:inset-x-8 mx-auto"
           >
             <div
               ref={megaColsRef}
@@ -847,7 +814,7 @@ export default function SiteHeader() {
                   <div key={col.key} className="flex flex-col">
                     <div className="flex items-center gap-2">
                       <span
-                        className={`inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] shadow-sm ${style.chip}`}
+                        className={`inline-flex rounded-full px-3 py-1 text-xs font-bold uppercase tracking-[0.14em] ${style.chip}`}
                       >
                         {col.title}
                       </span>
@@ -869,7 +836,7 @@ export default function SiteHeader() {
                               className={`group flex items-center gap-3 rounded-2xl border border-transparent p-2.5 text-sm font-medium text-ink transition-all duration-200 dark:text-white ${style.hover} ${style.borderHover}`}
                             >
                               <span
-                                className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl transition-all duration-300 shadow-sm ${style.icon}`}
+                                className={`grid h-9 w-9 shrink-0 place-items-center rounded-xl transition-all duration-300 ${style.icon}`}
                               >
                                 <Icon className="h-4.5 w-4.5" />
                               </span>
@@ -889,7 +856,7 @@ export default function SiteHeader() {
               })}
 
               {/* Promo Card with Gradient */}
-              <div className="relative flex flex-col justify-between overflow-hidden rounded-3xl bg-gradient-to-br from-tutor-600 via-tutor-500 to-tutor-700 p-6 text-white shadow-xl shadow-tutor-500/20">
+              <div className="relative flex flex-col justify-between overflow-hidden rounded-3xl bg-gradient-to-br from-tutor-600 via-tutor-500 to-tutor-700 p-6 text-white">
                 <div className="pointer-events-none absolute -right-8 -top-8 h-36 w-36 rounded-full bg-white/15 blur-2xl" />
 
                 <div>
@@ -911,7 +878,7 @@ export default function SiteHeader() {
                     <Link
                       href="/contact"
                       onClick={closeAll}
-                      className="group inline-flex h-11 items-center gap-2.5 rounded-full bg-white px-5 text-xs font-extrabold text-tutor-700 shadow-md transition-all hover:scale-105 active:scale-95"
+                      className="btn-duo btn-duo-white group inline-flex h-11 items-center gap-2.5 rounded-2xl px-5 text-xs font-extrabold"
                     >
                       <RollingText text={dict.common.requestTutor} />
                       <ArrowRight className={`h-4 w-4 transition-transform duration-300 group-hover:translate-x-1.5 ${isRTL ? "rotate-180" : ""}`} />
@@ -940,7 +907,7 @@ export default function SiteHeader() {
           {/* Full-height Drawer Panel */}
           <div
             ref={mobileDrawerRef}
-            className={`fixed inset-y-0 ${isRTL ? "left-0" : "right-0"} z-50 flex w-full max-w-[380px] flex-col bg-cream shadow-2xl dark:bg-ink-950 lg:hidden`}
+            className={`fixed inset-y-0 ${isRTL ? "left-0" : "right-0"} z-50 flex w-full max-w-[380px] flex-col bg-cream dark:bg-ink-950 lg:hidden`}
           >
             {/* Drawer Header */}
             <div className="mobile-anim-item flex items-center justify-between border-b border-line px-5 py-4 dark:border-white/10">
@@ -972,7 +939,7 @@ export default function SiteHeader() {
                       onClick={() => setMobileMega(r.id)}
                       className={`flex items-center justify-center gap-1.5 rounded-xl py-2 text-xs font-bold transition-all ${
                         active
-                          ? "bg-ink text-cream shadow-sm dark:bg-white dark:text-ink"
+                          ? "bg-ink text-cream dark:bg-white dark:text-ink"
                           : "bg-white text-ink-soft hover:text-ink dark:bg-white/10 dark:text-white/70"
                       }`}
                     >
@@ -988,7 +955,7 @@ export default function SiteHeader() {
             <nav className="flex-1 overflow-y-auto px-5 py-4">
               {/* Selected Role Sublinks */}
               {mobileMega && (
-                <div className="mobile-anim-item mb-5 rounded-2xl border border-line bg-white p-3.5 shadow-sm dark:border-white/10 dark:bg-white/5">
+                <div className="mobile-anim-item mb-5 rounded-2xl border border-line bg-white p-3.5 dark:border-white/10 dark:bg-white/5">
                   {megaMenuData.filter((m) => m.key === mobileMega).map((col) => (
                     <div key={col.key}>
                       <div className="flex items-center justify-between">
@@ -1054,7 +1021,7 @@ export default function SiteHeader() {
                       onClick={() => setLocale(lang.code)}
                       className={`rounded-full border px-3 py-1 text-xs font-bold transition-all ${
                         locale === lang.code
-                          ? "border-tutor-500 bg-tutor-500 text-white shadow-sm"
+                          ? "border-tutor-500 bg-tutor-500 text-white"
                           : "border-line bg-white text-ink hover:bg-sand dark:border-white/15 dark:bg-white/10 dark:text-white"
                       }`}
                     >
@@ -1070,7 +1037,7 @@ export default function SiteHeader() {
               <Link
                 href="/contact"
                 onClick={closeAll}
-                className="group flex h-12 w-full items-center justify-center gap-2 rounded-full bg-student-600 text-sm font-bold text-student-50 shadow-md transition-transform active:scale-95"
+                className="btn-duo group flex h-12 w-full items-center justify-center gap-2 rounded-2xl text-sm font-extrabold"
               >
                 <Search className="h-4 w-4" />
                 <RollingText text={dict.common.requestTutor} />
@@ -1079,7 +1046,7 @@ export default function SiteHeader() {
               <Link
                 href="/comment-ca-marche/profs"
                 onClick={closeAll}
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-full border border-line bg-white text-xs font-bold text-ink shadow-sm transition-transform active:scale-95 dark:border-white/15 dark:bg-white/10 dark:text-white"
+                className="flex h-11 w-full items-center justify-center gap-2 rounded-full border border-line bg-white text-xs font-bold text-ink transition-transform active:scale-95 dark:border-white/15 dark:bg-white/10 dark:text-white"
               >
                 <Sparkles className="h-3.5 w-3.5 text-tutor-500" />
                 <span>{dict.common.becomeTutor}</span>

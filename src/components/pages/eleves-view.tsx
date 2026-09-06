@@ -74,7 +74,7 @@ export default function ElevesView({ subjects }: { subjects: SubjectCard[] }) {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="grid items-center gap-12 lg:grid-cols-2">
             <div data-anim="left" className="relative">
-              <div className="overflow-hidden rounded-[36px] border-4 border-white shadow-pop dark:border-white/10">
+              <div className="overflow-hidden rounded-[36px] border-4 border-white dark:border-white/10">
                 <Image
                   src="/images/hero-student.jpg"
                   alt="Élève en cours particulier"
@@ -85,7 +85,7 @@ export default function ElevesView({ subjects }: { subjects: SubjectCard[] }) {
               </div>
               <div
                 data-drift="0.8"
-                className="absolute -right-4 bottom-8 w-[220px] rounded-2xl border border-line bg-white p-5 shadow-card dark:border-white/10 dark:bg-ink-800"
+                className="absolute -right-4 bottom-8 w-[220px] rounded-2xl border border-line bg-white p-5 dark:border-white/10 dark:bg-ink-800"
               >
                 <LineChart className="h-6 w-6 text-student-600 dark:text-student-400" />
                 <p className="mt-2 text-sm font-bold text-ink dark:text-white">

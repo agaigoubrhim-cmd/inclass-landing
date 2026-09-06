@@ -43,12 +43,12 @@ const SPARKLE_TONE_STYLES: Record<Tone, string> = {
 
 const BORDER_HOVER_STYLES: Record<Tone, string> = {
     student:
-        "hover:border-student-500/40 hover:shadow-xl hover:shadow-student-500/5",
+        "hover:border-student-500/40",
     tutor:
-        "hover:border-tutor-500/40 hover:shadow-xl hover:shadow-tutor-500/5",
+        "hover:border-tutor-500/40",
     parent:
-        "hover:border-parent-500/40 hover:shadow-xl hover:shadow-parent-500/5",
-    ink: "hover:border-ink/30 hover:shadow-xl hover:shadow-ink/5",
+        "hover:border-parent-500/40",
+    ink: "hover:border-ink/30",
 };
 
 export function AudienceCards() {
@@ -268,9 +268,6 @@ export function AudienceCards() {
                                 border-slate-200
                                 bg-white
                                 p-3
-                                
-                                
-                                transition-shadow
                                 duration-300
                                 will-change-transform
                                 [transform-style:preserve-3d]
@@ -334,11 +331,7 @@ export function AudienceCards() {
                                             shrink-0
                                             items-center
                                             justify-center
-                                            rounded-xl
-                                            shadow
-                                            shadow-lg
-                                            shadow-white
-                                            border
+                                            rounded-xl                                            border
                                             border-white/20
                                             bg-white/20
                                             backdrop-blur-md
@@ -356,9 +349,7 @@ export function AudienceCards() {
                                             font-bold
                                             uppercase
                                             tracking-wider
-                                            text-white
-                                            drop-shadow-sm
-                                        "
+                                            text-white                                        "
                                     >
                                         {a.kicker}
                                     </span>

@@ -49,15 +49,15 @@ export function Btn({
     md: "h-12 px-6 text-[15px]",
     lg: "h-14 px-8 text-base",
   };
-  const variants = {
-    solid: TONE_SOLID[tone],
-    outline: `border-2 bg-transparent ${TONE_OUTLINE[tone]}`,
-    soft: TONE_SOFT[tone],
+  const variants: Record<typeof variant, string> = {
+    solid: "btn-duo",
+    outline: "btn-duo btn-duo-white",
+    soft: "btn-duo btn-duo-white",
   };
   return (
     <Link
       href={href}
-      className={`group inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 active:scale-[0.98] ${sizes[size]} ${variants[variant]} ${className}`}
+      className={`group inline-flex items-center justify-center gap-2 rounded-2xl font-extrabold transition-all duration-200 active:scale-[0.98] ${sizes[size]} ${variants[variant]} ${className}`}
     >
       {typeof children === "string" ? <RollingText text={children} /> : children}
       {arrow ? (

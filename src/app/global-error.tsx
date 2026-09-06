@@ -29,7 +29,7 @@ export default function GlobalError({
             <button
               type="button"
               onClick={() => reset()}
-              className="inline-flex h-11 items-center gap-2 rounded-full bg-[#1E1B18] px-6 text-sm font-bold text-white shadow-md transition-all hover:bg-black"
+              className="btn-duo inline-flex h-11 items-center gap-2 rounded-2xl px-6 text-sm font-extrabold"
             >
               <RefreshCw className="h-4 w-4" />
               Recharger l&apos;application

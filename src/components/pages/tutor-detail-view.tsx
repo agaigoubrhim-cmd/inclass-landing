@@ -95,7 +95,7 @@ export default function TutorDetailView({
             <div data-anim="up" className="space-y-8">
               {/* Header profile badge */}
               <div className="flex flex-wrap items-start gap-5">
-                <span className="grid h-24 w-24 place-items-center rounded-3xl bg-student-600 text-3xl font-extrabold text-student-50 shadow-md">
+                <span className="grid h-24 w-24 place-items-center rounded-3xl bg-student-600 text-3xl font-extrabold text-student-50">
                   {tutor.initials}
                 </span>
 
@@ -139,15 +139,15 @@ export default function TutorDetailView({
                   {tutor.headline}
                 </p>
                 <div className="mt-4 flex flex-wrap gap-2 text-xs font-bold">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-student-700 shadow-sm dark:border dark:border-white/10 dark:bg-ink-800 dark:text-student-300">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-student-700 dark:border dark:border-white/10 dark:bg-ink-800 dark:text-student-300">
                     <SubjectIcon name="book" className="h-3.5 w-3.5" />
                     {localizedSubject}
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-parent-700 shadow-sm dark:border dark:border-white/10 dark:bg-ink-800 dark:text-parent-300">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-parent-700 dark:border dark:border-white/10 dark:bg-ink-800 dark:text-parent-300">
                     <GraduationCap className="h-3.5 w-3.5" />
                     {tutor.levels}
                   </span>
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-tutor-700 shadow-sm dark:border dark:border-white/10 dark:bg-ink-800 dark:text-tutor-300">
+                  <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3.5 py-1.5 text-tutor-700 dark:border dark:border-white/10 dark:bg-ink-800 dark:text-tutor-300">
                     <CalendarCheck className="h-3.5 w-3.5" />
                     <RollingNumber targetNumber={tutor.lessons} height={16} /> {dict.common.lessonsGiven}
                   </span>
@@ -155,7 +155,7 @@ export default function TutorDetailView({
               </div>
 
               {/* Bio & Methodology */}
-              <div className="rounded-3xl border border-line bg-white p-6 shadow-sm dark:border-white/10 dark:bg-ink-900/80 sm:p-7">
+              <div className="rounded-3xl border border-line bg-white p-6 dark:border-white/10 dark:bg-ink-900/80 sm:p-7">
                 <h2 className="text-lg font-bold text-ink dark:text-white">Présentation &amp; Pédagogie</h2>
                 <p className="mt-3 text-[15px] leading-relaxed text-ink-soft dark:text-white/80">
                   {tutor.bio}
@@ -181,7 +181,7 @@ export default function TutorDetailView({
               </div>
 
               {/* Verified Quality Badges */}
-              <div className="rounded-3xl border border-line bg-white p-6 shadow-sm dark:border-white/10 dark:bg-ink-900/80 sm:p-7">
+              <div className="rounded-3xl border border-line bg-white p-6 dark:border-white/10 dark:bg-ink-900/80 sm:p-7">
                 <h2 className="text-lg font-bold text-ink dark:text-white">Garanties &amp; Vérifications</h2>
                 <div className="mt-4 grid gap-4 sm:grid-cols-2">
                   {verifiedChecks.map((c) => {
@@ -202,7 +202,7 @@ export default function TutorDetailView({
               </div>
 
               {/* Reviews Section */}
-              <div className="rounded-3xl border border-line bg-white p-6 shadow-sm dark:border-white/10 dark:bg-ink-900/80 sm:p-7">
+              <div className="rounded-3xl border border-line bg-white p-6 dark:border-white/10 dark:bg-ink-900/80 sm:p-7">
                 <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <h2 className="text-lg font-bold text-ink dark:text-white">

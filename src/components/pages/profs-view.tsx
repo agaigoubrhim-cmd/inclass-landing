@@ -62,7 +62,7 @@ export default function ProfsView() {
         <div className="flex flex-wrap justify-center gap-3">
           <Link
             href="/contact?subject=Candidature%20Professeur"
-            className="inline-flex h-14 items-center gap-2 rounded-full bg-tutor-500 px-8 font-bold text-white transition-transform hover:scale-[1.02]"
+            className="btn-duo inline-flex h-14 items-center gap-2 rounded-2xl px-8 font-extrabold"
           >
             <RollingText text={dict.audiences.tutorCta} />
             <ArrowRight className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`} />
@@ -117,7 +117,7 @@ export default function ProfsView() {
               <div
                 key={p.t}
                 data-anim-child
-                className="rounded-3xl border border-line bg-white p-7 shadow-sm transition-all hover:border-tutor-300 hover:shadow-card dark:border-white/10 dark:bg-ink-800"
+                className="rounded-3xl border border-line bg-white p-7 transition-all hover:border-tutor-300 dark:border-white/10 dark:bg-ink-800"
               >
                 <span className="grid h-12 w-12 place-items-center rounded-2xl bg-tutor-50 text-tutor-600 dark:bg-tutor-950/60 dark:text-tutor-400">
                   <p.icon className="h-6 w-6" />
@@ -149,7 +149,7 @@ export default function ProfsView() {
           <div className="mt-8 flex flex-wrap justify-center gap-3">
             <Link
               href="/contact?subject=Recrutement%20Professeur"
-              className="inline-flex h-13 items-center gap-2 rounded-full bg-tutor-600 px-8 text-sm font-bold text-white shadow-md transition-all hover:bg-tutor-700 hover:scale-105 active:scale-95"
+              className="btn-duo inline-flex h-13 items-center gap-2 rounded-2xl px-8 text-sm font-extrabold"
             >
               <RollingText text={dict.contactForm.submitBtn} />
               <ArrowRight className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`} />
@@ -158,7 +158,7 @@ export default function ProfsView() {
               href="https://wa.me/212600000000?text=Bonjour,%20je%20souhaite%20postuler%20comme%20professeur%20INCLASS"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-13 items-center gap-2 rounded-full border border-line bg-white px-7 text-sm font-bold text-ink shadow-sm transition-all hover:bg-sand hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-ink-800 dark:text-white"
+              className="inline-flex h-13 items-center gap-2 rounded-full border border-line bg-white px-7 text-sm font-bold text-ink transition-all hover:bg-sand hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-ink-800 dark:text-white"
             >
               <WhatsAppIcon className="h-4 w-4" />
               <span>WhatsApp Direct</span>

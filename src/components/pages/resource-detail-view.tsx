@@ -126,7 +126,7 @@ export default function ResourceDetailView({
         {/* Author Bio Box */}
         <div
           data-anim="up"
-          className="mt-12 flex flex-wrap items-center gap-5 rounded-3xl border border-line bg-white p-6 shadow-sm dark:border-white/10 dark:bg-ink-900 sm:p-7"
+          className="mt-12 flex flex-wrap items-center gap-5 rounded-3xl border border-line bg-white p-6 dark:border-white/10 dark:bg-ink-900 sm:p-7"
         >
           <div className="grid h-16 w-16 place-items-center rounded-2xl bg-tutor-100 text-xl font-bold text-tutor-700 dark:bg-tutor-950 dark:text-tutor-300">
             {article.author.slice(0, 2).toUpperCase()}
@@ -155,7 +155,7 @@ export default function ResourceDetailView({
                 <Link
                   key={o.slug}
                   href={`/ressources/${o.slug}`}
-                  className="group rounded-3xl border border-line bg-white p-6 shadow-sm transition-all hover:-translate-y-1 hover:shadow-card dark:border-white/10 dark:bg-ink-800"
+                  className="group rounded-3xl border border-line bg-white p-6 transition-all hover:-translate-y-1 dark:border-white/10 dark:bg-ink-800"
                 >
                   <span className="text-xs font-bold uppercase tracking-wider text-tutor-600 dark:text-tutor-400">
                     {o.category}

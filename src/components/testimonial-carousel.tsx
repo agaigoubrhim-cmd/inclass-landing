@@ -133,7 +133,7 @@ export function TestimonialCard({ item }: { item: TestimonialItem }) {
             src={item.avatarUrl}
             alt={item.name}
             loading="lazy"
-            className="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-black/5 shadow-sm dark:ring-white/15"
+            className="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-black/5 dark:ring-white/15"
           />
           <div className="min-w-0">
             <p className="truncate text-sm font-bold text-ink dark:text-white leading-tight">

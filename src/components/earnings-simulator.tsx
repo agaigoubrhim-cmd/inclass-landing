@@ -15,7 +15,7 @@ export default function EarningsSimulator() {
   const net = gross - commission;
 
   return (
-    <div className="rounded-[28px] border border-tutor-200 bg-white p-7 shadow-card dark:border-tutor-500/30 dark:bg-ink-800">
+    <div className="rounded-[28px] border border-tutor-200 bg-white p-7 dark:border-tutor-500/30 dark:bg-ink-800">
       <div className="flex items-center gap-3">
         <span className="grid h-11 w-11 place-items-center rounded-2xl bg-tutor-100 text-tutor-700 dark:bg-tutor-950/80 dark:text-tutor-300">
           <TrendingUp className="h-5 w-5" />

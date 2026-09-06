@@ -85,7 +85,7 @@ export default function HowItWorksView() {
         <div className="flex flex-wrap justify-center gap-3">
           <Link
             href="/comment-ca-marche/eleves"
-            className="group inline-flex h-12 items-center gap-2 rounded-full bg-student-600 px-6 font-bold text-student-50 transition-transform hover:scale-[1.02]"
+            className="btn-duo group inline-flex h-12 items-center gap-2 rounded-2xl px-6 font-extrabold"
           >
             <RollingText text={dict.nav.studentGuide} />
             <ArrowRight className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`} />
@@ -131,7 +131,7 @@ export default function HowItWorksView() {
             highlight="avantages"
           />
 
-          <div data-anim="up" className="mt-12 overflow-hidden rounded-[32px] border border-line bg-white shadow-sm dark:border-white/10 dark:bg-ink-800">
+          <div data-anim="up" className="mt-12 overflow-hidden rounded-[32px] border border-line bg-white dark:border-white/10 dark:bg-ink-800">
             <div className="grid grid-cols-3 border-b border-line bg-sand/60 p-5 text-sm font-bold text-ink dark:border-white/10 dark:bg-ink-900 dark:text-white">
               <div>Critères</div>
               <div className="flex items-center gap-2 text-student-700 dark:text-student-400">

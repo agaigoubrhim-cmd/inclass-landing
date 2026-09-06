@@ -70,7 +70,7 @@ export default function HomeView({
           <Link
             data-anim="up"
             href="/contact"
-            className="group inline-flex items-center gap-2 rounded-full border border-black/[0.08] bg-white px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:bg-sand dark:border-white/10 dark:bg-white/8 dark:text-white dark:hover:bg-white/15"
+            className="btn-duo btn-duo-white group inline-flex items-center gap-2 rounded-2xl px-5 py-2.5 text-sm font-extrabold"
           >
             <RollingText text={dict.common.findTutor} />
             <ArrowRight className={`h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`} />
@@ -86,8 +86,6 @@ export default function HomeView({
           TESTIMONIALS
          ========================================================= */}
       <section className="relative overflow-hidden bg-gradient-to-br from-tutor-50/70 via-sand/60 to-student-50/70 py-20 dark:from-tutor-950/30 dark:via-ink-950/50 dark:to-student-950/25">
-        <div className="pointer-events-none absolute -left-24 top-0 h-72 w-72 rounded-full bg-tutor-500/10 blur-[110px] dark:bg-tutor-500/15" />
-        <div className="pointer-events-none absolute -right-20 bottom-0 h-72 w-72 rounded-full bg-student-500/10 blur-[110px] dark:bg-student-500/15" />
         <div className="relative">
           <TestimonialCarousel items={testimonials} />
         </div>
@@ -133,7 +131,7 @@ export default function HomeView({
         <div data-anim="up" className="mt-10 text-center">
           <Link
             href="/contact"
-            className="group inline-flex h-12 items-center gap-2 rounded-full bg-ink px-7 text-[15px] font-bold text-cream transition-transform hover:scale-[1.02] dark:bg-white dark:text-ink"
+            className="btn-duo group inline-flex h-12 items-center gap-2 rounded-2xl px-7 text-[15px] font-extrabold"
           >
             <RollingText text={dict.common.requestTutor} />
             <ArrowRight className={`h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`} />

@@ -24,12 +24,11 @@ export default function Error({
     <section className="relative min-h-[80vh] flex items-center justify-center overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
       {/* Glow Effect */}
       <div className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
-        <div className="h-[400px] w-[500px] rounded-full bg-gradient-to-tr from-amber-400/20 via-red-400/15 to-student-400/15 blur-[100px] dark:from-amber-600/10 dark:via-red-600/10 dark:to-student-600/10" />
       </div>
 
       <div className="relative mx-auto max-w-2xl text-center">
         {/* Error icon badge */}
-        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-amber-200 bg-amber-50 shadow-pop dark:border-amber-500/30 dark:bg-amber-950/40">
+        <div className="mx-auto flex h-20 w-20 items-center justify-center rounded-3xl border border-amber-200 bg-amber-50 dark:border-amber-500/30 dark:bg-amber-950/40">
           <AlertTriangle className="h-10 w-10 text-amber-600 dark:text-amber-400" />
         </div>
 
@@ -52,7 +51,7 @@ export default function Error({
           <button
             type="button"
             onClick={() => reset()}
-            className="group inline-flex h-12 items-center gap-2 rounded-full bg-student-600 px-7 text-sm font-bold text-white shadow-md transition-all hover:bg-student-700 hover:scale-105 active:scale-95"
+            className="btn-duo group inline-flex h-12 items-center gap-2 rounded-2xl px-7 text-sm font-extrabold"
           >
             <RefreshCw className="h-4 w-4 transition-transform duration-500 group-hover:rotate-180" />
             <RollingText text={dict.errorState.btnRetry} />
@@ -60,7 +59,7 @@ export default function Error({
 
           <Link
             href="/"
-            className="inline-flex h-12 items-center gap-2 rounded-full border border-line bg-white px-6 text-sm font-bold text-ink shadow-sm transition-all hover:bg-sand hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-ink-800 dark:text-white"
+            className="btn-duo btn-duo-white inline-flex h-12 items-center gap-2 rounded-2xl px-6 text-sm font-extrabold"
           >
             <Home className="h-4 w-4" />
             <span>{dict.errorState.btnHome}</span>
@@ -70,7 +69,7 @@ export default function Error({
             href="https://wa.me/212600000000?text=Bonjour,%20j'ai%20rencontr%C3%A9%20une%20erreur%20sur%20INCLASS"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-12 items-center gap-2 rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-md transition-all hover:bg-emerald-700 hover:scale-105 active:scale-95"
+            className="btn-duo inline-flex h-12 items-center gap-2 rounded-2xl px-6 text-sm font-extrabold"
           >
             <WhatsAppIcon className="h-4 w-4" />
             <span>{dict.errorState.btnReport}</span>

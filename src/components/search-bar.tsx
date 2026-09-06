@@ -53,7 +53,7 @@ export default function SearchBar({
               onClick={() => setRole(r.id)}
               className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-sm font-semibold transition-all ${
                 active
-                  ? `${r.cls} shadow-card`
+                  ? `${r.cls}`
                   : onDark
                     ? "text-white/75 hover:text-white"
                     : "text-ink-soft hover:text-ink"
@@ -69,7 +69,7 @@ export default function SearchBar({
       <form
         onSubmit={submit}
         className={`flex flex-col gap-2 rounded-[28px] border bg-white p-2 sm:flex-row sm:items-center sm:rounded-full dark:border-white/10 dark:bg-ink-800 ${
-          onDark ? "border-white/20 shadow-pop" : "border-line shadow-card"
+          onDark ? "border-white/20" : "border-line"
         }`}
       >
         <label className="flex flex-1 items-center gap-2 rounded-full px-4 py-2.5">

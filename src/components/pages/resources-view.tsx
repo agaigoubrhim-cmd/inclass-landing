@@ -58,7 +58,7 @@ export default function ResourcesView({
             href="/ressources"
             className={`rounded-full px-5 py-2 text-sm font-bold transition-all duration-200 ${
               !selectedCategory
-                ? "bg-ink text-cream shadow-sm dark:bg-white dark:text-ink"
+                ? "bg-ink text-cream dark:bg-white dark:text-ink"
                 : "border border-line bg-white text-ink-soft hover:border-student-300 hover:bg-sand dark:border-white/10 dark:bg-ink-800 dark:text-white/70 dark:hover:bg-ink-700"
             }`}
           >
@@ -72,7 +72,7 @@ export default function ResourcesView({
                 href={`/ressources?categorie=${encodeURIComponent(c)}`}
                 className={`rounded-full border px-5 py-2 text-sm font-bold transition-all duration-200 ${
                   isSelected
-                    ? "border-tutor-500 bg-tutor-500 text-white shadow-sm"
+                    ? "border-tutor-500 bg-tutor-500 text-white"
                     : "border-line bg-white text-ink-soft hover:border-tutor-300 hover:bg-sand dark:border-white/10 dark:bg-ink-800 dark:text-white/70 dark:hover:bg-ink-700"
                 }`}
               >
@@ -102,7 +102,7 @@ export default function ResourcesView({
                   key={article.slug}
                   data-anim-child
                   href={`/ressources/${article.slug}`}
-                  className="group relative flex flex-col overflow-hidden rounded-[30px] border border-line bg-white shadow-sm transition-all duration-300 hover:-translate-y-1.5 hover:shadow-card dark:border-white/10 dark:bg-ink-800"
+                  className="group relative flex flex-col overflow-hidden rounded-[30px] border border-line bg-white transition-all duration-300 hover:-translate-y-1.5 dark:border-white/10 dark:bg-ink-800"
                 >
                   {/* Cover Image Container */}
                   <div className="relative h-52 w-full overflow-hidden bg-sand dark:bg-ink-900">
@@ -117,7 +117,7 @@ export default function ResourcesView({
 
                     {/* Category & Audience Pills */}
                     <div className="absolute left-4 rtl:left-auto rtl:right-4 top-4 flex flex-wrap gap-2">
-                      <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-md shadow-sm ${tag.cls}`}>
+                      <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-md ${tag.cls}`}>
                         {article.category}
                       </span>
                     </div>
@@ -177,7 +177,7 @@ export default function ResourcesView({
             </p>
             <Link
               href="/ressources"
-              className="mt-6 inline-flex h-11 items-center rounded-full bg-tutor-500 px-6 text-sm font-bold text-white transition-colors hover:bg-tutor-600"
+              className="btn-duo mt-6 inline-flex h-11 items-center rounded-2xl px-6 text-sm font-extrabold"
             >
               {dict.resourcesPage.allArticles}
             </Link>

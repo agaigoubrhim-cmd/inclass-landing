@@ -45,7 +45,7 @@ export default function TutorApplyForm() {
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-[28px] border border-tutor-200 bg-white p-6 shadow-card sm:p-8 dark:border-tutor-500/30 dark:bg-ink-800"
+      className="rounded-[28px] border border-tutor-200 bg-white p-6 sm:p-8 dark:border-tutor-500/30 dark:bg-ink-800"
     >
       <h3 className="text-2xl font-extrabold text-ink dark:text-white">Candidature professeur</h3>
       <p className="mt-2 text-sm text-ink-soft dark:text-white/60">
@@ -114,7 +114,7 @@ export default function TutorApplyForm() {
       <button
         type="submit"
         disabled={state === "loading"}
-        className="group mt-6 inline-flex h-12 items-center gap-2 rounded-full bg-tutor-600 px-7 text-[15px] font-bold text-tutor-50 transition-transform hover:scale-[1.02] disabled:opacity-60"
+        className="btn-duo group mt-6 inline-flex h-12 items-center gap-2 rounded-2xl px-7 text-[15px] font-extrabold disabled:opacity-60"
       >
         {state === "loading" ? (
           <Loader2 className="h-4 w-4 animate-spin" />

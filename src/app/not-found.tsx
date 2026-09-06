@@ -70,12 +70,11 @@ export default function NotFound() {
     <section className="relative min-h-[85vh] overflow-hidden px-4 py-16 sm:px-6 sm:py-24 lg:px-8">
       {/* Background Decorative Glows */}
       <div className="pointer-events-none absolute left-1/2 top-12 -translate-x-1/2 -translate-y-1/2">
-        <div className="h-[450px] w-[600px] rounded-full bg-gradient-to-tr from-student-400/20 via-tutor-400/15 to-parent-400/20 blur-[100px] dark:from-student-600/10 dark:via-tutor-600/10 dark:to-parent-600/10" />
       </div>
 
       <div className="relative mx-auto max-w-4xl text-center">
         {/* Top Status Pill */}
-        <div data-anim="up" className="inline-flex items-center gap-2 rounded-full border border-student-200 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-student-700 shadow-sm backdrop-blur-md dark:border-student-500/30 dark:bg-ink-800/80 dark:text-student-300">
+        <div data-anim="up" className="inline-flex items-center gap-2 rounded-full border border-student-200 bg-white/80 px-4 py-1.5 text-xs font-bold uppercase tracking-wider text-student-700 backdrop-blur-md dark:border-student-500/30 dark:bg-ink-800/80 dark:text-student-300">
           <Sparkles className="h-3.5 w-3.5 text-student-500" />
           <span>{dict.notFound.statusBadge}</span>
         </div>
@@ -100,7 +99,7 @@ export default function NotFound() {
         <form
           data-anim="up"
           onSubmit={handleSearch}
-          className="mx-auto mt-8 flex max-w-md items-center gap-2 rounded-full border border-line bg-white p-1.5 shadow-card transition-all focus-within:border-student-500 focus-within:ring-2 focus-within:ring-student-500/20 dark:border-white/15 dark:bg-ink-800"
+          className="mx-auto mt-8 flex max-w-md items-center gap-2 rounded-full border border-line bg-white p-1.5 transition-all focus-within:border-student-500 focus-within:ring-2 focus-within:ring-student-500/20 dark:border-white/15 dark:bg-ink-800"
         >
           <div className="flex flex-1 items-center gap-2.5 pl-3">
             <Search className="h-4 w-4 text-ink-soft dark:text-white/50" />
@@ -114,7 +113,7 @@ export default function NotFound() {
           </div>
           <button
             type="submit"
-            className="inline-flex h-10 items-center gap-1.5 rounded-full bg-student-600 px-5 text-xs font-bold text-white shadow-sm transition-transform hover:scale-105 active:scale-95"
+            className="btn-duo inline-flex h-10 items-center gap-1.5 rounded-2xl px-5 text-xs font-extrabold"
           >
             <span>{dict.notFound.searchBtn}</span>
             <ArrowRight className={`h-3.5 w-3.5 ${isRTL ? "rotate-180" : ""}`} />
@@ -125,7 +124,7 @@ export default function NotFound() {
         <div data-anim="up" className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/"
-            className="group inline-flex h-12 items-center gap-2 rounded-full bg-ink px-7 text-sm font-bold text-cream shadow-md transition-all hover:scale-105 active:scale-95 dark:bg-white dark:text-ink"
+            className="btn-duo group inline-flex h-12 items-center gap-2 rounded-2xl px-7 text-sm font-extrabold"
           >
             <Home className="h-4 w-4" />
             <RollingText text={dict.notFound.btnHome} />
@@ -135,7 +134,7 @@ export default function NotFound() {
             href="https://wa.me/212600000000"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex h-12 items-center gap-2 rounded-full bg-emerald-600 px-6 text-sm font-bold text-white shadow-md transition-all hover:bg-emerald-700 hover:scale-105 active:scale-95"
+            className="btn-duo inline-flex h-12 items-center gap-2 rounded-2xl px-6 text-sm font-extrabold"
           >
             <WhatsAppIcon className="h-4 w-4" />
             <span>{dict.notFound.btnWhatsapp}</span>
@@ -143,7 +142,7 @@ export default function NotFound() {
 
           <Link
             href="/contact"
-            className="inline-flex h-12 items-center gap-2 rounded-full border border-line bg-white/90 px-6 text-sm font-bold text-ink shadow-sm transition-all hover:bg-sand hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-ink-800 dark:text-white"
+            className="btn-duo btn-duo-white inline-flex h-12 items-center gap-2 rounded-2xl px-6 text-sm font-extrabold"
           >
             <span>{dict.notFound.btnContact}</span>
           </Link>
@@ -163,9 +162,9 @@ export default function NotFound() {
                   key={page.href}
                   data-anim-child
                   href={page.href}
-                  className={`group flex items-start gap-4 rounded-2xl border p-5 transition-all duration-200 hover:-translate-y-1 hover:shadow-card ${page.tone}`}
+                  className={`group flex items-start gap-4 rounded-2xl border p-5 transition-all duration-200 hover:-translate-y-1 ${page.tone}`}
                 >
-                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white shadow-xs dark:bg-ink-900">
+                  <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white dark:bg-ink-900">
                     <Icon className="h-5 w-5" />
                   </span>
                   <div className="flex-1 min-w-0">

@@ -73,7 +73,7 @@ export function StatsBar() {
             <div
               key={stat.label}
               data-anim-child
-              className={`relative overflow-hidden rounded-3xl border border-line/80 bg-white/80 px-4 py-5 text-center shadow-card ring-1 ${accent.ring} transition-all duration-300 hover:-translate-y-1 hover:shadow-pop dark:border-white/10 dark:bg-ink-800/60`}
+              className={`relative overflow-hidden rounded-3xl border border-line/80 bg-white/80 px-4 py-5 text-center ring-1 ${accent.ring} transition-all duration-300 hover:-translate-y-1 dark:border-white/10 dark:bg-ink-800/60`}
             >
               <span className={`absolute left-4 top-4 h-2 w-2 rounded-full ${accent.dot} opacity-80`} />
               <p className="font-brand text-[clamp(1.7rem,3.2vw,2.35rem)] font-extrabold leading-none text-ink dark:text-white">
@@ -136,7 +136,7 @@ export function StepsSection({
       <SectionHead eyebrow={eyebrow} title={title} highlight={highlight} sub={sub} tone={tone} />
 
       {/* Desktop / Tablet: Horizontal Expanding Cards Slider */}
-      <div data-anim="up" className="mt-14 hidden md:flex h-[460px] lg:h-[490px] w-full gap-3 overflow-hidden rounded-[36px] border border-line bg-sand/30 p-3 shadow-card dark:border-white/10 dark:bg-ink-900/50">
+      <div data-anim="up" className="mt-14 hidden md:flex h-[460px] lg:h-[490px] w-full gap-3 overflow-hidden rounded-[36px] border border-line bg-sand/30 p-3 dark:border-white/10 dark:bg-ink-900/50">
         {steps.map((step, i) => {
           const isActive = activeStep === i;
           const Icon = STEP_ICONS[step.icon] ?? SearchAnimatedIcon;
@@ -148,7 +148,7 @@ export function StepsSection({
             return (
               <div
                 key={step.title}
-                className="group relative flex-[4.5] overflow-hidden rounded-[28px] p-8 text-white transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col justify-between shadow-pop"
+                className="group relative flex-[4.5] overflow-hidden rounded-[28px] p-8 text-white transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] flex flex-col justify-between"
               >
                 {/* Background image & gradient overlay */}
                 <Image
@@ -164,11 +164,11 @@ export function StepsSection({
                 {/* Top Bar */}
                 <div className="relative z-10 flex items-center justify-between">
                   <span
-                    className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest ${numberCls[tone]} shadow-sm backdrop-blur-md`}
+                    className={`inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-extrabold uppercase tracking-widest ${numberCls[tone]} backdrop-blur-md`}
                   >
                     <span>{stepWord} {stepNumber}</span>
                   </span>
-                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/20 backdrop-blur-md border border-white/25 text-white shadow-sm">
+                  <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white/20 backdrop-blur-md border border-white/25 text-white">
                     <Icon className="h-7 w-7 text-white" />
                   </span>
                 </div>
@@ -199,7 +199,7 @@ export function StepsSection({
               tabIndex={0}
               role="button"
               aria-label={`${stepWord} ${i + 1}: ${cleanTitle}`}
-              className="group relative flex-[0.7] overflow-hidden rounded-[28px] border border-line bg-white/90 p-4 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:border-student-400 hover:bg-white dark:border-white/10 dark:bg-ink-800/90 dark:hover:bg-ink-800 dark:hover:border-student-500/50 cursor-pointer flex flex-col items-center justify-between shadow-sm"
+              className="group relative flex-[0.7] overflow-hidden rounded-[28px] border border-line bg-white/90 p-4 transition-all duration-500 ease-[cubic-bezier(0.25,1,0.5,1)] hover:border-student-400 hover:bg-white dark:border-white/10 dark:bg-ink-800/90 dark:hover:bg-ink-800 dark:hover:border-student-500/50 cursor-pointer flex flex-col items-center justify-between"
             >
               {/* Top: Step number & Icon */}
               <div className="flex flex-col items-center gap-2">
@@ -238,7 +238,7 @@ export function StepsSection({
             return (
               <div
                 key={step.title}
-                className="relative overflow-hidden rounded-[28px] p-6 text-white min-h-[320px] flex flex-col justify-between shadow-pop"
+                className="relative overflow-hidden rounded-[28px] p-6 text-white min-h-[320px] flex flex-col justify-between"
               >
                 <Image
                   src={stepImg}
@@ -277,7 +277,7 @@ export function StepsSection({
               key={step.title}
               type="button"
               onClick={() => setActiveStep(i)}
-              className="flex items-center justify-between rounded-2xl border border-line bg-white p-4 text-left shadow-sm transition-all hover:bg-sand/30 dark:border-white/10 dark:bg-ink-800"
+              className="flex items-center justify-between rounded-2xl border border-line bg-white p-4 text-left transition-all hover:bg-sand/30 dark:border-white/10 dark:bg-ink-800"
             >
               <div className="flex items-center gap-3">
                 <span className="grid h-8 w-8 place-items-center rounded-full bg-sand text-xs font-bold text-ink dark:bg-white/10 dark:text-white">
@@ -309,10 +309,8 @@ export function GuaranteeBand() {
   ];
 
   return (
-    <section className="relative overflow-hidden rounded-[40px] bg-gradient-to-br from-ink-900 via-ink-800 to-ink-950 border border-white/10 py-16 text-student-50 shadow-pop">
+    <section className="relative overflow-hidden rounded-[40px] bg-gradient-to-br from-ink-900 via-ink-800 to-ink-950 border border-white/10 py-16 text-student-50">
       {/* Decorative brand glows */}
-      <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-tutor-500/25 blur-[120px]" />
-      <div className="pointer-events-none absolute -bottom-28 -right-20 h-80 w-80 rounded-full bg-student-500/20 blur-[130px]" />
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -366,7 +364,7 @@ export function HowItWorksTeaser() {
       <div className="mt-12 text-center">
         <Link
           href="/comment-ca-marche/eleves"
-          className="inline-flex h-12 items-center gap-2 rounded-full bg-student-600 px-7 font-bold text-white transition-all hover:bg-student-700 hover:scale-105"
+          className="btn-duo inline-flex h-12 items-center gap-2 rounded-2xl px-7 font-extrabold"
         >
           <RollingText text={dict.audiences.studentCta} />
           <ArrowRight className="h-4 w-4" />
@@ -404,14 +402,14 @@ export function BecomeTutorBand() {
         <div className="flex flex-col gap-3 sm:flex-row lg:flex-col justify-center">
           <Link
             href="/comment-ca-marche/profs"
-            className="group flex h-13 items-center justify-center gap-2 rounded-full bg-white px-7 font-bold text-tutor-700 shadow-md transition-all hover:scale-105 hover:bg-cream"
+            className="btn-duo btn-duo-white group flex h-13 items-center justify-center gap-2 rounded-2xl px-7 font-extrabold"
           >
             <RollingText text={dict.audiences.tutorCta} />
             <ArrowRight className={`h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`} />
           </Link>
           <Link
             href="/contact?subject=Recrutement%20Professeur"
-            className="flex h-13 items-center justify-center rounded-full border border-white/40 bg-white/10 px-7 font-bold text-white backdrop-blur-md transition-all hover:bg-white/20"
+            className="flex h-13 items-center justify-center rounded-2xl border border-white/40 bg-white/10 px-7 font-extrabold text-white backdrop-blur-md transition-all hover:bg-white/20"
           >
             {dict.common.contactAdvisor}
           </Link>
@@ -449,7 +447,7 @@ export function ParentsBand() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/comment-ca-marche/eleves#parents"
-                className="group inline-flex h-12 items-center gap-2 rounded-full bg-parent-600 px-7 font-bold text-white shadow-md transition-all hover:bg-parent-700 hover:scale-105"
+                className="btn-duo group inline-flex h-12 items-center gap-2 rounded-2xl px-7 font-extrabold"
               >
                 <RollingText text={dict.audiences.parentCta} />
                 <ArrowRight className={`h-4 w-4 transition-transform group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`} />
@@ -462,7 +460,7 @@ export function ParentsBand() {
               </Link>
             </div>
           </div>
-          <div className="relative overflow-hidden rounded-3xl shadow-card">
+          <div className="relative overflow-hidden rounded-3xl">
             <Image
               src="/images/parents.jpg"
               alt={dict.audiences.parentTitle}
@@ -504,7 +502,7 @@ export function TestimonialsSection({
           <div
             key={idx}
             data-anim-child
-            className="flex flex-col justify-between rounded-3xl border border-line bg-white p-6 shadow-sm dark:border-white/10 dark:bg-ink-800"
+            className="flex flex-col justify-between rounded-3xl border border-line bg-white p-6 dark:border-white/10 dark:bg-ink-800"
           >
             <div>
               <Rating value={t.rating} />
@@ -569,9 +567,9 @@ export function FaqAccordion({
   };
 
   const activeBorderCls: Record<Tone, string> = {
-    student: "border-student-300 dark:border-student-500/40 ring-1 ring-student-500/15 shadow-sm",
-    tutor: "border-tutor-300 dark:border-tutor-500/40 ring-1 ring-tutor-500/15 shadow-sm",
-    parent: "border-parent-300 dark:border-parent-500/40 ring-1 ring-parent-500/15 shadow-sm",
+    student: "border-student-300 dark:border-student-500/40 ring-1 ring-student-500/15",
+    tutor: "border-tutor-300 dark:border-tutor-500/40 ring-1 ring-tutor-500/15",
+    parent: "border-parent-300 dark:border-parent-500/40 ring-1 ring-parent-500/15",
     ink: "border-ink/40 dark:border-white/30",
   };
 
@@ -595,7 +593,7 @@ export function FaqAccordion({
             className={`overflow-hidden rounded-[24px] border bg-white transition-all duration-300 dark:bg-ink-800/90 ${
               isOpen
                 ? `${activeBorderCls[tone]} bg-white dark:bg-ink-800`
-                : "border-line/90 hover:border-line hover:shadow-xs dark:border-white/10 dark:hover:border-white/20"
+                : "border-line/90 hover:border-line dark:border-white/10 dark:hover:border-white/20"
             }`}
           >
             <button
@@ -640,7 +638,7 @@ export function FaqAccordion({
       {/* Helpful contact banner below FAQ */}
       <div className="mt-8 flex flex-wrap items-center justify-between gap-4 rounded-2xl border border-line bg-sand/60 p-4 sm:p-5 dark:border-white/10 dark:bg-white/[0.02]">
         <div className="flex items-center gap-3">
-          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white shadow-xs dark:bg-ink-800">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white dark:bg-ink-800">
             <HelpCircle className="h-5 w-5 text-student-600 dark:text-student-400" />
           </span>
           <div>
@@ -653,7 +651,7 @@ export function FaqAccordion({
             href="https://wa.me/212600000000"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-4 py-2 text-xs font-bold text-white shadow-xs transition-transform hover:scale-105"
+            className="btn-duo inline-flex items-center gap-2 rounded-2xl px-4 py-2 text-xs font-extrabold"
           >
             <WhatsAppIcon className="h-4 w-4" />
             <span>{dict.faq.directWhatsapp}</span>
@@ -698,9 +696,6 @@ export function CtaBand({
       >
         {/* Decorative color glows */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />
-        <div className="pointer-events-none absolute -right-16 -top-20 h-72 w-72 rounded-full bg-white/10 blur-[100px]" />
-        <div className="pointer-events-none absolute -bottom-24 -left-16 h-72 w-72 rounded-full bg-black/20 blur-[110px]" />
-        <div className="pointer-events-none absolute left-1/2 top-0 h-40 w-[80%] -translate-x-1/2 rounded-full bg-white/[0.08] blur-[80px]" />
 
         <h2 className="relative text-[clamp(1.9rem,4.4vw,3rem)] font-extrabold leading-tight text-white">
           {displayTitle}

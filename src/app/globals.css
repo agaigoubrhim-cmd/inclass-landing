@@ -96,17 +96,17 @@
   --color-parent-900: #1f1147;
   --color-parent-950: #100827;
 
-  /* Duolingo-inspired primary action color */
-  --color-duo-50: #eaffd8;
-  --color-duo-100: #d7ffb8;
-  --color-duo-200: #b8f28c;
-  --color-duo-300: #9ae864;
-  --color-duo-400: #7cdc45;
-  --color-duo-500: #58cc02;
-  --color-duo-600: #46a302;
-  --color-duo-700: #3a8c00;
-  --color-duo-800: #2f7300;
-  --color-duo-900: #255a00;
+  /* 2026 primary action color — INCLASS blue */
+  --color-duo-50: #eef3ff;
+  --color-duo-100: #dbe6ff;
+  --color-duo-200: #b9ccff;
+  --color-duo-300: #8aa9fb;
+  --color-duo-400: #5b81f3;
+  --color-duo-500: #2b62e8;
+  --color-duo-600: #1c4bc9;
+  --color-duo-700: #163ba1;
+  --color-duo-800: #122d78;
+  --color-duo-900: #0d1f4f;
 
   --radius-4xl: 2rem;
   --radius-5xl: 2.75rem;
@@ -124,26 +124,6 @@
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     transition: background-color 0.25s ease, color 0.25s ease;
-  }
-
-  /* Ambient brand color wash behind the content */
-  body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    z-index: -1;
-    pointer-events: none;
-    background:
-      radial-gradient(42rem 30rem at 8% -5%, rgba(43, 98, 232, 0.11), transparent 58%),
-      radial-gradient(38rem 30rem at 94% 8%, rgba(233, 83, 13, 0.09), transparent 58%),
-      radial-gradient(44rem 38rem at 50% 100%, rgba(113, 72, 228, 0.08), transparent 60%);
-  }
-
-  .dark body::before {
-    background:
-      radial-gradient(42rem 30rem at 8% -5%, rgba(43, 98, 232, 0.16), transparent 60%),
-      radial-gradient(38rem 30rem at 94% 8%, rgba(233, 83, 13, 0.12), transparent 58%),
-      radial-gradient(44rem 38rem at 50% 100%, rgba(113, 72, 228, 0.14), transparent 62%);
   }
 
   .dark body {
@@ -186,37 +166,34 @@
 }
 
 @utility shadow-card {
-  box-shadow: 0 1px 0 0 rgba(20, 16, 12, 0.06), 0 18px 40px -24px rgba(20, 16, 12, 0.35);
+  box-shadow: none;
 }
 
 .dark .shadow-card {
-  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.05), 0 18px 40px -24px rgba(0, 0, 0, 0.7);
+  box-shadow: none;
 }
 
 @utility shadow-pop {
-  box-shadow: 0 24px 60px -28px rgba(20, 16, 12, 0.55);
+  box-shadow: none;
 }
 
 .dark .shadow-pop {
-  box-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.85);
+  box-shadow: none;
 }
 
 /* =========================================================
-   DUOLINGO-STYLE 3D BUTTON
+   MODERN 2026 BUTTON (flat, bold, blue)
    ========================================================= */
 .btn-duo {
   --btn-color: var(--color-duo-500);
-  --btn-edge: var(--color-duo-600);
   --btn-text: #ffffff;
+  --btn-hover-color: var(--color-duo-600);
 
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  border: 2px solid transparent;
-  border-bottom-width: 5px;
-  border-bottom-color: var(--btn-edge);
   border-radius: 1rem;
   background: var(--btn-color);
   color: var(--btn-text);
@@ -225,45 +202,38 @@
   user-select: none;
   transition:
     transform 0.12s ease,
-    filter 0.15s ease,
-    border-bottom-width 0.12s ease,
-    box-shadow 0.15s ease;
+    background-color 0.15s ease,
+    opacity 0.15s ease;
 }
 
 .btn-duo:hover {
-  filter: brightness(1.06);
-  box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--btn-edge) 45%, transparent);
+  background: var(--btn-hover-color);
 }
 
 .btn-duo:active {
-  transform: translateY(3px);
-  border-bottom-width: 2px;
+  transform: scale(0.98);
 }
 
 .btn-duo-blue {
   --btn-color: var(--color-tutor-500);
-  --btn-edge: var(--color-tutor-600);
 }
 
 .btn-duo-student {
   --btn-color: var(--color-student-500);
-  --btn-edge: var(--color-student-600);
 }
 
 .btn-duo-parent {
   --btn-color: var(--color-parent-500);
-  --btn-edge: var(--color-parent-600);
 }
 
 .btn-duo-white {
   --btn-color: #ffffff;
-  --btn-edge: #d8d8dd;
   --btn-text: var(--color-ink);
+  --btn-hover-color: #eef3ff;
 }
 
 .btn-duo-ink {
   --btn-color: var(--color-ink);
-  --btn-edge: #05070f;
   --btn-text: #ffffff;
 }
 
@@ -509,7 +479,7 @@ html[dir="rtl"] .writing-mode-vertical {
 
 
 /* =========================================================
-   iOS 26 STYLE — LIQUID GLASS NAVBAR (COLORFUL / IRIDESCENT)
+   CLEAN 2026 NAVBAR — minimal glass, no sparkle shadows
    ========================================================= */
 
 .ios-liquid-glass {
@@ -521,303 +491,43 @@ html[dir="rtl"] .writing-mode-vertical {
 
   border-radius: var(--glass-radius) !important;
 
-  /* LIQUID GLASS + COLOR TINT */
   background:
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.42) 0%,
-      rgba(255, 255, 255, 0.20) 28%,
-      rgba(255, 255, 255, 0.10) 55%,
-      rgba(255, 255, 255, 0.26) 100%
-    ),
-    linear-gradient(
-      120deg,
-      rgba(125, 211, 252, 0.16) 0%,   /* cyan */
-      rgba(196, 181, 253, 0.14) 35%,  /* violet */
-      rgba(249, 168, 212, 0.12) 65%,  /* pink */
-      rgba(253, 224, 71, 0.10) 100%   /* jaune léger */
+      rgba(255, 255, 255, 0.78) 0%,
+      rgba(255, 255, 255, 0.70) 100%
     ) !important;
 
-  border-color: rgba(255, 255, 255, 0.48) !important;
+  border: 1px solid rgba(16, 20, 35, 0.08) !important;
 
-  /* REAL BACKDROP GLASS */
   backdrop-filter:
-    blur(30px)
-    saturate(220%)
-    brightness(1.10)
-    hue-rotate(2deg) !important;
+    blur(24px)
+    saturate(160%) !important;
 
   -webkit-backdrop-filter:
-    blur(30px)
-    saturate(220%)
-    brightness(1.10)
-    hue-rotate(2deg) !important;
-
-  box-shadow:
-    0 20px 50px -22px rgba(99, 102, 241, 0.20),
-    0 8px 24px -12px rgba(236, 72, 153, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.80),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.12) !important;
+    blur(24px)
+    saturate(160%) !important;
 
   transform: translateZ(0);
 }
 
-/* =========================================================
-   GLASS DEPTH + COLOR WASH
-   ========================================================= */
-
-.ios-liquid-glass::before {
-  content: "";
-
-  position: absolute;
-  inset: 0;
-
-  z-index: 0;
-  pointer-events: none;
-
-  border-radius: inherit;
-
-  background:
-    radial-gradient(
-      ellipse 90% 130% at 12% -10%,
-      rgba(255, 255, 255, 0.52),
-      transparent 48%
-    ),
-    radial-gradient(
-      ellipse 70% 100% at 90% 100%,
-      rgba(196, 181, 253, 0.35),   /* violet blob */
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse 70% 100% at 10% 100%,
-      rgba(125, 211, 252, 0.30),   /* cyan blob */
-      transparent 55%
-    ),
-    radial-gradient(
-      ellipse 60% 90% at 60% 0%,
-      rgba(249, 168, 212, 0.25),   /* pink blob */
-      transparent 55%
-    ),
-    linear-gradient(
-      115deg,
-      rgba(255, 255, 255, 0.18),
-      transparent 42%,
-      rgba(255, 255, 255, 0.08)
-    );
-
-  opacity: 1;
-  mix-blend-mode: screen;
-}
-
-/* =========================================================
-   MOVING SPECULAR LIGHT (avec teinte arc-en-ciel)
-   ========================================================= */
-
+.ios-liquid-glass::before,
 .ios-liquid-glass::after {
-  content: "";
-
-  position: absolute;
-
-  top: -80%;
-  left: -65%;
-
-  width: 45%;
-  height: 260%;
-
-  z-index: 1;
-  pointer-events: none;
-
-  border-radius: 999px;
-
-  background:
-    linear-gradient(
-      105deg,
-      transparent 0%,
-      rgba(125, 211, 252, 0.10) 30%,
-      rgba(255, 255, 255, 0.70) 48%,
-      rgba(249, 168, 212, 0.18) 58%,
-      transparent 70%
-    );
-
-  filter: blur(12px);
-
-  transform: rotate(14deg);
-
-  opacity: 0;
-
-  animation:
-    ios-liquid-sweep
-    6s
-    cubic-bezier(0.4, 0, 0.2, 1)
-    infinite;
+  content: none;
 }
-
-@keyframes ios-liquid-sweep {
-
-  0% {
-    left: -70%;
-    opacity: 0;
-  }
-
-  10% {
-    opacity: 0.35;
-  }
-
-  30% {
-    opacity: 0.65;
-  }
-
-  52% {
-    left: 115%;
-    opacity: 0.30;
-  }
-
-  65% {
-    left: 135%;
-    opacity: 0;
-  }
-
-  100% {
-    left: 135%;
-    opacity: 0;
-  }
-}
-
-/* =========================================================
-   CONTENT ABOVE GLASS
-   ========================================================= */
 
 .ios-liquid-glass > * {
   position: relative;
   z-index: 3;
 }
 
-/* =========================================================
-   SUBTLE GLASS EDGE
-   ========================================================= */
-
-.ios-liquid-glass {
-  box-shadow:
-    0 20px 50px -22px rgba(99, 102, 241, 0.20),
-    0 8px 24px -12px rgba(236, 72, 153, 0.12),
-    inset 0 1px 0 rgba(255, 255, 255, 0.82),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.14),
-    inset 1px 0 0 rgba(196, 181, 253, 0.25),
-    inset -1px 0 0 rgba(125, 211, 252, 0.18) !important;
-}
-
-/* =========================================================
-   HOVER
-   ========================================================= */
-
-@media (hover: hover) {
-
-  .ios-liquid-glass:hover {
-    border-color: rgba(255, 255, 255, 0.62) !important;
-
-    box-shadow:
-      0 24px 60px -24px rgba(99, 102, 241, 0.28),
-      0 10px 28px -12px rgba(236, 72, 153, 0.18),
-      inset 0 1px 0 rgba(255, 255, 255, 0.90),
-      inset 0 -1px 0 rgba(255, 255, 255, 0.16) !important;
-  }
-}
-
-/* =========================================================
-   DARK MODE (glass coloré plus vif dans le noir)
-   ========================================================= */
-
 .dark .ios-liquid-glass {
   background:
     linear-gradient(
       135deg,
-      rgba(255, 255, 255, 0.15) 0%,
-      rgba(255, 255, 255, 0.075) 35%,
-      rgba(255, 255, 255, 0.035) 65%,
-      rgba(255, 255, 255, 0.10) 100%
-    ),
-    linear-gradient(
-      120deg,
-      rgba(99, 102, 241, 0.22) 0%,
-      rgba(168, 85, 247, 0.18) 35%,
-      rgba(236, 72, 153, 0.16) 65%,
-      rgba(56, 189, 248, 0.18) 100%
+      rgba(20, 26, 46, 0.92) 0%,
+      rgba(20, 26, 46, 0.86) 100%
     ) !important;
 
-  border-color: rgba(255, 255, 255, 0.20) !important;
-
-  backdrop-filter:
-    blur(32px)
-    saturate(220%)
-    brightness(1.18)
-    hue-rotate(2deg) !important;
-
-  -webkit-backdrop-filter:
-    blur(32px)
-    saturate(220%)
-    brightness(1.18)
-    hue-rotate(2deg) !important;
-
-  box-shadow:
-    0 20px 55px -20px rgba(99, 102, 241, 0.45),
-    0 8px 25px -10px rgba(236, 72, 153, 0.30),
-    inset 0 1px 0 rgba(255, 255, 255, 0.22),
-    inset 0 -1px 0 rgba(255, 255, 255, 0.05) !important;
-}
-
-.dark .ios-liquid-glass::before {
-  background:
-    radial-gradient(ellipse 90% 130% at 12% -10%, rgba(255, 255, 255, 0.18), transparent 48%),
-    radial-gradient(ellipse 70% 100% at 90% 100%, rgba(168, 85, 247, 0.45), transparent 55%),
-    radial-gradient(ellipse 70% 100% at 10% 100%, rgba(56, 189, 248, 0.40), transparent 55%),
-    radial-gradient(ellipse 60% 90% at 60% 0%, rgba(236, 72, 153, 0.35), transparent 55%),
-    linear-gradient(115deg, rgba(255, 255, 255, 0.08), transparent 42%, rgba(255, 255, 255, 0.025));
-  mix-blend-mode: screen;
-}
-
-/* =========================================================
-   MOBILE — SAME GLASS
-   ========================================================= */
-
-@media (max-width: 1023px) {
-
-  .ios-liquid-glass {
-    backdrop-filter:
-      blur(26px)
-      saturate(200%)
-      brightness(1.08)
-      hue-rotate(2deg) !important;
-
-    -webkit-backdrop-filter:
-      blur(26px)
-      saturate(200%)
-      brightness(1.08)
-      hue-rotate(2deg) !important;
-  }
-}
-
-/* =========================================================
-   REDUCED MOTION
-   ========================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  .ios-liquid-glass::after {
-    animation: none;
-  }
-}
-
-/* =========================================================
-   FALLBACK
-   ========================================================= */
-
-@supports not (backdrop-filter: blur(1px)) {
-
-  .ios-liquid-glass {
-    background: rgba(255, 255, 255, 0.90) !important;
-  }
-
-  .dark .ios-liquid-glass {
-    background: rgba(20, 20, 24, 0.92) !important;
-  }
+  border: 1px solid rgba(255, 255, 255, 0.10) !important;
 }

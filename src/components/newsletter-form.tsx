@@ -45,7 +45,7 @@ export default function NewsletterForm() {
         <button
           type="submit"
           disabled={state === "loading"}
-          className="group inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-full bg-student-400 px-6 text-sm font-bold text-student-900 transition-colors hover:bg-student-300 disabled:opacity-60"
+          className="btn-duo group inline-flex h-12 shrink-0 items-center justify-center gap-2 rounded-2xl px-6 text-sm font-extrabold disabled:opacity-60"
         >
           {state === "loading" ? (
             <Loader2 className="h-4 w-4 animate-spin" />

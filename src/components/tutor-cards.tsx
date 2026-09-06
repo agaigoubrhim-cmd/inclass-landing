@@ -59,8 +59,6 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
         border
         border-black/[0.08]
         bg-black
-        shadow-[0_10px_35px_rgba(15,23,42,0.06)]
-        transition-shadow
         duration-300
 
         sm:h-[calc(100svh-32px)]
@@ -71,10 +69,10 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
         lg:snap-none
         lg:rounded-[30px]
 
-        lg:hover:shadow-[0_24px_55px_rgba(15,23,42,0.12)]
+        lg:
 
         dark:border-white/[0.09]
-        dark:shadow-[0_15px_45px_rgba(0,0,0,0.22)]
+        dark:
       "
         >
             {/* =========================================================
@@ -157,7 +155,7 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
           text-[11px]
           font-bold
           text-white
-          shadow-lg
+         
           backdrop-blur-md
         "
             >
@@ -167,7 +165,6 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
             w-2
             rounded-full
             bg-emerald-400
-            shadow-[0_0_0_3px_rgba(52,211,153,0.16)]
           "
                 />
 
@@ -195,7 +192,7 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
           border-white/20
           bg-black/25
           text-white
-          shadow-lg
+         
           backdrop-blur-md
           transition-all
           duration-300
@@ -251,7 +248,7 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
               rounded-2xl
               border
               border-white/20
-              shadow-2xl
+             
 
               sm:h-[82px]
               sm:w-[145px]
@@ -275,7 +272,7 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
               items-center
               gap-2
               text-white
-              drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)]
+              drop-
             "
                     >
                         <Video
@@ -518,11 +515,11 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
                 text-[13px]
                 font-extrabold
                 text-ink
-                shadow-sm
+               
                 transition-all
                 duration-300
                 hover:scale-[1.01]
-                hover:shadow-md
+               
               "
                         >
                             <RollingText text={dict.common.viewProfile} />
@@ -542,7 +539,7 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
                 border-white/20
                 bg-white/10
                 text-white
-                shadow-sm
+               
                 backdrop-blur-md
                 transition-all
                 duration-300

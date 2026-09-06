@@ -73,7 +73,7 @@ export default function PricingCalculator() {
       {/* ─── 1. Interactive Session Estimator ─── */}
       <div
         data-anim="up"
-        className="relative overflow-hidden rounded-[36px] border border-line bg-white p-6 shadow-card dark:border-white/10 dark:bg-ink-800/90 sm:p-10"
+        className="relative overflow-hidden rounded-[36px] border border-line bg-white p-6 dark:border-white/10 dark:bg-ink-800/90 sm:p-10"
       >
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line/80 pb-6 dark:border-white/10">
           <div>
@@ -96,7 +96,7 @@ export default function PricingCalculator() {
               onClick={() => setMode("online")}
               className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all ${
                 mode === "online"
-                  ? "bg-white text-tutor-700 shadow-sm dark:bg-white/15 dark:text-white"
+                  ? "bg-white text-tutor-700 dark:bg-white/15 dark:text-white"
                   : "text-ink-soft hover:text-ink dark:text-white/60"
               }`}
             >
@@ -108,7 +108,7 @@ export default function PricingCalculator() {
               onClick={() => setMode("home")}
               className={`flex items-center gap-2 rounded-xl px-4 py-2 text-xs font-bold transition-all ${
                 mode === "home"
-                  ? "bg-white text-student-700 shadow-sm dark:bg-white/15 dark:text-white"
+                  ? "bg-white text-student-700 dark:bg-white/15 dark:text-white"
                   : "text-ink-soft hover:text-ink dark:text-white/60"
               }`}
             >
@@ -140,7 +140,7 @@ export default function PricingCalculator() {
                   onClick={() => setLevel(lvl.id)}
                   className={`flex flex-col items-start rounded-2xl border p-4 text-left transition-all ${
                     active
-                      ? "border-student-500 bg-student-50/70 shadow-sm ring-2 ring-student-500/20 dark:border-student-500/60 dark:bg-student-950/60"
+                      ? "border-student-500 bg-student-50/70 ring-2 ring-student-500/20 dark:border-student-500/60 dark:bg-student-950/60"
                       : "border-line bg-white hover:bg-sand dark:border-white/10 dark:bg-white/5 dark:hover:bg-white/10"
                   }`}
                 >
@@ -193,7 +193,7 @@ export default function PricingCalculator() {
         </div>
 
         {/* Live Calculation Banner */}
-        <div className="mt-8 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-6 text-white shadow-xl dark:bg-ink-950 sm:p-8">
+        <div className="mt-8 flex flex-wrap items-center justify-between gap-6 rounded-3xl bg-ink p-6 text-white dark:bg-ink-950 sm:p-8">
           <div>
             <span className="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-widest text-tutor-300">
               <Zap className="h-3.5 w-3.5" />
@@ -213,7 +213,7 @@ export default function PricingCalculator() {
           <div className="flex flex-wrap gap-3">
             <Link
               href={`/profs?mode=${mode}`}
-              className="group inline-flex h-13 items-center gap-2.5 rounded-full bg-student-600 px-7 text-sm font-bold text-white shadow-lg transition-transform hover:scale-105 active:scale-95"
+              className="btn-duo group inline-flex h-13 items-center gap-2.5 rounded-2xl px-7 text-sm font-extrabold"
             >
               <RollingText text="Voir les profs disponibles" />
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -227,7 +227,7 @@ export default function PricingCalculator() {
         {/* Card 1: Pour les Élèves & Parents */}
         <div
           data-anim-child
-          className="flex flex-col justify-between rounded-[32px] border border-student-200 bg-student-50/50 p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-pop dark:border-student-500/20 dark:bg-student-950/30"
+          className="flex flex-col justify-between rounded-[32px] border border-student-200 bg-student-50/50 p-7 transition-all duration-300 hover:-translate-y-1 dark:border-student-500/20 dark:bg-student-950/30"
         >
           <div>
             <div className="flex items-center justify-between">
@@ -271,7 +271,7 @@ export default function PricingCalculator() {
           <div className="mt-8">
             <Link
               href="/profs"
-              className="group flex h-12 w-full items-center justify-center gap-2 rounded-full bg-student-600 text-sm font-bold text-student-50 shadow-md transition-all hover:bg-student-700 active:scale-95"
+              className="btn-duo group flex h-12 w-full items-center justify-center gap-2 rounded-2xl text-sm font-extrabold"
             >
               <RollingText text="Trouver un professeur" />
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -282,7 +282,7 @@ export default function PricingCalculator() {
         {/* Card 2: Portefeuille Sécurisé */}
         <div
           data-anim-child
-          className="flex flex-col justify-between rounded-[32px] border border-line bg-white p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-pop dark:border-white/10 dark:bg-ink-800"
+          className="flex flex-col justify-between rounded-[32px] border border-line bg-white p-7 transition-all duration-300 hover:-translate-y-1 dark:border-white/10 dark:bg-ink-800"
         >
           <div>
             <div className="flex items-center justify-between">
@@ -338,7 +338,7 @@ export default function PricingCalculator() {
         {/* Card 3: Pour les Professeurs */}
         <div
           data-anim-child
-          className="flex flex-col justify-between rounded-[32px] border border-tutor-200 bg-tutor-50/50 p-7 shadow-card transition-all duration-300 hover:-translate-y-1 hover:shadow-pop dark:border-tutor-500/20 dark:bg-tutor-950/30"
+          className="flex flex-col justify-between rounded-[32px] border border-tutor-200 bg-tutor-50/50 p-7 transition-all duration-300 hover:-translate-y-1 dark:border-tutor-500/20 dark:bg-tutor-950/30"
         >
           <div>
             <div className="flex items-center justify-between">
@@ -382,7 +382,7 @@ export default function PricingCalculator() {
           <div className="mt-8">
             <Link
               href="/comment-ca-marche/profs"
-              className="group flex h-12 w-full items-center justify-center gap-2 rounded-full bg-tutor-600 text-sm font-bold text-white transition-colors hover:bg-tutor-700"
+              className="btn-duo group flex h-12 w-full items-center justify-center gap-2 rounded-2xl text-sm font-extrabold"
             >
               <RollingText text="Devenir professeur INCLASS" />
               <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -394,7 +394,7 @@ export default function PricingCalculator() {
       {/* ─── 3. Payment Methods & Trust Banner ─── */}
       <div
         data-anim="up"
-        className="rounded-3xl border border-line bg-white p-6 shadow-sm dark:border-white/10 dark:bg-ink-900/80 sm:p-7"
+        className="rounded-3xl border border-line bg-white p-6 dark:border-white/10 dark:bg-ink-900/80 sm:p-7"
       >
         <div className="flex flex-wrap items-center justify-between gap-6">
           <div className="flex items-center gap-3.5">

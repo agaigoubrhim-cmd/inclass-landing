@@ -63,7 +63,7 @@ export default function ContactForm({
   return (
     <form
       onSubmit={onSubmit}
-      className="rounded-[32px] border border-line bg-white p-6 shadow-card sm:p-8 dark:border-white/10 dark:bg-ink-800"
+      className="rounded-[32px] border border-line bg-white p-6 sm:p-8 dark:border-white/10 dark:bg-ink-800"
     >
       {initialTutor && (
         <div className="mb-6 flex items-center gap-2.5 rounded-2xl bg-student-50 p-4 text-xs font-semibold text-student-800 dark:bg-student-950/60 dark:text-student-300">
@@ -86,7 +86,7 @@ export default function ContactForm({
             onClick={() => setRole(r.id)}
             className={`rounded-xl px-5 py-2 text-xs font-bold transition-all ${
               role === r.id
-                ? `${r.cls} shadow-sm`
+                ? `${r.cls}`
                 : "text-ink-soft hover:text-ink dark:text-white/70 dark:hover:text-white"
             }`}
           >
@@ -178,7 +178,7 @@ export default function ContactForm({
       <button
         type="submit"
         disabled={state === "loading"}
-        className={`group mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full font-bold text-white shadow-md transition-all hover:scale-[1.01] active:scale-[0.98] disabled:opacity-60 ${active.cls}`}
+        className={`btn-duo group mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl font-extrabold disabled:opacity-60`}
       >
         {state === "loading" ? (
           <Loader2 className="h-4 w-4 animate-spin" />
