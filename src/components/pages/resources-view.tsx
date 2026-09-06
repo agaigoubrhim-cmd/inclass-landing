@@ -171,7 +171,7 @@ export default function ResourcesView({
 
         {/* Search */}
         <div data-anim="up" className="mt-6">
-          <div className="mx-auto flex max-w-xl items-center gap-2.5 rounded-full border border-line bg-white p-2 pl-4 transition-all focus-within:border-tutor-500 focus-within:ring-2 focus-within:ring-tutor-500/20 dark:border-white/15 dark:bg-ink-800">
+          <div className="mx-auto flex max-w-xl items-center gap-2.5 rounded-full border border-line bg-white p-2 ps-4 transition-all focus-within:border-tutor-500 focus-within:ring-2 focus-within:ring-tutor-500/20 dark:border-white/15 dark:bg-ink-800">
             <Search className="h-4 w-4 shrink-0 text-ink-soft dark:text-white/50" aria-hidden="true" />
             <input
               type="search"

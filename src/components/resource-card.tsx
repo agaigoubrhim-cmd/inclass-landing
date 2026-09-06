@@ -166,8 +166,8 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
           <NotepadClip />
 
           {/* red margin line on the left */}
-          <div aria-hidden="true" className="absolute inset-y-4 left-7 w-px bg-[#e66] opacity-70" />
-          <div aria-hidden="true" className="absolute inset-y-4 right-7 w-px bg-[#e66] opacity-40" />
+          <div aria-hidden="true" className="absolute inset-y-4 start-7 w-px bg-[#e66] opacity-70" />
+          <div aria-hidden="true" className="absolute inset-y-4 end-7 w-px bg-[#e66] opacity-40" />
 
           <div className="relative z-10 flex h-full flex-col px-8 pb-6 pt-12 sm:px-10 sm:pt-14">
             <div className="flex items-center gap-2 text-[#8f8a3a] dark:text-amber-300">
@@ -351,14 +351,14 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
               </h4>
               {leadBody ? (
                 <p
-                  className="mt-3 text-[15px] leading-[1.8] text-ink-soft first-letter:float-left first-letter:mr-2.5 first-letter:text-[52px] first-letter:font-black first-letter:leading-[0.72] first-letter:text-ink"
+                  className="mt-3 text-[15px] leading-[1.8] text-ink-soft first-letter:float-left first-letter:mr-2.5 first-letter:text-[52px] first-letter:font-black first-letter:leading-[0.72] first-letter:text-ink rtl:first-letter:float-right rtl:first-letter:ml-2.5"
                   style={serif}
                 >
                   {leadBody}
                 </p>
               ) : (
                 <p
-                  className="mt-3 text-[15px] leading-[1.8] text-ink-soft first-letter:float-left first-letter:mr-2.5 first-letter:text-[52px] first-letter:font-black first-letter:leading-[0.72] first-letter:text-ink"
+                  className="mt-3 text-[15px] leading-[1.8] text-ink-soft first-letter:float-left first-letter:mr-2.5 first-letter:text-[52px] first-letter:font-black first-letter:leading-[0.72] first-letter:text-ink rtl:first-letter:float-right rtl:first-letter:ml-2.5"
                   style={serif}
                 >
                   {article.excerpt}
@@ -401,7 +401,7 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
                   <p key={i}>{paragraph}</p>
                 ))}
               </div>
-              <aside className="border-y border-ink py-5 text-center md:border-y-0 md:border-l md:py-0 md:pl-6">
+              <aside className="border-y border-ink py-5 text-center md:border-y-0 md:border-s md:py-0 md:ps-6">
                 <p className="text-lg font-bold italic leading-snug text-ink" style={serif}>
                   « {article.tags?.[0] || article.category} »
                 </p>

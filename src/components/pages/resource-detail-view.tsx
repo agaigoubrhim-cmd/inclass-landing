@@ -331,14 +331,14 @@ function EditorialArticle({ article }: { article: ResourceItem }) {
               key={i}
               className={
                 i === 0
-                  ? "first-letter:float-left first-letter:mr-3 first-letter:text-[58px] first-letter:font-black first-letter:leading-[0.75] first-letter:text-ink dark:first-letter:text-white"
+                  ? "first-letter:float-left first-letter:mr-3 first-letter:text-[58px] first-letter:font-black first-letter:leading-[0.75] first-letter:text-ink dark:first-letter:text-white rtl:first-letter:float-right rtl:first-letter:ml-3"
                   : ""
               }
             >
               {paragraph}
             </p>
           ))}
-          <div className="border-l-4 border-ink pl-4 text-[15px] italic leading-relaxed text-ink dark:text-white/80 dark:border-white">
+          <div className="border-s-4 border-ink ps-4 text-[15px] italic leading-relaxed text-ink dark:text-white/80 dark:border-white">
             {article.tags?.length ? article.tags.slice(0, 3).join(" · ") : article.category}
           </div>
         </div>
@@ -438,9 +438,9 @@ function NotepadDetail({ article }: { article: ResourceItem }) {
         }}
       />
       {/* red margin lines */}
-      <div aria-hidden="true" className="absolute inset-y-0 left-10 w-px bg-[#e66] opacity-60 sm:left-14" />
-      <div aria-hidden="true" className="absolute inset-y-0 left-12 w-px bg-[#e66] opacity-40 sm:left-16" />
-      <div aria-hidden="true" className="absolute inset-y-0 right-10 w-px bg-[#e66] opacity-40 sm:right-14" />
+      <div aria-hidden="true" className="absolute inset-y-0 start-10 w-px bg-[#e66] opacity-60 sm:start-14" />
+      <div aria-hidden="true" className="absolute inset-y-0 start-12 w-px bg-[#e66] opacity-40 sm:start-16" />
+      <div aria-hidden="true" className="absolute inset-y-0 end-10 w-px bg-[#e66] opacity-40 sm:end-14" />
       {/* soft bottom shadow */}
       <div aria-hidden="true" className="absolute inset-x-2 bottom-0 h-6 bg-gradient-to-t from-black/15 to-transparent" />
 
