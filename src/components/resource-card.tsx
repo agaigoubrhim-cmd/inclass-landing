@@ -140,6 +140,40 @@ function NotepadClip() {
   );
 }
 
+function CardCover({
+  article,
+  heightClass = "h-36 sm:h-44",
+  className = "",
+}: {
+  article: ResourceItem;
+  heightClass?: string;
+  className?: string;
+}) {
+  const { dict } = useI18n();
+  const image =
+    article.coverImageUrl || (article.cover && /^https?:/i.test(article.cover) ? article.cover : null);
+
+  return (
+    <div className={`relative w-full overflow-hidden ${heightClass} ${className}`}>
+      {image ? (
+        <Image
+          src={image}
+          alt={article.title}
+          fill
+          sizes="(max-width: 767px) 100vw, 50vw"
+          className="object-cover"
+        />
+      ) : (
+        <div className="absolute inset-0 grid place-items-center bg-[repeating-linear-gradient(45deg,#f1f2f6,#f1f2f6_8px,#e9ebf2_8px,#e9ebf2_16px)] dark:bg-[repeating-linear-gradient(45deg,#141a2e,#141a2e_8px,#0d111f_8px,#0d111f_16px)]">
+          <span className="px-4 text-center text-[11px] font-bold uppercase tracking-[0.2em] text-ink-soft dark:text-white/60">
+            {dict.resourcesPage.imageNotFound}
+          </span>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type: ResourceType; href: string }) {
   const { dict } = useI18n();
 
@@ -176,6 +210,7 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
                 {dict.resourcesPage.types.notes}
               </span>
             </div>
+            <CardCover article={article} heightClass="mb-5 h-28 rounded-[6px] sm:h-36" />
             <h3 className="mt-3 text-[22px] font-extrabold leading-snug transition-colors group-hover:text-[#7a7524] dark:text-amber-100 dark:group-hover:text-amber-300">
               {article.title}
             </h3>
@@ -238,6 +273,11 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
             {/* ornamental rules */}
             <div className="border-t-4 border-double border-[#4a3c25] dark:border-amber-100" />
             <div className="mt-1 border-t border-[#4a3c25] dark:border-amber-100/70" />
+
+            <CardCover
+              article={article}
+              heightClass="mb-6 mt-5 h-32 rounded-[6px] border border-[#c8b890] sm:h-40"
+            />
 
             <div className="mt-5 text-center">
               <p
@@ -436,6 +476,7 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
           </div>
 
           <div className="relative z-10">
+            <CardCover article={article} heightClass="mb-5 h-32 rounded-[18px] sm:h-40" />
             <div className="flex items-center justify-between">
               <TypeChip type={type} skin="dark" />
               <span className={`grid h-12 w-12 place-items-center rounded-full bg-white/10 text-white transition-transform duration-300 group-hover:scale-110 ${isVideo ? "" : "rounded-full"}`}>
@@ -478,6 +519,8 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
           <div className="rounded-[4px] bg-gradient-to-r from-[#dcebfc] to-[#eef6ff] px-3 py-2.5 text-center text-[11px] font-extrabold uppercase tracking-[0.16em] text-[#2f5c8a] dark:from-ink-700 dark:to-ink-600 dark:text-blue-200">
             {dict.resourcesPage.types.exercise}
           </div>
+
+          <CardCover article={article} heightClass="mb-4 mt-4 h-28 rounded-[5px] sm:h-36" />
 
           <h3 className="mt-4 text-lg font-extrabold leading-snug text-[#1c3a5e] transition-colors group-hover:text-[#2b62e8] dark:text-white dark:group-hover:text-blue-300">
             {article.title}
@@ -530,6 +573,7 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
         >
           <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-tutor-500/10" aria-hidden="true" />
           <div className="relative z-10">
+            <CardCover article={article} heightClass="mb-5 h-32 rounded-[16px] sm:h-40" />
             <div className="flex items-center justify-between">
               <TypeChip type={type} skin="light" />
               <span className="grid h-10 w-10 place-items-center rounded-full bg-tutor-500 text-white" aria-hidden="true">
@@ -564,6 +608,7 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
             <Brain className="absolute right-6 top-6 h-12 w-12 text-parent-400/30" />
           </div>
           <div className="relative z-10">
+            <CardCover article={article} heightClass="mb-5 h-32 rounded-[16px] sm:h-40" />
             <TypeChip type={type} skin="light" />
             <h3 className="mt-4 text-xl font-extrabold leading-snug transition-colors group-hover:text-parent-700 dark:text-white dark:group-hover:text-parent-300">
               {article.title}
