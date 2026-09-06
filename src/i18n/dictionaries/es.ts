@@ -419,6 +419,8 @@ export const es: Dictionary = {
     writtenBy: "Escrito por",
     relatedArticles: "Artículos relacionados",
     shareArticle: "Compartir artículo",
+    searchPlaceholder: "Buscar un artículo, una categoría o un autor...",
+    noResults: "Ningún artículo coincide con tu búsqueda.",
   },
   simulator: {
     title: "Calcula tus ingresos",

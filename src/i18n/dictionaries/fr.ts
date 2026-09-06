@@ -419,6 +419,8 @@ export const fr: Dictionary = {
     writtenBy: "Rédigé par",
     relatedArticles: "Articles similaires",
     shareArticle: "Partager l'article",
+    searchPlaceholder: "Rechercher un article, une catégorie ou un auteur...",
+    noResults: "Aucun article ne correspond à ta recherche.",
   },
   simulator: {
     title: "Simule tes revenus",

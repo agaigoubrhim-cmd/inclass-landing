@@ -294,6 +294,8 @@ export interface Dictionary {
     writtenBy: string;
     relatedArticles: string;
     shareArticle: string;
+    searchPlaceholder: string;
+    noResults: string;
   };
   simulator: {
     title: string;

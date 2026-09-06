@@ -39,9 +39,11 @@ function formatDate(date: Date, locale: string) {
 export default function ResourceDetailView({
   article,
   others,
+  basePath = "/ressources",
 }: {
   article: ArticleItem;
   others: ArticleItem[];
+  basePath?: string;
 }) {
   const { dict, locale, isRTL } = useI18n();
   const sections = getDefaultArticleSections();
@@ -55,7 +57,7 @@ export default function ResourceDetailView({
         tone={tone}
         image={article.cover}
         imageAlt={article.title}
-        crumbs={[{ label: dict.nav.resources, href: "/ressources" }, { label: article.category }]}
+        crumbs={[{ label: dict.nav.resources, href: basePath }, { label: article.category }]}
         sub={article.excerpt}
       >
         <div className="flex flex-wrap items-center justify-center gap-5 text-sm text-white/85">
@@ -76,7 +78,7 @@ export default function ResourceDetailView({
         {/* Navigation & Share Row */}
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-6 dark:border-white/10">
           <Link
-            href="/ressources"
+            href={basePath}
             className="inline-flex items-center gap-2 text-sm font-semibold text-student-700 transition-colors hover:text-student-800 dark:text-student-400 dark:hover:text-student-300"
           >
             <ArrowLeft className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`} />
@@ -154,7 +156,7 @@ export default function ResourceDetailView({
               {others.map((o) => (
                 <Link
                   key={o.slug}
-                  href={`/ressources/${o.slug}`}
+                  href={`${basePath}/${o.slug}`}
                   className="group rounded-3xl border border-line bg-white p-6 transition-all hover:-translate-y-1 dark:border-white/10 dark:bg-ink-800"
                 >
                   <span className="text-xs font-bold uppercase tracking-wider text-tutor-600 dark:text-tutor-400">

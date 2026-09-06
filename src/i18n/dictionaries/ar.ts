@@ -419,6 +419,8 @@ export const ar: Dictionary = {
     writtenBy: "بقلم",
     relatedArticles: "مقالات ذات صلة",
     shareArticle: "مشاركة المقال",
+    searchPlaceholder: "ابحث عن مقال أو تصنيف أو كاتب...",
+    noResults: "لا توجد مقالات مطابقة لبحثك.",
   },
   simulator: {
     title: "احسب مداخيلك المتوقعة",
