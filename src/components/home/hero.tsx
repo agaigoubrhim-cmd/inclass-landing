@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, BadgeCheck } from "lucide-react";
 import { useRef } from "react";
 
 import { Squiggle } from "@/components/icons";
@@ -19,6 +19,7 @@ export default function Hero() {
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLParagraphElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
+  const trustRef = useRef<HTMLDivElement>(null);
   const mobileButtonRef = useRef<HTMLDivElement>(null);
 
   useHeroAnimation({
@@ -29,6 +30,7 @@ export default function Hero() {
     titleRef,
     descriptionRef,
     buttonsRef,
+    trustRef,
     mobileButtonRef,
   });
 
@@ -146,6 +148,22 @@ export default function Hero() {
                   <ArrowRight className={`h-5 w-5 text-ink transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`} />
                 </Link>
               </div>
+            </div>
+
+            {/* Trust strip */}
+            <div
+              ref={trustRef}
+              className="mt-8 hidden flex-wrap items-center gap-x-5 gap-y-2.5 border-t border-white/15 pt-6 sm:flex"
+            >
+              {dict.hero.trustList.map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-2 text-[13px] font-semibold text-white/85"
+                >
+                  <BadgeCheck className="h-4 w-4 shrink-0 text-student-400" />
+                  {item}
+                </span>
+              ))}
             </div>
           </div>
         </div>

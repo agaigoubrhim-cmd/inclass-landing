@@ -12,6 +12,7 @@ import {
     HomeIcon,
     Bookmark,
     Star,
+    Play,
 } from "lucide-react";
 
 import { useI18n } from "@/i18n";
@@ -242,6 +243,7 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
                 >
                     <div
                         className="
+              relative
               h-[62px]
               w-[110px]
               shrink-0
@@ -255,18 +257,16 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
               sm:w-[145px]
             "
                     >
-                        <video
-                            src="/videos/tutor.mp4"
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                            className="
-                h-full
-                w-full
-                object-cover
-              "
+                        <img
+                            src={photo}
+                            alt=""
+                            className="h-full w-full scale-110 object-cover"
                         />
+                        <span className="absolute inset-0 grid place-items-center bg-black/15">
+                            <span className="grid h-7 w-7 place-items-center rounded-full bg-white/25 backdrop-blur-md">
+                                <Play className="h-3 w-3 translate-x-[1px] text-white" fill="currentColor" />
+                            </span>
+                        </span>
                     </div>
 
                     <div

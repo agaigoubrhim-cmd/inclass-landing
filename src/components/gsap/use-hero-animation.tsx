@@ -13,6 +13,7 @@ type HeroAnimationRefs = {
     titleRef: RefObject<HTMLHeadingElement | null>;
     descriptionRef: RefObject<HTMLParagraphElement | null>;
     buttonsRef: RefObject<HTMLDivElement | null>;
+    trustRef?: RefObject<HTMLDivElement | null>;
     mobileButtonRef: RefObject<HTMLDivElement | null>;
 };
 
@@ -24,6 +25,7 @@ export function useHeroAnimation({
     titleRef,
     descriptionRef,
     buttonsRef,
+    trustRef,
     mobileButtonRef,
 }: HeroAnimationRefs) {
     useLayoutEffect(() => {
@@ -61,6 +63,7 @@ export function useHeroAnimation({
             titleRef.current,
             descriptionRef.current,
             buttonsRef.current,
+            trustRef?.current,
         ].filter(Boolean);
 
         const ctx = gsap.context(() => {
@@ -253,6 +256,7 @@ export function useHeroAnimation({
         titleRef,
         descriptionRef,
         buttonsRef,
+        trustRef,
         mobileButtonRef,
     ]);
 }

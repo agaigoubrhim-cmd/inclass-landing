@@ -48,8 +48,21 @@ export function I18nProvider({
   const [locale, setLocaleState] = useState<Locale>(defaultLocale);
   const [mounted, setMounted] = useState(false);
 
+  const applyLocaleToDOM = (loc: Locale) => {
+    const isArabic = loc === "ar";
+    const dir: Direction = isArabic ? "rtl" : "ltr";
+    document.documentElement.lang = loc;
+    document.documentElement.dir = dir;
+    if (isArabic) {
+      document.documentElement.classList.add("rtl");
+    } else {
+      document.documentElement.classList.remove("rtl");
+    }
+  };
+
   // Initialize from localStorage or cookie on mount
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect -- Hydration-safe locale init from storage */
     setMounted(true);
     try {
       const stored = localStorage.getItem(STORAGE_KEY) as Locale | null;
@@ -69,19 +82,8 @@ export function I18nProvider({
     } catch {
       applyLocaleToDOM(defaultLocale);
     }
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [defaultLocale]);
-
-  const applyLocaleToDOM = (loc: Locale) => {
-    const isArabic = loc === "ar";
-    const dir: Direction = isArabic ? "rtl" : "ltr";
-    document.documentElement.lang = loc;
-    document.documentElement.dir = dir;
-    if (isArabic) {
-      document.documentElement.classList.add("rtl");
-    } else {
-      document.documentElement.classList.remove("rtl");
-    }
-  };
 
   const setLocale = useCallback((nextLocale: Locale) => {
     setLocaleState(nextLocale);

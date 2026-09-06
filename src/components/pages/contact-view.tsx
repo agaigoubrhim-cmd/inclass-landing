@@ -407,7 +407,7 @@ export default function ContactView({
 
                 <div className="min-w-0">
                   <h4 className="text-base font-extrabold text-ink dark:text-white">
-                    Besoin d'aide ?
+                    Besoin d&apos;aide ?
                   </h4>
 
                   <p className="mt-1 text-xs text-ink-soft dark:text-white/60">

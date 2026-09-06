@@ -94,6 +94,12 @@ export const es: Dictionary = {
     btnBecome: "Ser profesor",
     statProfs: "Profesores verificados",
     statLessons: "Clases impartidas",
+    trustList: [
+      "Profesores verificados",
+      "Clases desde 80 MAD/h",
+      "A domicilio y online",
+      "Primera clase garantizada",
+    ],
   },
   subjectsSection: {
     eyebrow: "48 Materias",

@@ -94,6 +94,12 @@ export const ar: Dictionary = {
     btnBecome: "انضم كأساتذة",
     statProfs: "أستاذ معتمد",
     statLessons: "حصة منجزة",
+    trustList: [
+      "أساتذة معتمدون",
+      "دروس ابتداءً من 80 درهم/ساعة",
+      "في المنزل وعن بُعد",
+      "أول حصة مضمونة",
+    ],
   },
   subjectsSection: {
     eyebrow: "48 مادة دراسية",

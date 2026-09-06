@@ -94,6 +94,12 @@ export const en: Dictionary = {
     btnBecome: "Become a Tutor",
     statProfs: "Verified Tutors",
     statLessons: "Lessons Completed",
+    trustList: [
+      "Verified tutors",
+      "Lessons from 80 MAD/h",
+      "At home & online",
+      "First lesson guaranteed",
+    ],
   },
   subjectsSection: {
     eyebrow: "48 Subjects",

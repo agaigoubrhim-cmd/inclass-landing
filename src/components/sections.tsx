@@ -290,8 +290,19 @@ export function GuaranteeBand() {
   ];
 
   return (
-    <section className="relative overflow-hidden rounded-[40px] bg-[#999999] border border-ink-950 dark:border-white py-16 text-student-50">
+    <section className="relative overflow-hidden rounded-[40px] bg-gradient-to-br from-ink-900 via-ink-800 to-ink-950 border border-white/10 py-16 text-student-50 shadow-pop">
+      {/* Decorative brand glows */}
+      <div className="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-tutor-500/25 blur-[120px]" />
+      <div className="pointer-events-none absolute -bottom-28 -right-20 h-80 w-80 rounded-full bg-student-500/20 blur-[130px]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
+
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div data-anim="up" className="mb-5 flex justify-center">
+          <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-[0.16em] text-student-100 backdrop-blur-md">
+            <ShieldAnimatedIcon className="h-4 w-4" />
+            {dict.megaMenu.guaranteeBadge}
+          </span>
+        </div>
         <h2
           data-anim="up"
           className="text-center text-[clamp(2rem,5vw,3.4rem)] font-extrabold leading-tight text-white"
@@ -657,7 +668,7 @@ export function CtaBand({
     ink: "bg-ink text-cream dark:bg-ink-800 dark:border dark:border-white/10",
   };
 
-  const displayTitle = title || dict.hero.titlePrefix + " " + dict.hero.highlight;
+  const displayTitle = title || `${dict.hero.titlePrefix} ${dict.hero.highlight} ${dict.hero.titleSuffix}`;
   const displaySub = sub || dict.hero.description;
 
   return (

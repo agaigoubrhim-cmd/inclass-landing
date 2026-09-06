@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
 import localFont from "next/font/local";
-import { Caveat, Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import SiteHeader, { ThemeProvider } from "@/components/site-header";
 import SiteFooter from "@/components/site-footer";
@@ -52,18 +51,6 @@ const elMessiri = localFont({
   display: "swap",
 });
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-jakarta",
-  display: "swap",
-});
-
-const caveat = Caveat({
-  subsets: ["latin"],
-  variable: "--font-caveat",
-  display: "swap",
-});
-
 export const metadata: Metadata = {
   metadataBase: new URL("https://inclass.app"),
   title: {
@@ -85,7 +72,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="fr"
-      className={`${instagramSansScript.variable} ${jakarta.variable} ${caveat.variable} ${elMessiri.variable}`}
+      className={`${instagramSansScript.variable} ${elMessiri.variable}`}
       suppressHydrationWarning
     >
       <body className="bg-cream text-ink antialiased transition-colors duration-200 dark:bg-ink-900 dark:text-white">

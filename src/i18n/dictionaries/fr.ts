@@ -94,6 +94,12 @@ export const fr: Dictionary = {
     btnBecome: "Devenir enseignant",
     statProfs: "Profs vérifiés",
     statLessons: "Cours donnés",
+    trustList: [
+      "Professeurs vérifiés",
+      "Cours dès 80 MAD/h",
+      "À domicile & en ligne",
+      "Premier cours garanti",
+    ],
   },
   subjectsSection: {
     eyebrow: "48 matières",

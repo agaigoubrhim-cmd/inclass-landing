@@ -59,6 +59,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect -- Hydration-safe theme init from storage */
     setMounted(true);
     const stored = localStorage.getItem("theme") as Theme | null;
     if (stored === "dark" || stored === "light") {
@@ -70,6 +71,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
       setTheme(initial);
       document.documentElement.classList.toggle("dark", initial === "dark");
     }
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, []);
 
   const toggle = useCallback(() => {
@@ -298,6 +300,7 @@ function SearchPaletteModal({
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 80);
     } else {
+      /* eslint-disable-next-line react-hooks/set-state-in-effect -- Reset search while closing the modal */
       setQuery("");
     }
   }, [isOpen]);
@@ -551,8 +554,10 @@ export default function SiteHeader() {
 
   /* Close menus on route change */
   useEffect(() => {
+    /* eslint-disable react-hooks/set-state-in-effect -- Close menus after navigation */
     setMega(false);
     setMenuOpen(false);
+    /* eslint-enable react-hooks/set-state-in-effect */
   }, [pathname]);
 
   /* Keyboard shortcut for Cmd+K */

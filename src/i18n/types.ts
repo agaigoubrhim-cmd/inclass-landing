@@ -109,6 +109,7 @@ export interface Dictionary {
     btnBecome: string;
     statProfs: string;
     statLessons: string;
+    trustList: string[];
   };
   subjectsSection: {
     eyebrow: string;
