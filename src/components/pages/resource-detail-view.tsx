@@ -506,6 +506,126 @@ function NotepadDetail({ article }: { article: ResourceItem }) {
   );
 }
 
+function VintageGuidePage({ article }: { article: ResourceItem }) {
+  const { dict } = useI18n();
+  const serif = {
+    fontFamily: "Georgia, 'Times New Roman', 'Noto Serif', serif",
+  };
+
+  const items = [
+    article.category,
+    article.subject,
+    article.educationLevel,
+    ...(article.tags || []),
+  ]
+    .filter((item): item is string => Boolean(item))
+    .slice(0, 8);
+
+  const paragraphs = (article.body || article.excerpt)
+    .split(/\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+
+  return (
+    <div
+      data-anim="up"
+      className="relative mx-auto max-w-3xl overflow-hidden rounded-[8px] border border-[#c8b890] bg-[#f4ecd8] px-6 py-12 text-[#4a3c25] sm:px-14 sm:py-16 dark:bg-[#2c2620] dark:text-amber-50"
+    >
+      {/* aged paper texture */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-40"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 15% 25%, rgba(133,105,62,0.28) 0, transparent 32%), radial-gradient(circle at 85% 75%, rgba(133,105,62,0.2) 0, transparent 30%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          backgroundImage: "repeating-linear-gradient(0deg, rgba(120,95,55,0.04) 0, rgba(120,95,55,0.04) 1px, transparent 1px, transparent 10px)",
+        }}
+      />
+
+      <div className="relative z-10">
+        {/* ornamental masthead */}
+        <div className="border-t-4 border-double border-[#4a3c25] dark:border-amber-100" />
+        <div className="mt-1 border-t border-[#4a3c25] dark:border-amber-100/70" />
+
+        {/* title */}
+        <div className="mt-8 text-center">
+          <h1
+            className="text-[clamp(2.2rem,7vw,4rem)] font-black uppercase tracking-[0.14em] leading-none text-[#2f2413] dark:text-amber-100"
+            style={serif}
+          >
+            {dict.resourcesPage.contents}
+          </h1>
+          <p className="mt-3 text-[12px] font-bold uppercase tracking-[0.24em] text-[#6e5832] dark:text-amber-300" style={serif}>
+            {article.title}
+          </p>
+          <p className="mx-auto mt-5 max-w-xl text-[15px] italic leading-relaxed text-[#6e5832] dark:text-amber-100/70" style={serif}>
+            {article.excerpt}
+          </p>
+        </div>
+
+        {/* page header row */}
+        <div className="mt-10 flex items-end justify-between border-b border-[#4a3c25] pb-1 dark:border-amber-100/60">
+          <span />
+          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#6e5832] dark:text-amber-300" style={serif}>
+            {dict.resourcesPage.pageLabel}.
+          </span>
+        </div>
+
+        {/* index entries */}
+        <div className="mt-6 space-y-6">
+          <div>
+            <p
+              className="text-[13px] font-bold uppercase tracking-[0.2em] text-[#6e5832] dark:text-amber-300"
+              style={serif}
+            >
+              {dict.resourcesPage.partOne}
+            </p>
+            <p
+              className="mt-1 text-[12px] font-bold uppercase tracking-[0.18em] text-[#8a6f42] dark:text-amber-200/70"
+              style={serif}
+            >
+              {dict.resourcesPage.sectionOne}
+            </p>
+            <ul className="mt-4 space-y-3">
+              {items.map((item, i) => (
+                <li key={i} className="flex items-baseline gap-2 text-sm text-[#4a3c25] dark:text-amber-100/80" style={serif}>
+                  <span className="shrink-0">{item}</span>
+                  <span className="flex-1 border-b border-dotted border-[#8a6f42]/70" aria-hidden="true" />
+                  <span className="shrink-0 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="border-t border-double border-[#4a3c25]/50 pt-5 dark:border-amber-100/40">
+            <p className="text-[12px] font-bold uppercase tracking-[0.2em] text-[#6e5832] dark:text-amber-300" style={serif}>
+              {article.subject || article.category}
+            </p>
+            <div className="mt-4 space-y-4 text-[15px] leading-[1.9] text-[#4a3c25] dark:text-amber-100/75" style={serif}>
+              {paragraphs.slice(0, 6).map((paragraph, i) => (
+                <p key={i}>{paragraph}</p>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* footer ornament */}
+        <div className="mt-12 flex items-center justify-between border-t border-[#4a3c25] pt-4 text-[11px] font-bold uppercase tracking-[0.2em] text-[#8a6f42] dark:border-amber-100/40 dark:text-amber-200/60" style={serif}>
+          <span dir="ltr">{article.author}</span>
+          <span>01</span>
+        </div>
+        <div className="mt-1 border-t border-double border-[#4a3c25]/50 dark:border-amber-100/40" />
+      </div>
+    </div>
+  );
+}
+
 function ResourceContent({ article }: { article: ResourceItem }) {
   const { dict } = useI18n();
   const type: ResourceType = normalizeResourceType(article.type ?? article.resourceType);
@@ -547,12 +667,7 @@ function ResourceContent({ article }: { article: ResourceItem }) {
     case "notes":
       return <NotepadDetail article={article} />;
     case "guide":
-      return (
-        <>
-          <LeadBox article={article} />
-          <ContentSections article={article} />
-        </>
-      );
+      return <VintageGuidePage article={article} />;
     case "article":
       return <EditorialArticle article={article} />;
     default:
@@ -578,7 +693,7 @@ export default function ResourceDetailView({
   const tone = TONE[article.audience] ?? "tutor";
   const type = normalizeResourceType(article.type ?? article.resourceType);
   const typeLabel = dict.resourcesPage.types[type] ?? dict.resourcesPage.types.article;
-  const isEditorial = type === "article" || type === "notes";
+  const isEditorial = type === "article" || type === "notes" || type === "guide";
 
   return (
     <>

@@ -300,6 +300,10 @@ export interface Dictionary {
     typeAll: string;
     resourceTypeLabel: string;
     keyPoints: string;
+    contents: string;
+    pageLabel: string;
+    partOne: string;
+    sectionOne: string;
     practiceArea: string;
     yourAnswer: string;
     showSolution: string;

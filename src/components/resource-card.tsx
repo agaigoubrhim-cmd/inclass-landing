@@ -199,29 +199,104 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
     }
 
     case "guide": {
+      const serif = {
+        fontFamily: "Georgia, 'Times New Roman', 'Noto Serif', serif",
+      };
+      const items = [
+        article.category,
+        article.subject,
+        article.educationLevel,
+        ...(article.tags || []),
+      ]
+        .filter((item): item is string => Boolean(item))
+        .slice(0, 6);
+
       return (
         <Link
           href={href}
-          className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[26px] bg-[linear-gradient(135deg,#4c1d95_0%,#7c3aed_42%,#a855f7_70%,#e46ee3_100%)] p-6 text-white transition-all duration-300 hover:-translate-y-1.5 sm:p-7"
+          className="group relative flex min-h-[410px] flex-col overflow-hidden rounded-[6px] border border-[#c8b890] bg-[#f4ecd8] px-6 pb-6 pt-5 text-[#4a3c25] transition-all duration-300 hover:-translate-y-1.5 dark:bg-[#2c2620] dark:text-amber-50 sm:px-8"
         >
-          <div className="pointer-events-none absolute -right-16 -top-16 h-52 w-52 rounded-full bg-white/10 blur-2xl" aria-hidden="true" />
-          <div className="pointer-events-none absolute -bottom-20 -left-10 h-48 w-48 rounded-full bg-fuchsia-300/15 blur-2xl" aria-hidden="true" />
+          {/* aged paper mottling + vignette */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 opacity-40"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle at 20% 30%, rgba(133,105,62,0.25) 0, transparent 30%), radial-gradient(circle at 80% 70%, rgba(133,105,62,0.18) 0, transparent 28%)",
+            }}
+          />
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(0deg, rgba(120,95,55,0.04) 0, rgba(120,95,55,0.04) 1px, transparent 1px, transparent 10px)",
+            }}
+          />
 
           <div className="relative z-10">
-            <TypeChip type={type} skin="gradient" />
-            <h3 className="mt-4 text-2xl font-extrabold leading-snug transition-colors group-hover:text-fuchsia-100">
-              {article.title}
-            </h3>
-            <p className="mt-4 text-[15px] leading-relaxed text-white/85 line-clamp-[8]">
-              {article.excerpt}
-            </p>
-            <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-white/75">
-              <GraduationCap className="h-4 w-4" aria-hidden="true" />
-              {article.readMinutes} {dict.resourcesPage.minRead}
-            </span>
-          </div>
-          <div className="relative z-10 mt-6">
-            <CardFooter article={article} skin="gradient" />
+            {/* ornamental rules */}
+            <div className="border-t-4 border-double border-[#4a3c25] dark:border-amber-100" />
+            <div className="mt-1 border-t border-[#4a3c25] dark:border-amber-100/70" />
+
+            <div className="mt-5 text-center">
+              <p
+                className="text-[13px] font-extrabold uppercase tracking-[0.24em] text-[#6e5832] dark:text-amber-300"
+                style={serif}
+              >
+                {dict.resourcesPage.contents}
+              </p>
+              <h3
+                className="mt-3 text-[clamp(1.3rem,2.6vw,1.9rem)] font-extrabold uppercase leading-tight tracking-[0.03em] text-[#2f2413] transition-colors group-hover:text-[#6e5832] dark:text-amber-100 dark:group-hover:text-amber-300"
+                style={serif}
+              >
+                {article.title}
+              </h3>
+              <p
+                className="mx-auto mt-4 max-w-sm text-[13px] italic leading-relaxed text-[#6e5832] dark:text-amber-100/70"
+                style={serif}
+              >
+                {article.excerpt}
+              </p>
+            </div>
+
+            {/* contents list with dotted leaders */}
+            <div className="mt-6">
+              <p
+                className="mb-2 text-center text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#6e5832] dark:text-amber-300"
+                style={serif}
+              >
+                {dict.resourcesPage.partOne}
+              </p>
+              <p
+                className="mb-4 text-center text-[11px] font-bold uppercase tracking-[0.18em] text-[#8a6f42] dark:text-amber-200/70"
+                style={serif}
+              >
+                {dict.resourcesPage.sectionOne}
+              </p>
+
+              <ul className="space-y-2.5">
+                {items.map((item, i) => (
+                  <li
+                    key={i}
+                    className="flex items-baseline gap-2 text-[13px] leading-snug text-[#4a3c25] dark:text-amber-100/80"
+                    style={serif}
+                  >
+                    <span className="shrink-0">{item}</span>
+                    <span className="flex-1 border-b border-dotted border-[#8a6f42]/70" aria-hidden="true" />
+                    <span className="shrink-0 tabular-nums">{String(i + 1).padStart(2, "0")}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="mt-6 flex items-center justify-between border-t border-[#c8b890] pt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#8a6f42] dark:border-amber-100/20 dark:text-amber-200/60">
+              <span className="inline-flex items-center gap-1.5">
+                <GraduationCap className="h-3.5 w-3.5" aria-hidden="true" />
+                {article.readMinutes} {dict.resourcesPage.minRead}
+              </span>
+              <span>{article.author}</span>
+            </div>
           </div>
         </Link>
       );
