@@ -312,11 +312,12 @@ export function GuaranteeBand() {
   ];
 
   return (
-    <section className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-ink-900 via-ink-800 to-ink-950 border border-white/10 py-12 text-student-50 sm:rounded-[40px] sm:py-16">
+    <section className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
+      <div className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-ink-900 via-ink-800 to-ink-950 border border-white/10 px-5 py-12 text-student-50 sm:rounded-[40px] sm:px-8 sm:py-16">
       {/* Decorative brand glows */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
-      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div className="relative mx-auto max-w-6xl">
         <div data-anim="up" className="mb-5 flex justify-center">
           <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-[0.16em] text-student-100 backdrop-blur-md">
             <ShieldAnimatedIcon className="h-4 w-4" />
@@ -348,6 +349,7 @@ export function GuaranteeBand() {
             );
           })}
         </div>
+      </div>
       </div>
     </section>
   );
@@ -426,8 +428,9 @@ export function ParentsBand() {
   const { dict, isRTL } = useI18n();
 
   return (
-    <section className="relative overflow-hidden bg-parent-50 py-20 dark:bg-parent-950/30 dark:border-y dark:border-parent-500/10">
+    <section className="relative overflow-hidden bg-parent-50 py-16 dark:bg-parent-950/30 dark:border-y dark:border-parent-500/10 sm:py-20">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="rounded-[28px] border border-parent-200/70 bg-white/70 p-5 backdrop-blur-sm sm:rounded-[36px] sm:p-8 lg:p-10 dark:border-parent-500/15 dark:bg-white/[0.02]">
         <div className="grid gap-10 lg:grid-cols-2 items-center">
           <div>
             <span className="inline-flex rounded-full bg-parent-100 px-3.5 py-1 text-xs font-bold uppercase tracking-wider text-parent-800 dark:bg-parent-950 dark:text-parent-300">
@@ -472,6 +475,7 @@ export function ParentsBand() {
               className="h-[380px] w-full object-cover"
             />
           </div>
+        </div>
         </div>
       </div>
     </section>
