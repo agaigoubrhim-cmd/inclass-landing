@@ -59,7 +59,7 @@ function CardFooter({
 
   return (
     <div
-      className={`mt-auto flex items-center justify-between gap-3 border-t pt-4 ${
+      className={`mt-auto flex items-center justify-between gap-3 border-t pt-4 max-sm:gap-1.5 max-sm:pt-3 ${
         skin === "light"
           ? "border-line/70 dark:border-white/10"
           : skin === "gradient"
@@ -67,28 +67,28 @@ function CardFooter({
             : "border-white/10"
       }`}
     >
-      <span className="flex min-w-0 items-center gap-2.5">
+      <span className="flex min-w-0 items-center gap-2.5 max-sm:gap-1.5">
         <span
-          className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-[11px] font-extrabold ${avatar}`}
+          className={`grid h-8 w-8 shrink-0 place-items-center rounded-full text-[11px] font-extrabold max-sm:h-6 max-sm:w-6 max-sm:text-[9px] ${avatar}`}
           aria-hidden="true"
         >
           {initials(article.author)}
         </span>
-        <span className={`truncate text-xs font-bold ${authorText}`}>
+        <span className={`truncate text-xs font-bold max-sm:text-[9px] ${authorText}`}>
           <span className="line-clamp-1" dir="ltr">{authorShort(article.author)}</span>
         </span>
       </span>
 
-      <span className={`flex shrink-0 items-center gap-2.5 text-[11px] font-semibold ${statText}`}>
+      <span className={`flex shrink-0 items-center gap-2.5 text-[11px] font-semibold max-sm:gap-1 max-sm:text-[9px] ${statText}`}>
         <span className="inline-flex items-center gap-1" title={dict.resourcesPage.minRead}>
-          <Clock3 className="h-3.5 w-3.5" aria-hidden="true" />
+          <Clock3 className="h-3.5 w-3.5 max-sm:h-3 max-sm:w-3" aria-hidden="true" />
           {article.readMinutes}min
         </span>
-        <span className="inline-flex items-center gap-1" title={dict.resourcesPage.comments}>
+        <span className="inline-flex items-center gap-1 max-sm:hidden" title={dict.resourcesPage.comments}>
           <MessageCircle className="h-3.5 w-3.5" aria-hidden="true" />
           {formatCount(article.responsesCount ?? article.likeCount ?? 0)}
         </span>
-        <span className="inline-flex items-center gap-1" title={dict.resourcesPage.likes}>
+        <span className="inline-flex items-center gap-1 max-sm:hidden" title={dict.resourcesPage.likes}>
           <Heart className={`h-3.5 w-3.5 ${isRTL ? "rtl-flip" : ""}`} aria-hidden="true" />
           {formatCount(article.likeCount)}
         </span>
@@ -118,9 +118,9 @@ function TypeChip({
 
   return (
     <span
-      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.12em] ${base}`}
+      className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1 text-[11px] font-extrabold uppercase tracking-[0.12em] max-sm:gap-1 max-sm:px-2 max-sm:py-0.5 max-sm:text-[8px] ${base}`}
     >
-      <ResourceTypeIcon type={type} className="h-3.5 w-3.5" />
+      <ResourceTypeIcon type={type} className="h-3.5 w-3.5 max-sm:h-3 max-sm:w-3" />
       {label}
     </span>
   );
@@ -195,25 +195,25 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
           <div aria-hidden="true" className="absolute inset-y-4 start-7 w-px bg-[#e66] opacity-70" />
           <div aria-hidden="true" className="absolute inset-y-4 end-7 w-px bg-[#e66] opacity-40" />
 
-          <div className="relative z-10 flex h-full flex-col px-8 pb-6 pt-12 sm:px-10 sm:pt-14">
+          <div className="relative z-10 flex h-full flex-col px-4 pb-4 pt-10 sm:px-10 sm:pb-6 sm:pt-14">
             <div className="flex items-center gap-2 text-[#8f8a3a] dark:text-amber-300">
-              <ResourceTypeIcon type={type} className="h-4 w-4" />
+              <ResourceTypeIcon type={type} className="h-4 w-4 max-sm:h-3 max-sm:w-3" />
               <span className="text-[11px] font-extrabold uppercase tracking-[0.16em]">
                 {dict.resourcesPage.types.notes}
               </span>
             </div>
-            <CardCover article={article} heightClass="mb-5 h-28 rounded-[6px] sm:h-36" />
-            <h3 className="mt-3 text-[22px] font-extrabold leading-snug transition-colors group-hover:text-[#7a7524] dark:text-amber-100 dark:group-hover:text-amber-300">
+            <CardCover article={article} heightClass="mb-5 h-28 rounded-[6px] sm:h-36 max-sm:mb-3 max-sm:h-20" />
+            <h3 className="mt-3 text-[22px] font-extrabold leading-snug transition-colors group-hover:text-[#7a7524] dark:text-amber-100 dark:group-hover:text-amber-300 max-sm:mt-2 max-sm:text-base">
               {article.title}
             </h3>
-            <p className="mt-4 text-[15px] leading-8 text-[#5b5a33] dark:text-amber-100/75">
+            <p className="mt-4 text-[15px] leading-8 text-[#5b5a33] dark:text-amber-100/75 max-sm:mt-2 max-sm:text-[11px] max-sm:leading-6">
               {article.excerpt}
             </p>
 
             {/* small "Notebook" marker */}
-            <div className="mt-auto flex items-center justify-between pt-6">
+            <div className="mt-auto flex items-center justify-between pt-6 max-sm:pt-3">
               <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#8f8a3a] dark:text-amber-300">
-                <NotebookPen className="h-3.5 w-3.5" aria-hidden="true" />
+                <NotebookPen className="h-3.5 w-3.5 max-sm:h-3 max-sm:w-3" aria-hidden="true" />
                 {article.readMinutes} {dict.resourcesPage.minRead}
               </span>
               <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#8f8a3a] dark:text-amber-300">
@@ -241,7 +241,7 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
       return (
         <Link
           href={href}
-          className="group relative flex min-h-[410px] flex-col overflow-hidden rounded-[6px] border border-[#c8b890] bg-[#f4ecd8] px-6 pb-6 pt-5 text-[#4a3c25] transition-all duration-300 hover:-translate-y-1.5 dark:bg-[#2c2620] dark:text-amber-50 sm:px-8"
+          className="group relative flex min-h-[410px] flex-col overflow-hidden rounded-[6px] border border-[#c8b890] bg-[#f4ecd8] px-3.5 pb-4 pt-3 text-[#4a3c25] transition-all duration-300 hover:-translate-y-1.5 dark:bg-[#2c2620] dark:text-amber-50 sm:px-8 sm:pb-6 sm:pt-5"
         >
           {/* aged paper mottling + vignette */}
           <div
@@ -268,10 +268,10 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
 
             <CardCover
               article={article}
-              heightClass="mb-6 mt-5 h-32 rounded-[6px] border border-[#c8b890] sm:h-40"
+              heightClass="mb-6 mt-5 h-32 rounded-[6px] border border-[#c8b890] sm:h-40 max-sm:mb-3 max-sm:mt-3 max-sm:h-20"
             />
 
-            <div className="mt-5 text-center">
+            <div className="mt-5 text-center max-sm:mt-3">
               <p
                 className="text-[13px] font-extrabold uppercase tracking-[0.24em] text-[#6e5832] dark:text-amber-300"
                 style={serif}
@@ -279,13 +279,13 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
                 {dict.resourcesPage.contents}
               </p>
               <h3
-                className="mt-3 text-[clamp(1.3rem,2.6vw,1.9rem)] font-extrabold uppercase leading-tight tracking-[0.03em] text-[#2f2413] transition-colors group-hover:text-[#6e5832] dark:text-amber-100 dark:group-hover:text-amber-300"
+                className="mt-3 text-[clamp(1.3rem,2.6vw,1.9rem)] font-extrabold uppercase leading-tight tracking-[0.03em] text-[#2f2413] transition-colors group-hover:text-[#6e5832] dark:text-amber-100 dark:group-hover:text-amber-300 max-sm:mt-1 max-sm:text-base"
                 style={serif}
               >
                 {article.title}
               </h3>
               <p
-                className="mx-auto mt-4 max-w-sm text-[13px] italic leading-relaxed text-[#6e5832] dark:text-amber-100/70"
+                className="mx-auto mt-4 max-w-sm text-[13px] italic leading-relaxed text-[#6e5832] dark:text-amber-100/70 max-sm:mt-2 max-sm:text-[11px]"
                 style={serif}
               >
                 {article.excerpt}
@@ -293,25 +293,25 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
             </div>
 
             {/* contents list with dotted leaders */}
-            <div className="mt-6">
+            <div className="mt-6 max-sm:mt-3">
               <p
-                className="mb-2 text-center text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#6e5832] dark:text-amber-300"
+                className="mb-2 text-center text-[12px] font-extrabold uppercase tracking-[0.2em] text-[#6e5832] dark:text-amber-300 max-sm:mb-1 max-sm:text-[9px]"
                 style={serif}
               >
                 {dict.resourcesPage.partOne}
               </p>
               <p
-                className="mb-4 text-center text-[11px] font-bold uppercase tracking-[0.18em] text-[#8a6f42] dark:text-amber-200/70"
+                className="mb-4 text-center text-[11px] font-bold uppercase tracking-[0.18em] text-[#8a6f42] dark:text-amber-200/70 max-sm:mb-2 max-sm:text-[9px]"
                 style={serif}
               >
                 {dict.resourcesPage.sectionOne}
               </p>
 
-              <ul className="space-y-2.5">
+              <ul className="space-y-2.5 max-sm:space-y-1.5">
                 {items.map((item, i) => (
                   <li
                     key={i}
-                    className="flex items-baseline gap-2 text-[13px] leading-snug text-[#4a3c25] dark:text-amber-100/80"
+                    className="flex items-baseline gap-2 text-[13px] leading-snug text-[#4a3c25] dark:text-amber-100/80 max-sm:gap-1 max-sm:text-[10px]"
                     style={serif}
                   >
                     <span className="shrink-0">{item}</span>
@@ -322,12 +322,12 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
               </ul>
             </div>
 
-            <div className="mt-6 flex items-center justify-between border-t border-[#c8b890] pt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#8a6f42] dark:border-amber-100/20 dark:text-amber-200/60">
+            <div className="mt-6 flex items-center justify-between border-t border-[#c8b890] pt-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#8a6f42] dark:border-amber-100/20 dark:text-amber-200/60 max-sm:mt-3 max-sm:text-[9px]">
               <span className="inline-flex items-center gap-1.5">
-                <GraduationCap className="h-3.5 w-3.5" aria-hidden="true" />
+                <GraduationCap className="h-3.5 w-3.5 max-sm:h-3 max-sm:w-3" aria-hidden="true" />
                 {article.readMinutes} {dict.resourcesPage.minRead}
               </span>
-              <span>{article.author}</span>
+              <span className="truncate">{article.author}</span>
             </div>
           </div>
         </Link>
@@ -458,7 +458,7 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
       return (
         <Link
           href={href}
-          className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[26px] bg-[radial-gradient(120%_120%_at_0%_0%,#141a2e_0%,#070913_70%)] p-6 text-white transition-all duration-300 hover:-translate-y-1.5 sm:p-7"
+          className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[26px] bg-[radial-gradient(120%_120%_at_0%_0%,#141a2e_0%,#070913_70%)] p-3.5 text-white transition-all duration-300 hover:-translate-y-1.5 sm:p-7"
         >
           <div className="pointer-events-none absolute inset-0 opacity-40" aria-hidden="true">
             <div className="absolute left-8 top-8 h-40 w-40 rounded-[28px] border border-white/10" />
@@ -466,24 +466,24 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
           </div>
 
           <div className="relative z-10">
-            <CardCover article={article} heightClass="mb-5 h-32 rounded-[18px] sm:h-40" />
+            <CardCover article={article} heightClass="mb-5 h-32 rounded-[18px] sm:h-40 max-sm:mb-3 max-sm:h-20" />
             <div className="flex items-center justify-between">
               <TypeChip type={type} skin="dark" />
-              <span className={`grid h-12 w-12 place-items-center rounded-full bg-white/10 text-white transition-transform duration-300 group-hover:scale-110 ${isVideo ? "" : "rounded-full"}`}>
-                {isVideo ? <Video className="h-5 w-5" aria-hidden="true" /> : <Icon className="h-5 w-5" aria-hidden="true" />}
+              <span className={`grid h-12 w-12 place-items-center rounded-full bg-white/10 text-white transition-transform duration-300 group-hover:scale-110 max-sm:h-9 max-sm:w-9 ${isVideo ? "" : "rounded-full"}`}>
+                {isVideo ? <Video className="h-5 w-5 max-sm:h-4 max-sm:w-4" aria-hidden="true" /> : <Icon className="h-5 w-5 max-sm:h-4 max-sm:w-4" aria-hidden="true" />}
               </span>
             </div>
-            <h3 className="mt-6 text-xl font-extrabold leading-snug transition-colors group-hover:text-fuchsia-200">
+            <h3 className="mt-6 text-xl font-extrabold leading-snug transition-colors group-hover:text-fuchsia-200 max-sm:mt-3 max-sm:text-base">
               {article.title}
             </h3>
-            <p className="mt-4 text-sm leading-relaxed text-white/65 line-clamp-[7]">{article.excerpt}</p>
-            <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-white/60">
-              {isVideo ? <Play className="h-4 w-4" aria-hidden="true" /> : <Headphones className="h-4 w-4" aria-hidden="true" />}
+            <p className="mt-4 text-sm leading-relaxed text-white/65 line-clamp-[7] max-sm:mt-2 max-sm:text-[11px]">{article.excerpt}</p>
+            <span className="mt-4 inline-flex items-center gap-1.5 text-xs font-semibold text-white/60 max-sm:mt-2 max-sm:text-[9px]">
+              {isVideo ? <Play className="h-4 w-4 max-sm:h-3 max-sm:w-3" aria-hidden="true" /> : <Headphones className="h-4 w-4 max-sm:h-3 max-sm:w-3" aria-hidden="true" />}
               {isVideo ? dict.resourcesPage.playVideo : dict.resourcesPage.listenAudio}
             </span>
           </div>
 
-          <div className="relative z-10 mt-6">
+          <div className="relative z-10 mt-6 max-sm:mt-3">
             <CardFooter article={article} skin="dark" />
           </div>
         </Link>
@@ -510,34 +510,34 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
             {dict.resourcesPage.types.exercise}
           </div>
 
-          <CardCover article={article} heightClass="mb-4 mt-4 h-28 rounded-[5px] sm:h-36" />
+          <CardCover article={article} heightClass="mb-4 mt-4 h-28 rounded-[5px] sm:h-36 max-sm:mb-3 max-sm:mt-3 max-sm:h-20" />
 
-          <h3 className="mt-4 text-lg font-extrabold leading-snug text-[#1c3a5e] transition-colors group-hover:text-[#2b62e8] dark:text-white dark:group-hover:text-blue-300">
+          <h3 className="mt-4 text-lg font-extrabold leading-snug text-[#1c3a5e] transition-colors group-hover:text-[#2b62e8] dark:text-white dark:group-hover:text-blue-300 max-sm:mt-2 max-sm:text-sm">
             {article.title}
           </h3>
 
           {/* instruction box */}
-          <div className="mt-4 rounded-[5px] border border-[#bcd6f2] bg-[#f5faff] px-3.5 py-3 dark:border-blue-500/30 dark:bg-ink-900">
-            <span className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#2f5c8a] dark:text-blue-300">
+          <div className="mt-4 rounded-[5px] border border-[#bcd6f2] bg-[#f5faff] px-3.5 py-3 dark:border-blue-500/30 dark:bg-ink-900 max-sm:mt-3 max-sm:px-2.5 max-sm:py-2">
+            <span className="text-[10px] font-extrabold uppercase tracking-[0.16em] text-[#2f5c8a] dark:text-blue-300 max-sm:text-[8px]">
               {dict.resourcesPage.exerciseInstruction}
             </span>
-            <p className="mt-1.5 text-[13px] leading-relaxed text-ink-soft dark:text-white/70">
+            <p className="mt-1.5 text-[13px] leading-relaxed text-ink-soft dark:text-white/70 max-sm:text-[10px]">
               {article.excerpt}
             </p>
           </div>
 
           {/* section rows */}
-          <div className="mt-4 space-y-2.5">
+          <div className="mt-4 space-y-2.5 max-sm:mt-3 max-sm:space-y-1.5">
             {items.map((item, i) => (
               <div
                 key={i}
-                className="flex items-center gap-2 rounded-[5px] border border-[#cfe0f4] bg-[#fbfdff] px-3 py-2 dark:border-blue-500/20 dark:bg-ink-900"
+                className="flex items-center gap-2 rounded-[5px] border border-[#cfe0f4] bg-[#fbfdff] px-3 py-2 dark:border-blue-500/20 dark:bg-ink-900 max-sm:gap-1.5 max-sm:px-2 max-sm:py-1.5"
               >
                 <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${i % 2 ? "bg-[#8a9bb0]" : "bg-[#2b62e8]"}`} aria-hidden="true" />
-                <span className="min-w-0 flex-1 truncate text-[12px] font-bold text-[#2f5c8a] dark:text-blue-200">
+                <span className="min-w-0 flex-1 truncate text-[12px] font-bold text-[#2f5c8a] dark:text-blue-200 max-sm:text-[10px]">
                   {item}
                 </span>
-                <span className="shrink-0 text-[10px] font-extrabold uppercase tracking-wider text-[#8a9bb0] dark:text-white/40">
+                <span className="shrink-0 text-[10px] font-extrabold uppercase tracking-wider text-[#8a9bb0] dark:text-white/40 max-sm:text-[8px]">
                   {String(i + 1).padStart(2, "0")}
                 </span>
               </div>
@@ -545,9 +545,9 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
           </div>
 
           {/* bottom instruction line */}
-          <div className="mt-auto flex items-start gap-2 border-t border-[#dcebfc] pt-4 dark:border-blue-500/20">
-            <FileText className="mt-0.5 h-4 w-4 shrink-0 text-[#2b62e8] dark:text-blue-300" aria-hidden="true" />
-            <p className="text-[12px] leading-relaxed text-[#5a6b7c] dark:text-white/60">
+          <div className="mt-auto flex items-start gap-2 border-t border-[#dcebfc] pt-4 dark:border-blue-500/20 max-sm:pt-3">
+            <FileText className="mt-0.5 h-4 w-4 shrink-0 text-[#2b62e8] dark:text-blue-300 max-sm:h-3 max-sm:w-3" aria-hidden="true" />
+            <p className="text-[12px] leading-relaxed text-[#5a6b7c] dark:text-white/60 max-sm:text-[9px]">
               {article.tags?.[0] || article.category} · {article.readMinutes} {dict.resourcesPage.minRead}
             </p>
           </div>
@@ -559,25 +559,25 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
       return (
         <Link
           href={href}
-          className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[26px] border border-tutor-300/50 bg-[linear-gradient(160deg,#eef3ff_0%,#dbe6ff_100%)] p-6 text-ink transition-all duration-300 hover:-translate-y-1.5 dark:border-tutor-500/25 dark:bg-ink-800 dark:text-white sm:p-7"
+          className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[26px] border border-tutor-300/50 bg-[linear-gradient(160deg,#eef3ff_0%,#dbe6ff_100%)] p-3.5 text-ink transition-all duration-300 hover:-translate-y-1.5 dark:border-tutor-500/25 dark:bg-ink-800 dark:text-white sm:p-7"
         >
           <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-tutor-500/10" aria-hidden="true" />
           <div className="relative z-10">
-            <CardCover article={article} heightClass="mb-5 h-32 rounded-[16px] sm:h-40" />
+            <CardCover article={article} heightClass="mb-5 h-32 rounded-[16px] sm:h-40 max-sm:mb-3 max-sm:h-20" />
             <div className="flex items-center justify-between">
               <TypeChip type={type} skin="light" />
-              <span className="grid h-10 w-10 place-items-center rounded-full bg-tutor-500 text-white" aria-hidden="true">
-                <FileCheck2 className="h-5 w-5" />
+              <span className="grid h-10 w-10 place-items-center rounded-full bg-tutor-500 text-white max-sm:h-8 max-sm:w-8" aria-hidden="true">
+                <FileCheck2 className="h-5 w-5 max-sm:h-4 max-sm:w-4" />
               </span>
             </div>
-            <h3 className="mt-4 text-xl font-extrabold leading-snug transition-colors group-hover:text-tutor-700 dark:text-white dark:group-hover:text-tutor-300">
+            <h3 className="mt-4 text-xl font-extrabold leading-snug transition-colors group-hover:text-tutor-700 dark:text-white dark:group-hover:text-tutor-300 max-sm:mt-2 max-sm:text-base">
               {article.title}
             </h3>
-            <p className="mt-4 text-sm leading-relaxed text-ink-soft line-clamp-[7] dark:text-white/65">
+            <p className="mt-4 text-sm leading-relaxed text-ink-soft line-clamp-[7] dark:text-white/65 max-sm:mt-2 max-sm:text-[11px]">
               {article.excerpt}
             </p>
           </div>
-          <div className="relative z-10 mt-6">
+          <div className="relative z-10 mt-6 max-sm:mt-3">
             <CardFooter article={article} skin="light" />
           </div>
         </Link>
@@ -588,7 +588,7 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
       return (
         <Link
           href={href}
-          className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[26px] border border-parent-200/70 bg-[#f4f1ff] p-6 text-ink transition-all duration-300 hover:-translate-y-1.5 dark:border-parent-500/20 dark:bg-ink-800 dark:text-white sm:p-7"
+          className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[26px] border border-parent-200/70 bg-[#f4f1ff] p-3.5 text-ink transition-all duration-300 hover:-translate-y-1.5 dark:border-parent-500/20 dark:bg-ink-800 dark:text-white sm:p-7"
         >
           <div className="pointer-events-none absolute inset-0" aria-hidden="true">
             <span className="absolute left-7 top-1/2 h-3 w-3 rounded-full bg-parent-400/70" />
@@ -598,16 +598,16 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
             <Brain className="absolute right-6 top-6 h-12 w-12 text-parent-400/30" />
           </div>
           <div className="relative z-10">
-            <CardCover article={article} heightClass="mb-5 h-32 rounded-[16px] sm:h-40" />
+            <CardCover article={article} heightClass="mb-5 h-32 rounded-[16px] sm:h-40 max-sm:mb-3 max-sm:h-20" />
             <TypeChip type={type} skin="light" />
-            <h3 className="mt-4 text-xl font-extrabold leading-snug transition-colors group-hover:text-parent-700 dark:text-white dark:group-hover:text-parent-300">
+            <h3 className="mt-4 text-xl font-extrabold leading-snug transition-colors group-hover:text-parent-700 dark:text-white dark:group-hover:text-parent-300 max-sm:mt-2 max-sm:text-base">
               {article.title}
             </h3>
-            <p className="mt-4 text-sm leading-relaxed text-ink-soft line-clamp-[7] dark:text-white/65">
+            <p className="mt-4 text-sm leading-relaxed text-ink-soft line-clamp-[7] dark:text-white/65 max-sm:mt-2 max-sm:text-[11px]">
               {article.excerpt}
             </p>
           </div>
-          <div className="relative z-10 mt-6">
+          <div className="relative z-10 mt-6 max-sm:mt-3">
             <CardFooter article={article} skin="light" />
           </div>
         </Link>
@@ -623,7 +623,7 @@ export default function ResourceCard({ article, basePath }: { article: ResourceI
   const type = normalizeResourceType(article.type ?? article.resourceType);
   const isArticle = type === "article";
   return (
-    <div data-anim-child className={isArticle ? "lg:col-span-3" : "h-full"}>
+    <div data-anim-child className={isArticle ? "col-span-2 lg:col-span-3" : "h-full"}>
       <ResourceCardSkin article={article} type={type} href={`${basePath}/${article.slug}`} />
     </div>
   );
