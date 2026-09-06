@@ -423,6 +423,36 @@ function cleanText(value?: string | null): string {
     .trim();
 }
 
+/**
+ * Some CMS/API responses wrap remote media URLs in markdown or autolink
+ * syntax (e.g. `[https://…](https://…)`, `<https://…>`, `[https://…]`).
+ * Images must be a plain URL, so normalize those forms before rendering.
+ */
+function cleanRemoteUrl(value?: string | null): string | null {
+  if (!value) return null;
+  const trimmed = value.trim().replace(/^["']|["']$/g, "");
+  if (!trimmed) return null;
+
+  // Markdown link with optional trailing punctuation: [alt](https://…)
+  const markdown = trimmed.match(/^\[[^\]]*\]\((https?:\/\/[^)\s]+)\)\s*[.,;:]?$/i);
+  if (markdown) return markdown[1];
+
+  // Angle-bracket autolink: <https://…>
+  const angle = trimmed.match(/^<(https?:\/\/[^>\s]+)>$/i);
+  if (angle) return angle[1];
+
+  // Bracketed autolink: [https://…]
+  const bracket = trimmed.match(/^\[(https?:\/\/[^\]\s]+)\]$/i);
+  if (bracket) return bracket[1];
+
+  // Trim copied punctuation that sometimes trails a pasted URL.
+  let candidate = trimmed;
+  while (/[\])>"']$/.test(candidate) && candidate.includes("http")) {
+    candidate = candidate.slice(0, -1);
+  }
+  return candidate;
+}
+
 function mapApiResourceToResource(item: ApiResource): ResourceItem {
   const catName =
     item.category?.name ||
@@ -442,7 +472,8 @@ function mapApiResourceToResource(item: ApiResource): ResourceItem {
 
   const cleanPreview = cleanText(item.body_preview);
   const resourceType = normalizeResourceType(item.type || item.resource_type || item.category?.slug);
-  const mediaUrl = item.video_url || item.audio_url || item.media_url || item.file_url || null;
+  const coverUrl = cleanRemoteUrl(item.cover_image_url);
+  const mediaUrl = cleanRemoteUrl(item.video_url || item.audio_url || item.media_url || item.file_url);
   const mediaType = item.video_url ? "video" : item.audio_url ? "audio" : null;
 
   return {
@@ -455,7 +486,7 @@ function mapApiResourceToResource(item: ApiResource): ResourceItem {
     audience,
     author: authorName || "Équipe INCLASS",
     readMinutes: item.read_time_minutes || 5,
-    cover: item.cover_image_url || "/images/banner-resources.jpg",
+    cover: coverUrl || "/images/banner-resources.jpg",
     featured: Boolean(item.is_featured || item.type === "guide"),
     publishedAt: new Date(item.published_at || Date.now()),
     type: item.type || resourceType,
@@ -475,9 +506,9 @@ function mapApiResourceToResource(item: ApiResource): ResourceItem {
     tags: item.tags?.map((t) => t.name) || [],
     categoryColor: item.category?.color || null,
     categoryIcon: item.category?.icon || null,
-    coverImageUrl: item.cover_image_url || null,
+    coverImageUrl: coverUrl,
     tutorId: item.tutor?.id || null,
-    avatarUrl: item.tutor?.avatar_url || null,
+    avatarUrl: cleanRemoteUrl(item.tutor?.avatar_url),
     isAnonymous: Boolean(item.is_anonymous),
   };
 }
