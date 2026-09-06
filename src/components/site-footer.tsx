@@ -56,7 +56,7 @@ function FooterNewsletter() {
   }
 
   return (
-    <form onSubmit={onSubmit} className="w-full">
+    <form onSubmit={onSubmit} className="w-full space-y-3">
       <div className="flex items-center gap-3 border-b border-white/20 pb-2 transition-colors focus-within:border-white">
         <input
           type="email"
@@ -66,23 +66,30 @@ function FooterNewsletter() {
           placeholder={dict.footer.newsletterPlaceholder}
           className="h-11 w-full bg-transparent text-sm text-white placeholder:text-white/35 focus:outline-none"
         />
-        <button
-          type="submit"
-          disabled={state === "loading"}
-          aria-label={dict.footer.newsletterBtn}
-          className="grid h-9 w-9 shrink-0 place-items-center rounded-full text-white transition-transform hover:scale-105 disabled:opacity-60"
-        >
-          {state === "loading" ? (
-            <Loader2 className="h-4 w-4 animate-spin" />
-          ) : state === "done" ? (
-            <Check className="h-4 w-4" />
-          ) : (
-            <ArrowRight className={`h-4 w-4 ${isRTL ? "rotate-180" : ""}`} />
-          )}
-        </button>
       </div>
+
+      {/* Full button — hero style */}
+      <button
+        type="submit"
+        disabled={state === "loading"}
+        className="group inline-flex h-14 w-full items-center justify-center gap-3 rounded-full bg-tutor-500 px-8 text-[15px] font-bold text-white transition-all duration-300 hover:bg-tutor-600 hover:shadow-lg hover:shadow-tutor-500/25 disabled:opacity-60"
+      >
+        {state === "loading" ? (
+          <Loader2 className="h-5 w-5 animate-spin" />
+        ) : state === "done" ? (
+          <Check className="h-5 w-5" />
+        ) : (
+          <ArrowRight
+            className={`h-5 w-5 transition-transform duration-300 group-hover:translate-x-1 ${
+              isRTL ? "rotate-180 group-hover:-translate-x-1" : ""
+            }`}
+          />
+        )}
+        <span>{dict.footer.newsletterBtn}</span>
+      </button>
+
       {message ? (
-        <p className={`mt-2 text-xs ${state === "error" ? "text-red-300" : "text-student-200"}`}>
+        <p className={`text-xs ${state === "error" ? "text-red-300" : "text-student-200"}`}>
           {message}
         </p>
       ) : null}
