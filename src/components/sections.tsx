@@ -69,11 +69,12 @@ export function StatsBar() {
       >
         {localizedStats.map((stat, i) => {
           const accent = STAT_ACCENTS[i % STAT_ACCENTS.length];
+          const isLast = i === localizedStats.length - 1;
           return (
             <div
               key={stat.label}
               data-anim-child
-              className={`relative overflow-hidden rounded-3xl border border-line/80 bg-white/80 px-4 py-5 text-center ring-1 ${accent.ring} transition-all duration-300 hover:-translate-y-1 dark:border-white/10 dark:bg-ink-800/60`}
+              className={`relative overflow-hidden rounded-3xl border border-line/80 bg-white/80 px-4 py-5 text-center ring-1 ${accent.ring} transition-all duration-300 hover:-translate-y-1 dark:border-white/10 dark:bg-ink-800/60 ${isLast ? "col-span-2 md:col-span-1" : ""}`}
             >
               <span className={`absolute left-4 top-4 h-2 w-2 rounded-full ${accent.dot} opacity-80`} />
               <p className="font-brand text-[clamp(1.7rem,3.2vw,2.35rem)] font-extrabold leading-none text-ink dark:text-white">
@@ -277,18 +278,18 @@ export function StepsSection({
               key={step.title}
               type="button"
               onClick={() => setActiveStep(i)}
-              className="flex items-center justify-between rounded-2xl border border-line bg-white p-4 text-left transition-all hover:bg-sand/30 dark:border-white/10 dark:bg-ink-800"
+              className="flex w-full items-center justify-between gap-3 rounded-2xl border border-line bg-white p-4 text-left transition-all hover:bg-sand/30 dark:border-white/10 dark:bg-ink-800"
             >
-              <div className="flex items-center gap-3">
-                <span className="grid h-8 w-8 place-items-center rounded-full bg-sand text-xs font-bold text-ink dark:bg-white/10 dark:text-white">
+              <div className="flex min-w-0 items-center gap-3">
+                <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-sand text-xs font-bold text-ink dark:bg-white/10 dark:text-white">
                   {stepNumber}
                 </span>
-                <Icon className="h-5 w-5 text-ink-soft dark:text-white/60" />
-                <span className="text-sm font-bold text-ink dark:text-white">
+                <Icon className="h-5 w-5 shrink-0 text-ink-soft dark:text-white/60" />
+                <span className="min-w-0 truncate text-sm font-bold text-ink dark:text-white">
                   {cleanTitle}
                 </span>
               </div>
-              <span className="text-xs font-semibold text-student-600 dark:text-student-400">
+              <span className="shrink-0 text-xs font-semibold text-student-600 dark:text-student-400">
                 →
               </span>
             </button>
@@ -309,7 +310,7 @@ export function GuaranteeBand() {
   ];
 
   return (
-    <section className="relative overflow-hidden rounded-[40px] bg-gradient-to-br from-ink-900 via-ink-800 to-ink-950 border border-white/10 py-16 text-student-50">
+    <section className="relative overflow-hidden rounded-[28px] bg-gradient-to-br from-ink-900 via-ink-800 to-ink-950 border border-white/10 py-12 text-student-50 sm:rounded-[40px] sm:py-16">
       {/* Decorative brand glows */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/30 to-transparent" />
 
@@ -378,7 +379,7 @@ export function BecomeTutorBand() {
   const { dict, isRTL } = useI18n();
 
   return (
-    <section className="relative mx-auto max-w-7xl overflow-hidden rounded-[36px] bg-gradient-to-r from-tutor-700 via-tutor-600 to-tutor-500 px-6 py-14 text-white sm:px-12 sm:py-16">
+    <section className="relative mx-auto max-w-7xl overflow-hidden rounded-[28px] bg-gradient-to-r from-tutor-700 via-tutor-600 to-tutor-500 px-5 py-12 text-white sm:rounded-[36px] sm:px-12 sm:py-16">
       <div className="relative z-10 grid gap-8 lg:grid-cols-[1.4fr_1fr] items-center">
         <div>
           <span className="inline-flex rounded-full bg-white/20 px-3.5 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-md">
@@ -692,7 +693,7 @@ export function CtaBand({
     <section className="mx-auto max-w-7xl px-4 pb-4 pt-20 sm:px-6 lg:px-8">
       <div
         data-anim="scale"
-        className={`relative overflow-hidden rounded-[36px] px-8 py-14 text-center sm:px-16 ${bg[tone]}`}
+        className={`relative overflow-hidden rounded-[28px] px-5 py-12 text-center sm:rounded-[36px] sm:px-16 sm:py-14 ${bg[tone]}`}
       >
         {/* Decorative color glows */}
         <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-white/50 to-transparent" />

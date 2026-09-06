@@ -48,8 +48,8 @@ export default function PageHero({
   const { dict, isRTL } = useI18n();
 
   return (
-    <section className="w-screen max-w-full overflow-hidden px-[10px] py-[10px]">
-      <div className="relative flex min-h-[54vh] items-center overflow-hidden rounded-[40px] bg-ink">
+    <section className="w-full max-w-full overflow-hidden px-[10px] py-[10px]">
+      <div className="relative flex min-h-[54svh] items-center overflow-hidden rounded-[40px] bg-ink">
         <div className="absolute inset-0">
           <Image
             src={image}
@@ -62,7 +62,7 @@ export default function PageHero({
         </div>
         <div className="absolute inset-0 bg-gradient-to-b from-ink/85 via-ink/70 to-ink/85" />
 
-        <div className="relative z-10 mx-auto w-full max-w-5xl px-6 py-16 text-center sm:px-10 sm:py-20">
+        <div className="relative z-10 mx-auto w-full max-w-5xl px-5 py-14 text-center sm:px-10 sm:py-20">
           {/* Breadcrumb */}
           {crumbs.length > 0 && (
             <nav aria-label="Breadcrumb" className="mb-7 flex justify-center">

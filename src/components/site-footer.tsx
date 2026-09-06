@@ -332,7 +332,7 @@ export default function SiteFooter() {
           {/* Giant brand wordmark */}
           <div className="border-b border-white/10 pt-16 sm:pt-20">
             <Link href="/" aria-label={dict.common.brandName} className="block">
-              <span className="block break-all text-[clamp(4.2rem,15.5vw,15rem)] font-extrabold leading-[0.82] tracking-[-0.07em] text-white transition-opacity hover:opacity-80">
+              <span className="block w-full whitespace-nowrap text-[clamp(3.1rem,15.5vw,15rem)] font-extrabold leading-[0.82] tracking-[-0.07em] text-white transition-opacity hover:opacity-80">
                 inclass
               </span>
             </Link>

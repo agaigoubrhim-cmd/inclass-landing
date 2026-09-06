@@ -12,8 +12,8 @@ export default function Hero() {
   const { dict, isRTL } = useI18n();
 
   return (
-    <section className="w-screen max-w-full overflow-hidden px-[10px] py-[10px]">
-      <div className="relative flex min-h-[85svh] items-center overflow-hidden rounded-[40px] bg-ink sm:min-h-[calc(100svh-96px)]">
+    <section className="w-full max-w-full overflow-hidden px-[10px] py-[10px]">
+      <div className="relative flex min-h-[83svh] items-center overflow-hidden rounded-[40px] bg-ink sm:min-h-[calc(100svh-96px)]">
         {/* Background photo */}
         <div className="absolute inset-0">
           <Image
@@ -35,7 +35,7 @@ export default function Hero() {
         <div className="pointer-events-none absolute inset-0 mix-blend-soft-light bg-gradient-to-t from-tutor-700/25 via-transparent to-parent-500/15" />
 
         {/* Main content */}
-        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-start px-6 pb-28 pt-14 sm:px-10 sm:py-24 lg:py-28">
+        <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-start px-5 pb-10 pt-14 sm:px-10 sm:py-24 lg:py-28">
           <div className="max-w-3xl">
             {/* Badge */}
             <div className="mb-5 inline-flex items-center gap-2.5 rounded-full border border-white/25 bg-white/10 px-4 py-1.5 text-xs font-bold text-white backdrop-blur-md">
@@ -56,9 +56,40 @@ export default function Hero() {
             </h1>
 
             {/* Description */}
-            <p className="mt-6 max-w-2xl text-[17px] leading-relaxed text-white/90 sm:text-[19px]">
+            <p className="mt-5 max-w-2xl text-[16px] leading-relaxed text-white/90 sm:mt-6 sm:text-[19px]">
               {dict.hero.description}
             </p>
+
+            {/* Mobile buttons */}
+            <div className="mt-6 flex w-full max-w-sm flex-col gap-2.5 sm:hidden">
+              <Link
+                href="/contact"
+                className="btn-duo group flex h-13 w-full items-center justify-center gap-2 rounded-2xl px-6 text-sm font-extrabold"
+              >
+                <RollingText text={dict.hero.btnFind} />
+                <ArrowRight className={`h-4 w-4 text-white transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`} />
+              </Link>
+
+              <Link
+                href="/comment-ca-marche/profs"
+                className="btn-duo btn-duo-white flex h-12 w-full items-center justify-center rounded-2xl px-6 text-xs font-extrabold"
+              >
+                <RollingText text={dict.hero.btnBecome} />
+              </Link>
+            </div>
+
+            {/* Trust strip (mobile) */}
+            <div className="mt-6 flex flex-wrap items-center gap-x-4 gap-y-2 border-t border-white/15 pt-5 sm:hidden">
+              {dict.hero.trustList.slice(0, 3).map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-1.5 text-[12px] font-semibold text-white/85"
+                >
+                  <BadgeCheck className="h-3.5 w-3.5 shrink-0 text-tutor-400" />
+                  {item}
+                </span>
+              ))}
+            </div>
 
             {/* Desktop buttons */}
             <div className="mt-8 hidden flex-wrap items-center gap-4 sm:flex">
@@ -112,24 +143,6 @@ export default function Hero() {
               ))}
             </div>
           </div>
-        </div>
-
-        {/* Mobile buttons group */}
-        <div className="absolute bottom-6 left-1/2 z-20 flex w-[calc(100%-2rem)] max-w-sm -translate-x-1/2 flex-col gap-2.5 sm:hidden">
-          <Link
-            href="/contact"
-            className="btn-duo group flex h-13 w-full items-center justify-center gap-2 rounded-2xl px-6 text-sm font-extrabold"
-          >
-            <RollingText text={dict.hero.btnFind} />
-            <ArrowRight className={`h-4 w-4 text-white transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`} />
-          </Link>
-
-          <Link
-            href="/comment-ca-marche/profs"
-            className="btn-duo btn-duo-white flex h-12 w-full items-center justify-center rounded-2xl px-6 text-xs font-extrabold"
-          >
-            <RollingText text={dict.hero.btnBecome} />
-          </Link>
         </div>
       </div>
     </section>

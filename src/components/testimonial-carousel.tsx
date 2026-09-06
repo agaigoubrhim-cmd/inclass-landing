@@ -287,20 +287,18 @@ export default function TestimonialCarousel({
         </div>
 
         {/* Infinite scrolling 3-column container */}
-        <div className="relative mt-14 h-[600px] sm:h-[660px] overflow-hidden">
+        <div className="relative mt-14 h-[560px] overflow-hidden sm:h-[660px]">
           {/* Top & Bottom gradient fade overlays */}
-          {/* Top fade */}
-          {/* Top fade */}
-          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-[200px] bg-gradient-to-b from-sand/60 via-sand/30 to-transparent dark:from-ink-950/50 dark:via-ink-950/25 dark:to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 top-0 z-10 h-16 bg-gradient-to-b from-sand/80 via-sand/40 to-transparent dark:from-ink-950/60 dark:via-ink-950/30 dark:to-transparent sm:h-[200px] sm:from-sand/60 sm:via-sand/30" />
 
           {/* Bottom fade */}
-          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-[200px] bg-gradient-to-t from-sand/60 via-sand/30 to-transparent dark:from-ink-950/50 dark:via-ink-950/25 dark:to-transparent" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10 h-16 bg-gradient-to-t from-sand/80 via-sand/40 to-transparent dark:from-ink-950/60 dark:via-ink-950/30 dark:to-transparent sm:h-[200px] sm:from-sand/60 sm:via-sand/30" />
 
           {/* Left fade */}
-          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-[200px] bg-gradient-to-r from-sand/60 via-sand/30 to-transparent dark:from-ink-950/50 dark:via-ink-950/25 dark:to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-sand/70 to-transparent dark:from-ink-950/50 dark:to-transparent sm:w-[200px] sm:from-sand/60 sm:via-sand/30" />
 
           {/* Right fade */}
-          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-[200px] bg-gradient-to-l from-sand/60 via-sand/30 to-transparent dark:from-ink-950/50 dark:via-ink-950/25 dark:to-transparent" />
+          <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-sand/70 to-transparent dark:from-ink-950/50 dark:to-transparent sm:w-[200px] sm:from-sand/60 sm:via-sand/30" />
 
 
           <div className="grid h-full grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -78,13 +78,13 @@ export default function ContactForm({
         {dict.contactForm.roleLabel}
       </p>
 
-      <div className="mt-2.5 inline-flex flex-wrap gap-1.5 rounded-2xl bg-sand p-1 dark:bg-ink-900">
+      <div className="mt-2.5 grid grid-cols-3 gap-1.5 rounded-2xl bg-sand p-1 dark:bg-ink-900">
         {roles.map((r) => (
           <button
             key={r.id}
             type="button"
             onClick={() => setRole(r.id)}
-            className={`rounded-xl px-5 py-2 text-xs font-bold transition-all ${
+            className={`rounded-xl px-2 py-2 text-xs font-bold transition-all ${
               role === r.id
                 ? `${r.cls}`
                 : "text-ink-soft hover:text-ink dark:text-white/70 dark:hover:text-white"

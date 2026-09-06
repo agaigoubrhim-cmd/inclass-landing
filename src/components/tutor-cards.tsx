@@ -27,7 +27,7 @@ const TUTOR_PHOTOS = [
     "https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&w=800&q=80",
 ];
 
-export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }) {
+export function TutorCard({ tutor, index = 0, asSlide = false }: { tutor: Tutor; index?: number; asSlide?: boolean }) {
     const { dict, locale } = useI18n();
     const modeLabel =
         tutor.mode === "online"
@@ -43,16 +43,12 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
         <article
             data-tutor-card
             data-anim-child
-            className="
+            className={`
         group
         relative
         flex
-        h-[calc(100svh-16px)]
-        min-h-[620px]
-        w-full
-        flex-shrink-0
-        snap-start
-        snap-always
+        ${asSlide ? "h-[540px]" : "h-[520px]"}
+        ${asSlide ? "w-[86vw] max-w-[380px] flex-shrink-0 snap-center" : "w-full"}
         flex-col
         overflow-hidden
         rounded-[24px]
@@ -62,18 +58,17 @@ export function TutorCard({ tutor, index = 0 }: { tutor: Tutor; index?: number }
         duration-300
 
         sm:h-[calc(100svh-32px)]
+        sm:w-full
+        sm:max-w-none
         sm:min-h-[650px]
+        sm:snap-none
 
         lg:h-full
         lg:min-h-[650px]
-        lg:snap-none
         lg:rounded-[30px]
 
-        lg:
-
         dark:border-white/[0.09]
-        dark:
-      "
+      `}
         >
             {/* =========================================================
           FULL IMAGE
@@ -564,15 +559,25 @@ export function TutorCards({ tutors }: { tutors: Tutor[] }) {
         <div
             data-anim-stagger
             className="
-                grid
-                grid-cols-1
-                gap-6
+                flex
+                snap-x
+                snap-mandatory
+                gap-4
+                overflow-x-auto
+                pb-2
+                no-scrollbar
+
+                sm:grid
                 sm:grid-cols-2
+                sm:gap-6
+                sm:overflow-visible
+                sm:pb-0
+
                 lg:grid-cols-3
             "
         >
             {tutors.map((tutor, i) => (
-                <TutorCard key={tutor.slug} tutor={tutor} index={i} />
+                <TutorCard key={tutor.slug} tutor={tutor} index={i} asSlide />
             ))}
         </div>
     );
