@@ -12,6 +12,7 @@ import {
   Headphones,
   Heart,
   MessageCircle,
+  NotebookPen,
   Play,
   Video,
 } from "lucide-react";
@@ -125,45 +126,17 @@ function TypeChip({
   );
 }
 
-function PaperLines() {
+function NotepadClip() {
   return (
-    <div
-      aria-hidden="true"
-      className="absolute inset-0 pointer-events-none"
-      style={{
-        backgroundImage:
-          "repeating-linear-gradient(to bottom, transparent, transparent 27px, rgba(180,132,61,0.18) 27px, rgba(180,132,61,0.18) 28px)",
-      }}
-    />
-  );
-}
-
-function Tape() {
-  return (
-    <div
-      aria-hidden="true"
-      className="absolute -left-5 top-6 h-7 w-24 -rotate-45 bg-amber-200/80 shadow-sm dark:bg-amber-300/40"
-    />
-  );
-}
-
-function Spine() {
-  return (
-    <div aria-hidden="true" className="absolute inset-y-0 left-0 w-3.5 bg-[#e36a4f]">
-      <span className="absolute left-1/2 top-6 h-2 w-2 -translate-x-1/2 rounded-full bg-white/90" />
-      <span className="absolute left-1/2 top-1/2 h-2 w-2 -translate-x-1/2 rounded-full bg-white/90" />
-      <span className="absolute left-1/2 bottom-6 h-2 w-2 -translate-x-1/2 rounded-full bg-white/90" />
+    <div aria-hidden="true" className="absolute left-1/2 top-0 z-20 -translate-x-1/2">
+      {/* metal clip arm holding the top edge */}
+      <div className="flex flex-col items-center">
+        <div className="h-5 w-16 rounded-t-md bg-gradient-to-b from-[#f6f6f6] via-[#cfcfcf] to-[#9a9a9a] shadow-[0_3px_4px_rgba(0,0,0,0.25)]" />
+        <div className="h-1.5 w-8 rounded-b-md bg-gradient-to-b from-[#ef7f2e] to-[#c85619] shadow-[0_3px_4px_rgba(0,0,0,0.18)]" />
+      </div>
+      {/* metal loop */}
+      <div className="absolute -bottom-5 left-1/2 h-10 w-9 -translate-x-1/2 rounded-b-full rounded-t-lg border-[3px] border-[#b9b9b9] border-t-0 bg-transparent shadow-[inset_0_-2px_4px_rgba(0,0,0,0.15)]" />
     </div>
-  );
-}
-
-function FoldedCorner() {
-  return (
-    <div
-      aria-hidden="true"
-      className="absolute bottom-0 right-0 h-10 w-10 bg-gradient-to-tl from-[#e5cfa0] to-[#fff7e8] shadow-lg"
-      style={{ clipPath: "polygon(100% 0, 100% 100%, 0 100%)" }}
-    />
   );
 }
 
@@ -175,28 +148,51 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
       return (
         <Link
           href={href}
-          className="group relative flex min-h-[360px] flex-col overflow-hidden rounded-[26px] border border-amber-200/80 bg-[#fff9ee] p-6 pt-12 text-amber-950 transition-all duration-300 hover:-translate-y-1.5 dark:border-amber-500/20 dark:bg-ink-800 dark:text-amber-50 sm:p-7 sm:pt-12"
+          className="group relative flex min-h-[390px] flex-col overflow-hidden rounded-[10px] bg-[#fff9c9] text-[#4a4a2a] transition-all duration-300 hover:-translate-y-1.5 dark:bg-[#3d3a1c] dark:text-amber-50"
         >
-          <PaperLines />
-          <Spine />
-          <Tape />
-          <FoldedCorner />
-          <div className="relative z-10">
-            <div className="flex items-center gap-2 text-amber-800 dark:text-amber-300">
+          {/* ruled paper */}
+          <div
+            aria-hidden="true"
+            className="absolute inset-0"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(to bottom, transparent, transparent 34px, rgba(136,133,80,0.32) 34px, rgba(136,133,80,0.32) 35px)",
+            }}
+          />
+          {/* soft shadow at the bottom so the page feels lifted */}
+          <div aria-hidden="true" className="absolute inset-x-2 bottom-0 h-5 bg-gradient-to-t from-black/15 to-transparent" />
+
+          {/* metal clip */}
+          <NotepadClip />
+
+          {/* red margin line on the left */}
+          <div aria-hidden="true" className="absolute inset-y-4 left-7 w-px bg-[#e66] opacity-70" />
+          <div aria-hidden="true" className="absolute inset-y-4 right-7 w-px bg-[#e66] opacity-40" />
+
+          <div className="relative z-10 flex h-full flex-col px-8 pb-6 pt-12 sm:px-10 sm:pt-14">
+            <div className="flex items-center gap-2 text-[#8f8a3a] dark:text-amber-300">
               <ResourceTypeIcon type={type} className="h-4 w-4" />
-              <span className="text-[11px] font-extrabold uppercase tracking-[0.14em]">
+              <span className="text-[11px] font-extrabold uppercase tracking-[0.16em]">
                 {dict.resourcesPage.types.notes}
               </span>
             </div>
-            <h3 className="mt-3 text-xl font-extrabold leading-snug transition-colors group-hover:text-amber-700 dark:text-amber-100 dark:group-hover:text-amber-300">
+            <h3 className="mt-3 text-[22px] font-extrabold leading-snug transition-colors group-hover:text-[#7a7524] dark:text-amber-100 dark:group-hover:text-amber-300">
               {article.title}
             </h3>
-            <p className="mt-4 text-sm italic leading-relaxed text-amber-900/75 line-clamp-[7] dark:text-amber-100/70">
+            <p className="mt-4 text-[15px] leading-8 text-[#5b5a33] dark:text-amber-100/75">
               {article.excerpt}
             </p>
-          </div>
-          <div className="relative z-10 mt-6">
-            <CardFooter article={article} skin="light" />
+
+            {/* small "Notebook" marker */}
+            <div className="mt-auto flex items-center justify-between pt-6">
+              <span className="inline-flex items-center gap-1.5 text-[11px] font-bold uppercase tracking-[0.14em] text-[#8f8a3a] dark:text-amber-300">
+                <NotebookPen className="h-3.5 w-3.5" aria-hidden="true" />
+                {article.readMinutes} {dict.resourcesPage.minRead}
+              </span>
+              <span className="text-[11px] font-bold uppercase tracking-[0.16em] text-[#8f8a3a] dark:text-amber-300">
+                {article.author}
+              </span>
+            </div>
           </div>
         </Link>
       );

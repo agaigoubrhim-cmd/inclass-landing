@@ -12,6 +12,7 @@ import {
   Headphones,
   Lightbulb,
   ListChecks,
+  NotebookPen as NotebookPenIcon,
   PenLine,
   Pause,
   Play,
@@ -413,6 +414,98 @@ function EditorialArticle({ article }: { article: ResourceItem }) {
   );
 }
 
+function NotepadDetail({ article }: { article: ResourceItem }) {
+  const { dict } = useI18n();
+  const paragraphs = (article.body || article.excerpt)
+    .split(/\n+/)
+    .map((p) => p.trim())
+    .filter(Boolean);
+  const points =
+    article.tags && article.tags.length
+      ? article.tags
+      : paragraphs.slice(0, 5);
+
+  return (
+    <div data-anim="up" className="relative overflow-hidden rounded-[12px] bg-[#fff9c9] text-[#4a4a2a] dark:bg-[#3d3a1c] dark:text-amber-50">
+      {/* ruled paper */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
+        style={{
+          backgroundImage:
+            "repeating-linear-gradient(to bottom, transparent, transparent 38px, rgba(136,133,80,0.32) 38px, rgba(136,133,80,0.32) 39px)",
+        }}
+      />
+      {/* red margin lines */}
+      <div aria-hidden="true" className="absolute inset-y-0 left-10 w-px bg-[#e66] opacity-60 sm:left-14" />
+      <div aria-hidden="true" className="absolute inset-y-0 left-12 w-px bg-[#e66] opacity-40 sm:left-16" />
+      <div aria-hidden="true" className="absolute inset-y-0 right-10 w-px bg-[#e66] opacity-40 sm:right-14" />
+      {/* soft bottom shadow */}
+      <div aria-hidden="true" className="absolute inset-x-2 bottom-0 h-6 bg-gradient-to-t from-black/15 to-transparent" />
+
+      {/* metal clip */}
+      <div aria-hidden="true" className="absolute left-1/2 top-0 z-20 -translate-x-1/2">
+        <div className="flex flex-col items-center">
+          <div className="h-6 w-20 rounded-t-md bg-gradient-to-b from-[#f6f6f6] via-[#cfcfcf] to-[#9a9a9a] shadow-[0_3px_4px_rgba(0,0,0,0.25)]" />
+          <div className="h-2 w-10 rounded-b-md bg-gradient-to-b from-[#ef7f2e] to-[#c85619] shadow-[0_3px_4px_rgba(0,0,0,0.18)]" />
+        </div>
+        <div className="absolute -bottom-6 left-1/2 h-12 w-11 -translate-x-1/2 rounded-b-full rounded-t-lg border-[3px] border-[#b9b9b9] border-t-0 bg-transparent shadow-[inset_0_-2px_4px_rgba(0,0,0,0.15)]" />
+      </div>
+
+      <div className="relative z-10 px-12 pb-12 pt-16 sm:px-16 sm:pt-20">
+        {/* header */}
+        <div className="flex items-center justify-between gap-4">
+          <span className="inline-flex items-center gap-2 text-[12px] font-extrabold uppercase tracking-[0.18em] text-[#8f8a3a] dark:text-amber-300">
+            <NotebookPenIcon className="h-4 w-4" aria-hidden="true" />
+            {dict.resourcesPage.types.notes}
+          </span>
+          <span className="text-[11px] font-bold uppercase tracking-[0.18em] text-[#8f8a3a] dark:text-amber-300">
+            {article.readMinutes} {dict.resourcesPage.minRead}
+          </span>
+        </div>
+
+        <h1 className="mt-4 text-[clamp(1.8rem,5vw,3rem)] font-extrabold leading-tight text-[#4a4a2a] dark:text-amber-100">
+          {article.title}
+        </h1>
+
+        <p className="mt-5 text-[16px] leading-[2.1] text-[#5b5a33] dark:text-amber-100/75">
+          {article.excerpt}
+        </p>
+
+        {/* written notes */}
+        <div className="mt-8 space-y-6">
+          {paragraphs.slice(0, 8).map((paragraph, i) => (
+            <p key={i} className="text-[15px] leading-[2.1] text-[#5b5a33] dark:text-amber-100/75">
+              {paragraph}
+            </p>
+          ))}
+        </div>
+
+        {/* key points at the bottom of the page */}
+        <div className="mt-10 border-t border-[#b9b48a]/60 pt-6">
+          <p className="text-[11px] font-extrabold uppercase tracking-[0.2em] text-[#8f8a3a] dark:text-amber-300">
+            {dict.resourcesPage.keyPoints}
+          </p>
+          <ul className="mt-4 grid gap-3 sm:grid-cols-2">
+            {points.map((point, i) => (
+              <li key={i} className="flex items-start gap-3 text-sm leading-relaxed text-[#5b5a33] dark:text-amber-100/75">
+                <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#e66]" aria-hidden="true" />
+                <span>{point}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        {/* footer */}
+        <div className="mt-10 flex items-center justify-between text-[11px] font-bold uppercase tracking-[0.2em] text-[#8f8a3a] dark:text-amber-300">
+          <span dir="ltr">{article.author}</span>
+          <span>01</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ResourceContent({ article }: { article: ResourceItem }) {
   const { dict } = useI18n();
   const type: ResourceType = normalizeResourceType(article.type ?? article.resourceType);
@@ -452,13 +545,7 @@ function ResourceContent({ article }: { article: ResourceItem }) {
         </>
       );
     case "notes":
-      return (
-        <>
-          <LeadBox article={article} />
-          <KeyPoints article={article} />
-          <ContentSections article={article} />
-        </>
-      );
+      return <NotepadDetail article={article} />;
     case "guide":
       return (
         <>
@@ -491,7 +578,7 @@ export default function ResourceDetailView({
   const tone = TONE[article.audience] ?? "tutor";
   const type = normalizeResourceType(article.type ?? article.resourceType);
   const typeLabel = dict.resourcesPage.types[type] ?? dict.resourcesPage.types.article;
-  const isEditorial = type === "article";
+  const isEditorial = type === "article" || type === "notes";
 
   return (
     <>
