@@ -14,7 +14,7 @@ import { useI18n } from "@/i18n";
 
 function ResourcesSkeleton() {
   return (
-    <div className="mt-8 grid grid-cols-2 animate-pulse items-stretch gap-3.5 sm:gap-5 md:grid-cols-2 md:gap-7 lg:grid-cols-3" aria-busy="true" role="status">
+    <div className="mt-8 grid grid-cols-1 animate-pulse items-stretch gap-5 sm:gap-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3" aria-busy="true" role="status">
       {Array.from({ length: 6 }).map((_, i) => (
         <div key={i} className="h-[360px] rounded-[26px] border border-line bg-white dark:border-white/10 dark:bg-ink-800">
           <div className="h-40 rounded-t-[26px] bg-sand dark:bg-ink-900" />
@@ -221,7 +221,7 @@ export default function ResourcesView({
             </Link>
           </div>
         ) : filtered.length ? (
-          <div data-anim-stagger className="mt-8 grid grid-cols-2 items-stretch gap-3.5 sm:gap-5 md:grid-cols-2 md:gap-7 lg:grid-cols-3">
+          <div data-anim-stagger className="mt-8 grid grid-cols-1 items-stretch gap-5 sm:gap-6 md:grid-cols-2 md:gap-7 lg:grid-cols-3">
             {filtered.map((article) => (
               <ResourceCard key={article.slug} article={article} basePath={basePath} />
             ))}
