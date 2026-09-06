@@ -7,7 +7,13 @@ import { AlertTriangle, ArrowRight, BookOpen, Clock3, RefreshCw, Search, X } fro
 import PageHero from "@/components/page-hero";
 import { CtaBand } from "@/components/sections";
 import { RollingNumber } from "@/components/gsap/rolling-number";
-import { ARTICLE_CATEGORIES, type ArticleItem } from "@/lib/article-types";
+import {
+  ARTICLE_CATEGORIES,
+  normalizeResourceType,
+  RESOURCE_TYPES,
+  type ResourceItem,
+} from "@/lib/article-types";
+import { ResourceTypeIcon, RESOURCE_TYPE_STYLE } from "@/components/resource-type";
 import { useI18n } from "@/i18n";
 
 const AUDIENCE_TAGS: Record<string, { cls: string }> = {
@@ -33,11 +39,13 @@ function formatDate(date: Date, locale: string) {
 export default function ResourcesView({
   articles,
   selectedCategory = "",
+  selectedType = "",
   basePath = "/ressources",
   initialError = false,
 }: {
-  articles: ArticleItem[];
+  articles: ResourceItem[];
   selectedCategory?: string;
+  selectedType?: string;
   basePath?: string;
   initialError?: boolean;
 }) {
@@ -47,13 +55,16 @@ export default function ResourcesView({
   const normalizedQuery = query.trim().toLowerCase();
   const filtered = articles.filter((article) => {
     if (normalizedQuery) {
-      const haystack = `${article.title} ${article.excerpt} ${article.category} ${article.author}`.toLowerCase();
+      const typeLabel = dict.resourcesPage.types[article.resourceType] ?? "";
+      const haystack = `${article.title} ${article.excerpt} ${article.category} ${article.author} ${
+        article.tags?.join(" ") ?? ""
+      } ${typeLabel}`.toLowerCase();
       if (!haystack.includes(normalizedQuery)) return false;
     }
     return true;
   });
 
-  const hasActiveFilter = Boolean(normalizedQuery || selectedCategory);
+  const hasActiveFilter = Boolean(normalizedQuery || selectedCategory || selectedType);
 
   return (
     <>
@@ -69,10 +80,66 @@ export default function ResourcesView({
       />
 
       <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        {/* Resource Type Selector */}
+        <div data-anim="up" className="rounded-[30px] border border-line bg-white/60 p-5 sm:p-7 dark:border-white/10 dark:bg-ink-800/60">
+          <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
+            <div className="flex items-center gap-3">
+              <span className="grid h-7 w-7 shrink-0 place-items-center rounded-full bg-tutor-100 text-xs font-extrabold text-tutor-700 dark:bg-tutor-950/80 dark:text-tutor-300">
+                1
+              </span>
+              <h2 className="text-sm font-extrabold uppercase tracking-[0.14em] text-ink dark:text-white">
+                {dict.resourcesPage.typeOfResource}
+              </h2>
+            </div>
+            <Link
+              href={basePath}
+              className="rounded-full border border-line bg-white px-4 py-1.5 text-xs font-bold text-ink-soft transition-colors hover:border-tutor-300 hover:bg-sand dark:border-white/10 dark:bg-ink-800 dark:text-white/70 dark:hover:bg-ink-700"
+            >
+              {dict.resourcesPage.typeAll}
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-4">
+            {RESOURCE_TYPES.map((type) => {
+              const isSelected = selectedType === type;
+              const label = dict.resourcesPage.types[type];
+              const desc = dict.resourcesPage.typeDescs[type];
+              return (
+                <Link
+                  key={type}
+                  href={`${basePath}?type=${type}${selectedCategory ? `&categorie=${encodeURIComponent(selectedCategory)}` : ""}`}
+                  aria-pressed={isSelected}
+                  className={`group flex flex-col items-center gap-1.5 rounded-2xl border p-4 text-center transition-all duration-200 sm:p-5 ${
+                    isSelected
+                      ? "border-tutor-500 bg-tutor-50 ring-2 ring-tutor-500/15 dark:border-tutor-400 dark:bg-tutor-950/50"
+                      : "border-line bg-white hover:-translate-y-0.5 hover:border-tutor-300 hover:bg-sand dark:border-white/10 dark:bg-ink-900 dark:hover:border-tutor-500/40 dark:hover:bg-ink-700/50"
+                  }`}
+                >
+                  <span
+                    className={`grid h-10 w-10 place-items-center rounded-xl transition-transform duration-200 group-hover:scale-110 ${
+                      isSelected ? "bg-tutor-500 text-white" : "bg-sand text-ink-soft dark:bg-white/10 dark:text-white/70"
+                    }`}
+                  >
+                    <ResourceTypeIcon type={type} className="h-5 w-5" />
+                  </span>
+                  <strong
+                    className={`text-sm font-extrabold ${
+                      isSelected ? "text-tutor-700 dark:text-tutor-300" : "text-ink dark:text-white"
+                    }`}
+                  >
+                    {label}
+                  </strong>
+                  <span className="text-xs leading-snug text-ink-soft dark:text-white/55">{desc}</span>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Category Filters Bar */}
-        <div data-anim="up" className="flex flex-wrap items-center gap-2.5 pb-2">
+        <div data-anim="up" className="mt-8 flex flex-wrap items-center gap-2.5">
           <Link
-            href={basePath}
+            href={selectedType ? `${basePath}?type=${selectedType}` : basePath}
             className={`rounded-full px-5 py-2 text-sm font-bold transition-all duration-200 ${
               !selectedCategory
                 ? "bg-ink text-cream dark:bg-white dark:text-ink"
@@ -86,7 +153,9 @@ export default function ResourcesView({
             return (
               <Link
                 key={c}
-                href={`${basePath}?categorie=${encodeURIComponent(c)}`}
+                href={`${basePath}?categorie=${encodeURIComponent(c)}${
+                  selectedType ? `&type=${selectedType}` : ""
+                }`}
                 className={`rounded-full border px-5 py-2 text-sm font-bold transition-all duration-200 ${
                   isSelected
                     ? "border-tutor-500 bg-tutor-500 text-white"
@@ -136,9 +205,7 @@ export default function ResourcesView({
         {initialError && articles.length === 0 ? (
           <div className="mt-12 rounded-[32px] border border-amber-200 bg-amber-50/80 p-10 text-center dark:border-amber-500/25 dark:bg-amber-950/30 sm:p-14">
             <AlertTriangle className="mx-auto h-10 w-10 text-amber-600 dark:text-amber-400" aria-hidden="true" />
-            <p className="mt-4 text-lg font-extrabold text-ink dark:text-white">
-              {dict.errorState.title}
-            </p>
+            <p className="mt-4 text-lg font-extrabold text-ink dark:text-white">{dict.errorState.title}</p>
             <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft dark:text-white/70">
               {dict.errorState.description}
             </p>
@@ -155,6 +222,8 @@ export default function ResourcesView({
             {filtered.map((article) => {
               const tag = AUDIENCE_TAGS[article.audience] ?? AUDIENCE_TAGS.student;
               const coverImg = article.cover || "/images/banner-resources.jpg";
+              const type = normalizeResourceType(article.type ?? article.resourceType);
+              const typeStyle = RESOURCE_TYPE_STYLE[type];
 
               return (
                 <Link
@@ -174,8 +243,12 @@ export default function ResourcesView({
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
 
-                    {/* Category & Audience Pills */}
+                    {/* Category & Type Pills */}
                     <div className="absolute left-4 rtl:left-auto rtl:right-4 top-4 flex flex-wrap gap-2">
+                      <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-md ${typeStyle.soft}`}>
+                        <ResourceTypeIcon type={type} className="h-3.5 w-3.5" />
+                        {dict.resourcesPage.types[type] ?? dict.resourcesPage.types.article}
+                      </span>
                       <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-md ${tag.cls}`}>
                         {article.category}
                       </span>
@@ -184,7 +257,9 @@ export default function ResourcesView({
                     {/* Reading time badge */}
                     <div className="absolute bottom-3 right-4 rtl:right-auto rtl:left-4 flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
                       <Clock3 className="h-3.5 w-3.5" />
-                      <span>{article.readMinutes} {dict.resourcesPage.minRead}</span>
+                      <span>
+                        {article.readMinutes} {dict.resourcesPage.minRead}
+                      </span>
                     </div>
                   </div>
 
@@ -209,9 +284,7 @@ export default function ResourcesView({
                           {article.author.slice(0, 2).toUpperCase()}
                         </span>
                         <div>
-                          <p className="text-xs font-bold text-ink dark:text-white line-clamp-1">
-                            {article.author}
-                          </p>
+                          <p className="text-xs font-bold text-ink dark:text-white line-clamp-1">{article.author}</p>
                           <p className="text-[11px] text-ink-soft dark:text-white/50">
                             {formatDate(article.publishedAt, locale)}
                           </p>
@@ -237,10 +310,7 @@ export default function ResourcesView({
             <p className="mx-auto mt-2 max-w-md text-sm text-ink-soft dark:text-white/70">
               {hasActiveFilter ? dict.common.search : dict.resourcesPage.sub}
             </p>
-            <Link
-              href={basePath}
-              className="btn-duo mt-6 inline-flex h-11 items-center rounded-2xl px-6 text-sm font-extrabold"
-            >
+            <Link href={basePath} className="btn-duo mt-6 inline-flex h-11 items-center rounded-2xl px-6 text-sm font-extrabold">
               {dict.resourcesPage.allArticles}
             </Link>
           </div>

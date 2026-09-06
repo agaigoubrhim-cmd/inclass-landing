@@ -296,6 +296,37 @@ export interface Dictionary {
     shareArticle: string;
     searchPlaceholder: string;
     noResults: string;
+    typeOfResource: string;
+    typeAll: string;
+    resourceTypeLabel: string;
+    keyPoints: string;
+    practiceArea: string;
+    yourAnswer: string;
+    showSolution: string;
+    hideSolution: string;
+    mediaUnavailable: string;
+    playVideo: string;
+    listenAudio: string;
+    types: {
+      article: string;
+      guide: string;
+      exercise: string;
+      notes: string;
+      exercise_corrige: string;
+      mind_map: string;
+      video: string;
+      audio: string;
+    };
+    typeDescs: {
+      article: string;
+      guide: string;
+      exercise: string;
+      notes: string;
+      exercise_corrige: string;
+      mind_map: string;
+      video: string;
+      audio: string;
+    };
   };
   simulator: {
     title: string;

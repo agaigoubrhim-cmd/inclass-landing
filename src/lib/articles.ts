@@ -1,6 +1,12 @@
 import { desc, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { articles, type Article } from "@/db/schema";
+import {
+  normalizeResourceType,
+  type ArticleItem,
+  type ResourceItem,
+  type ResourceType,
+} from "@/lib/article-types";
 
 export const ARTICLE_CATEGORIES = [
   "Guide Étudiant",
@@ -11,8 +17,97 @@ export const ARTICLE_CATEGORIES = [
   "Examens",
 ];
 
-const FALLBACK: Article[] = [
-  {
+const TYPE_LABEL_BY_RESOURCE: Record<ResourceType, string> = {
+  article: "Article",
+  guide: "Guide",
+  exercise: "Exercice",
+  notes: "Notes",
+  exercise_corrige: "Exercice & Corrigé",
+  mind_map: "Carte mentale",
+  video: "Vidéo",
+  audio: "Audio",
+};
+
+function toResourceItem(base: Article): ResourceItem {
+  return {
+    id: base.id,
+    slug: base.slug,
+    title: base.title,
+    excerpt: base.excerpt,
+    body: base.body,
+    category: base.category,
+    audience: base.audience,
+    author: base.author,
+    readMinutes: base.readMinutes,
+    cover: base.cover,
+    featured: base.featured,
+    publishedAt: base.publishedAt,
+    type: "article",
+    resourceType: "article",
+    apiId: null,
+    mediaUrl: null,
+    mediaType: null,
+    accessTier: "free",
+    language: "fr",
+    contentLanguages: ["fr"],
+    viewCount: 0,
+    likeCount: 0,
+    saveCount: 0,
+    responsesCount: 0,
+    subject: null,
+    educationLevel: null,
+    tags: [],
+    categoryColor: null,
+    categoryIcon: null,
+    coverImageUrl: base.cover,
+    tutorId: null,
+    avatarUrl: null,
+  };
+}
+
+type FallbackInput = Partial<Omit<ArticleItem, "id">> & {
+  id: number;
+  slug: string;
+  title: string;
+  excerpt: string;
+  resourceType?: ResourceType;
+  mediaUrl?: string | null;
+  mediaType?: "video" | "audio" | null;
+  tags?: string[];
+  subject?: string | null;
+  educationLevel?: string | null;
+  body?: string;
+};
+
+function fallbackResource(input: FallbackInput): ResourceItem {
+  const base = toResourceItem({
+    id: input.id,
+    slug: input.slug,
+    title: input.title,
+    excerpt: input.excerpt,
+    body: input.body ?? "",
+    category: input.category ?? "Conseils",
+    audience: input.audience ?? "student",
+    author: input.author ?? "Équipe INCLASS",
+    readMinutes: input.readMinutes ?? 5,
+    cover: input.cover ?? "/images/banner-resources.jpg",
+    featured: input.featured ?? false,
+    publishedAt: input.publishedAt ?? new Date(),
+  });
+  return {
+    ...base,
+    type: input.resourceType ?? "article",
+    resourceType: input.resourceType ?? "article",
+    mediaUrl: input.mediaUrl ?? null,
+    mediaType: input.mediaType ?? null,
+    tags: input.tags ?? [],
+    subject: input.subject ?? null,
+    educationLevel: input.educationLevel ?? null,
+  };
+}
+
+const FALLBACK: ResourceItem[] = [
+  toResourceItem({
     id: 1,
     slug: "reussir-le-bac-national-plan-revision",
     title: "Réussir le Bac national : le plan de révision des 12 dernières semaines",
@@ -26,8 +121,8 @@ const FALLBACK: Article[] = [
     cover: "/images/hero-student.jpg",
     featured: true,
     publishedAt: new Date("2026-01-12"),
-  },
-  {
+  }),
+  toResourceItem({
     id: 2,
     slug: "choisir-un-prof-particulier-au-maroc",
     title: "Comment choisir un prof particulier au Maroc : 7 critères qui comptent vraiment",
@@ -41,8 +136,8 @@ const FALLBACK: Article[] = [
     cover: "/images/parents.jpg",
     featured: true,
     publishedAt: new Date("2026-01-05"),
-  },
-  {
+  }),
+  toResourceItem({
     id: 3,
     slug: "fixer-son-tarif-horaire-prof-particulier",
     title: "Professeurs : comment fixer un tarif horaire juste (et le défendre)",
@@ -56,8 +151,8 @@ const FALLBACK: Article[] = [
     cover: "/images/become-tutor.jpg",
     featured: false,
     publishedAt: new Date("2025-12-18"),
-  },
-  {
+  }),
+  toResourceItem({
     id: 4,
     slug: "methode-pomodoro-lyceens",
     title: "La méthode Pomodoro adaptée aux lycéens marocains",
@@ -71,8 +166,8 @@ const FALLBACK: Article[] = [
     cover: "/images/banner-resources.jpg",
     featured: false,
     publishedAt: new Date("2025-12-02"),
-  },
-  {
+  }),
+  toResourceItem({
     id: 5,
     slug: "apres-le-bac-filieres-marocaines",
     title: "Après le Bac : panorama des filières marocaines et de leurs concours",
@@ -86,8 +181,8 @@ const FALLBACK: Article[] = [
     cover: "/images/lesson-home.jpg",
     featured: false,
     publishedAt: new Date("2025-11-20"),
-  },
-  {
+  }),
+  toResourceItem({
     id: 6,
     slug: "suivre-progres-enfant-sans-pression",
     title: "Suivre les progrès de son enfant sans mettre la pression",
@@ -101,7 +196,142 @@ const FALLBACK: Article[] = [
     cover: "/images/hero-tutor.jpg",
     featured: false,
     publishedAt: new Date("2025-11-04"),
-  },
+  }),
+  fallbackResource({
+    id: 7,
+    slug: "guide-methodologie-revisions-efficaces",
+    title: "Guide complet : organiser ses révisions sur 12 semaines",
+    excerpt:
+      "Un rétroplanning clair, avec objectifs hebdomadaires, fiches de synthèse et bilans réguliers pour aborder chaque contrôle sans stress.",
+    body: "Commence par un diagnostic honnête de ton niveau. Bloque deux créneaux courts par semaine plutôt qu'un marathon le dimanche. Termine chaque séance par une fiche de synthèse de 10 lignes et un point de contrôle mensuel avec ton professeur ou tes parents.",
+    category: "Guide Étudiant",
+    audience: "student",
+    author: "Sara H., professeure agrégée",
+    readMinutes: 8,
+    cover: "/images/banner-resources.jpg",
+    featured: true,
+    publishedAt: new Date("2026-02-02"),
+    resourceType: "guide",
+    tags: ["Méthodologie", "Organisation", "Bac national"],
+    subject: "Méthodologie",
+    educationLevel: "1ère Bac · 2ème Bac",
+  }),
+  fallbackResource({
+    id: 8,
+    slug: "exercices-maths-derivation-2eme-bac",
+    title: "Exercices de maths : dérivation et étude de fonctions",
+    excerpt:
+      "Une série d'exercices progressifs pour maîtriser la dérivation, les tableaux de variations et les problèmes d'optimisation.",
+    body: "Exercice 1 : calculer la dérivée de f(x)=x^3-3x+1. Exercice 2 : dresser le tableau de variations sur [-2;3]. Exercice 3 : déterminer la valeur minimale de la fonction sur l'intervalle.",
+    category: "Guide Étudiant",
+    audience: "student",
+    author: "Mehdi A., ingénieur",
+    readMinutes: 6,
+    cover: "/images/lesson-home.jpg",
+    featured: false,
+    publishedAt: new Date("2026-02-10"),
+    resourceType: "exercise",
+    tags: ["Mathématiques", "Dérivation", "2ème Bac"],
+    subject: "Mathématiques",
+    educationLevel: "2ème Bac",
+  }),
+  fallbackResource({
+    id: 9,
+    slug: "notes-cours-physique-nouveau-mouvement",
+    title: "Notes de cours : la cinématique du mouvement",
+    excerpt:
+      "Position, vitesse, accélération et équations horaires résumées en une fiche claire, avec les formules indispensables.",
+    body: "Vitesse moyenne = distance / durée. Accélération = variation de vitesse / durée. Équation horaire du mouvement rectiligne uniformément accéléré : x(t)=x0+v0·t+½a·t².",
+    category: "Méthodologie",
+    audience: "student",
+    author: "Omar B., docteur en physique",
+    readMinutes: 4,
+    cover: "/images/hero-wide.jpg",
+    featured: false,
+    publishedAt: new Date("2026-02-14"),
+    resourceType: "notes",
+    tags: ["Physique", "Cinématique", "Lycée"],
+    subject: "Physique-Chimie",
+    educationLevel: "Lycée",
+  }),
+  fallbackResource({
+    id: 10,
+    slug: "exercice-corrige-svt-genetique",
+    title: "Exercice corrigé : génétique et lois de Mendel",
+    excerpt:
+      "Un exercice type examen avec énoncé, questionnement progressif et corrigé détaillé pas à pas.",
+    body: "Enoncé : croiser deux plants de petits pois. Question 1 : déterminer les génotypes. Question 2 : établir l'échiquier de croisement. Corrigé : les caractères sont portés par des gènes autosomiques, l'allèle dominant s'exprime en hétérozygote...",
+    category: "Examens",
+    audience: "student",
+    author: "Khalid R., professeur de SVT",
+    readMinutes: 9,
+    cover: "/images/hero-tutor.jpg",
+    featured: false,
+    publishedAt: new Date("2026-02-18"),
+    resourceType: "exercise_corrige",
+    tags: ["SVT", "Génétique", "Concours"],
+    subject: "SVT",
+    educationLevel: "2ème Bac · Concours",
+  }),
+  fallbackResource({
+    id: 11,
+    slug: "carte-mentale-revision-histoire",
+    title: "Carte mentale : réviser la Seconde Guerre mondiale",
+    excerpt:
+      "Le schéma conceptuel qui relie dates, acteurs, phases et conséquences pour mémoriser plus vite le chapitre d'histoire.",
+    body: "Centre : Seconde Guerre mondiale. Branches : causes (crise de 1929, montée des totalitarismes), grandes phases (guerre éclair, mondiale, débarquements), acteurs (Alliés, Axe), conséquences (ONU, blocs, décolonisation).",
+    category: "Guide Étudiant",
+    audience: "student",
+    author: "Loubna S., professeure d'histoire",
+    readMinutes: 5,
+    cover: "/images/hero-student.jpg",
+    featured: false,
+    publishedAt: new Date("2026-02-22"),
+    resourceType: "mind_map",
+    tags: ["Histoire", "Révision", "Carte mentale"],
+    subject: "Histoire-Géographie",
+    educationLevel: "Tronc commun · 1ère Bac",
+  }),
+  fallbackResource({
+    id: 12,
+    slug: "video-cours-anglais-present-perfect",
+    title: "Vidéo : le present perfect en 8 minutes",
+    excerpt:
+      "Une vidéo courte qui explique quand et comment utiliser le present perfect, avec des exemples et des exercices à l'écran.",
+    body: "Le present perfect relie le passé au présent : used for experiences (I have visited...), for actions starting in the past (I have lived here since...), and for recent results (I have just finished...).",
+    category: "Méthodologie",
+    audience: "student",
+    author: "Hajar Z., coach IELTS/TOEFL",
+    readMinutes: 8,
+    cover: "/images/hero-wide.jpg",
+    featured: false,
+    publishedAt: new Date("2026-03-01"),
+    resourceType: "video",
+    mediaType: "video",
+    tags: ["Anglais", "Grammaire", "Vidéo"],
+    subject: "Anglais",
+    educationLevel: "Collège · Lycée",
+  }),
+  fallbackResource({
+    id: 13,
+    slug: "audio-podcast-methodologie-revisions",
+    title: "Audio : 10 minutes pour mieux réviser le soir",
+    excerpt:
+      "Une capsule audio pour structurer sa soirée de travail : pauses actives, exercices ciblés et gestion des distractions.",
+    body: "Commence par 5 minutes de rappel de ce que tu as appris, puis 25 minutes de travail concentré, puis 5 minutes de pause. Répète ce cycle trois fois, et termine par une fiche de synthèse.",
+    category: "Méthodologie",
+    audience: "student",
+    author: "Équipe INCLASS",
+    readMinutes: 10,
+    cover: "/images/banner-resources.jpg",
+    featured: false,
+    publishedAt: new Date("2026-03-05"),
+    resourceType: "audio",
+    mediaType: "audio",
+    tags: ["Méthodologie", "Podcast", "Révision"],
+    subject: "Méthodologie",
+    educationLevel: "Collège · Lycée",
+  }),
 ];
 
 const SECTIONS: { heading: string; paragraphs: string[] }[] = [
@@ -137,31 +367,62 @@ type ApiResource = {
   id: string;
   slug: string;
   type?: string;
+  resource_type?: string | null;
   title: string;
   excerpt?: string | null;
   body_preview?: string | null;
   cover_image_url?: string | null;
   read_time_minutes?: number | null;
   language?: string | null;
+  content_languages?: string[] | null;
   access_tier?: string | null;
   is_featured?: boolean;
+  is_anonymous?: boolean;
   published_at?: string | null;
   view_count?: number;
   like_count?: number;
+  save_count?: number;
+  responses_count?: number;
+  video_url?: string | null;
+  audio_url?: string | null;
+  media_url?: string | null;
+  file_url?: string | null;
   tutor?: {
     id?: string;
     first_name?: string;
     last_name?: string;
+    avatar_url?: string | null;
+  } | null;
+  subject?: {
+    id?: string;
+    name?: string;
+    slug?: string;
+  } | null;
+  education_level?: {
+    id?: string | number;
+    name?: string;
+    slug?: string;
   } | null;
   category?: {
     id?: number;
     name?: string;
     slug?: string;
+    icon?: string | null;
+    color?: string | null;
   } | null;
   tags?: Array<{ id: number; name: string; slug: string }>;
 };
 
-function mapApiResourceToArticle(item: ApiResource): Article {
+function cleanText(value?: string | null): string {
+  if (!value) return "";
+  return value
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function mapApiResourceToResource(item: ApiResource): ResourceItem {
   const catName =
     item.category?.name ||
     item.tags?.[0]?.name ||
@@ -178,9 +439,10 @@ function mapApiResourceToArticle(item: ApiResource): Article {
     ? `${item.tutor.first_name || ""} ${item.tutor.last_name || ""}`.trim()
     : "Équipe INCLASS";
 
-  const cleanPreview = item.body_preview
-    ? item.body_preview.replace(/<[^>]+>/g, " ").replace(/&nbsp;/g, " ").trim()
-    : "";
+  const cleanPreview = cleanText(item.body_preview);
+  const resourceType = normalizeResourceType(item.type || item.resource_type || item.category?.slug);
+  const mediaUrl = item.video_url || item.audio_url || item.media_url || item.file_url || null;
+  const mediaType = item.video_url ? "video" : item.audio_url ? "audio" : null;
 
   return {
     id: item.id as unknown as number,
@@ -195,10 +457,34 @@ function mapApiResourceToArticle(item: ApiResource): Article {
     cover: item.cover_image_url || "/images/banner-resources.jpg",
     featured: Boolean(item.is_featured || item.type === "guide"),
     publishedAt: new Date(item.published_at || Date.now()),
+    type: item.type || resourceType,
+    resourceType,
+    apiId: item.id,
+    mediaUrl,
+    mediaType,
+    accessTier: item.access_tier || null,
+    language: item.language || null,
+    contentLanguages: item.content_languages || null,
+    viewCount: item.view_count || 0,
+    likeCount: item.like_count || 0,
+    saveCount: item.save_count || 0,
+    responsesCount: item.responses_count || 0,
+    subject: item.subject?.name || null,
+    educationLevel: item.education_level?.name || null,
+    tags: item.tags?.map((t) => t.name) || [],
+    categoryColor: item.category?.color || null,
+    categoryIcon: item.category?.icon || null,
+    coverImageUrl: item.cover_image_url || null,
+    tutorId: item.tutor?.id || null,
+    avatarUrl: item.tutor?.avatar_url || null,
   };
 }
 
-export async function getArticles(category?: string): Promise<Article[]> {
+export function resourceTypeLabel(type: ResourceType | string): string {
+  return TYPE_LABEL_BY_RESOURCE[type as ResourceType] ?? "Article";
+}
+
+export async function getArticles(category?: string): Promise<ResourceItem[]> {
   try {
     const res = await fetch("https://api.inclass.app/api/resources", {
       next: { revalidate: 300 },
@@ -206,8 +492,10 @@ export async function getArticles(category?: string): Promise<Article[]> {
     if (res.ok) {
       const json = await res.json();
       if (Array.isArray(json?.data) && json.data.length > 0) {
-        const list: Article[] = json.data.map(mapApiResourceToArticle);
-        return category ? list.filter((a: Article) => a.category.toLowerCase() === category.toLowerCase()) : list;
+        const list: ResourceItem[] = json.data.map(mapApiResourceToResource);
+        return category
+          ? list.filter((a: ArticleItem) => a.category.toLowerCase() === category.toLowerCase())
+          : list;
       }
     }
   } catch {
@@ -217,7 +505,10 @@ export async function getArticles(category?: string): Promise<Article[]> {
   try {
     const rows = await db.select().from(articles).orderBy(desc(articles.publishedAt));
     if (rows.length) {
-      return category ? rows.filter((r) => r.category.toLowerCase() === category.toLowerCase()) : rows;
+      const list = rows.map(toResourceItem);
+      return category
+        ? list.filter((r) => r.category.toLowerCase() === category.toLowerCase())
+        : list;
     }
   } catch {
     // table not migrated yet
@@ -227,10 +518,10 @@ export async function getArticles(category?: string): Promise<Article[]> {
     : FALLBACK;
 }
 
-export async function getArticle(slug: string): Promise<Article | null> {
+export async function getArticle(slug: string): Promise<ResourceItem | null> {
   try {
     const all = await getArticles();
-    const found = all.find((a) => a.slug === slug || String(a.id) === slug);
+    const found = all.find((a) => a.slug === slug || String(a.id) === slug || a.apiId === slug);
     if (found) return found;
   } catch {
     // ignore
@@ -238,7 +529,7 @@ export async function getArticle(slug: string): Promise<Article | null> {
 
   try {
     const rows = await db.select().from(articles).where(eq(articles.slug, slug)).limit(1);
-    if (rows[0]) return rows[0];
+    if (rows[0]) return toResourceItem(rows[0]);
   } catch {
     // ignore
   }
