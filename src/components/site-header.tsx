@@ -1046,10 +1046,10 @@ export default function SiteHeader() {
               <Link
                 href="/comment-ca-marche/profs"
                 onClick={closeAll}
-                className="flex h-11 w-full items-center justify-center gap-2 rounded-full border border-line bg-white text-xs font-bold text-ink transition-transform active:scale-95 dark:border-white/15 dark:bg-white/10 dark:text-white"
+                className="btn-duo btn-duo-white flex h-11 w-full items-center justify-center gap-2 rounded-2xl text-xs font-extrabold"
               >
-                <span>{dict.common.becomeTutor}</span>
                 <Sparkles className="h-3.5 w-3.5 text-tutor-500" />
+                <span>{dict.common.becomeTutor}</span>
               </Link>
             </div>
           </div>

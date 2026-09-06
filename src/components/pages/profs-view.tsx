@@ -158,7 +158,7 @@ export default function ProfsView() {
               href="https://wa.me/212600000000?text=Bonjour,%20je%20souhaite%20postuler%20comme%20professeur%20INCLASS"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-13 items-center gap-2 rounded-full border border-line bg-white px-7 text-sm font-bold text-ink transition-all hover:bg-sand hover:scale-105 active:scale-95 dark:border-white/15 dark:bg-ink-800 dark:text-white"
+              className="btn-duo btn-duo-white group inline-flex h-13 items-center gap-2 rounded-2xl px-7 text-sm font-extrabold"
             >
               <WhatsAppIcon className="h-4 w-4" />
               <span>WhatsApp Direct</span>

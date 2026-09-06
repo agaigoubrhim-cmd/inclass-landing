@@ -76,6 +76,8 @@ export function StatsBar() {
               data-anim-child
               className={`relative overflow-hidden rounded-3xl border border-line/80 bg-white/80 px-4 py-5 text-center ring-1 ${accent.ring} transition-all duration-300 hover:-translate-y-1 dark:border-white/10 dark:bg-ink-800/60 ${isLast ? "col-span-2 md:col-span-1" : ""}`}
             >
+              {/* Top accent strip */}
+              <span className={`absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-transparent via-current to-transparent ${accent.dot.replace("bg-", "text-")}`} />
               <span className={`absolute left-4 top-4 h-2 w-2 rounded-full ${accent.dot} opacity-80`} />
               <p className="font-brand text-[clamp(1.7rem,3.2vw,2.35rem)] font-extrabold leading-none text-ink dark:text-white">
                 <RollingNumber targetNumber={stat.value} height={40} />
@@ -410,7 +412,7 @@ export function BecomeTutorBand() {
           </Link>
           <Link
             href="/contact?subject=Recrutement%20Professeur"
-            className="flex h-13 items-center justify-center rounded-2xl border border-white/40 bg-white/10 px-7 font-extrabold text-white backdrop-blur-md transition-all hover:bg-white/20"
+            className="flex h-13 items-center justify-center gap-2 rounded-2xl border-2 border-white/40 bg-transparent px-7 font-extrabold text-white transition-all hover:bg-white/10 active:scale-[0.98]"
           >
             {dict.common.contactAdvisor}
           </Link>
@@ -455,7 +457,7 @@ export function ParentsBand() {
               </Link>
               <Link
                 href="/contact"
-                className="inline-flex h-12 items-center rounded-full border border-parent-300 bg-white px-6 font-bold text-parent-700 transition-colors hover:bg-parent-50 dark:border-parent-500/40 dark:bg-ink-800 dark:text-parent-300"
+                className="btn-duo btn-duo-white group inline-flex h-12 items-center justify-center gap-2 rounded-2xl px-6 font-extrabold"
               >
                 {dict.common.contactAdvisor}
               </Link>
@@ -659,7 +661,7 @@ export function FaqAccordion({
           </a>
           <Link
             href="/contact"
-            className="inline-flex items-center rounded-full border border-line bg-white px-4 py-2 text-xs font-bold text-ink transition-colors hover:bg-sand dark:border-white/10 dark:bg-ink-800 dark:text-white"
+            className="btn-duo btn-duo-white inline-flex items-center rounded-2xl px-4 py-2 text-xs font-extrabold"
           >
             {dict.nav.contact}
           </Link>
@@ -705,13 +707,13 @@ export function CtaBand({
         <div className="relative mt-8 flex flex-wrap justify-center gap-3">
           <Link
             href="/contact"
-            className="btn-duo btn-duo-white group inline-flex h-13 items-center rounded-2xl px-7 py-3.5 text-[15px] font-extrabold"
+            className="btn-duo btn-duo-white group inline-flex h-13 items-center rounded-2xl px-7 text-[15px] font-extrabold"
           >
             <RollingText text={dict.common.requestTutor} />
           </Link>
           <Link
             href="/contact"
-            className="group inline-flex items-center rounded-2xl border-2 border-white/40 px-7 py-3.5 text-[15px] font-bold transition-colors hover:bg-white/10 text-white"
+            className="group inline-flex h-13 items-center rounded-2xl border-2 border-white/40 px-7 text-[15px] font-extrabold text-white transition-all hover:bg-white/10 active:scale-[0.98]"
           >
             <RollingText text={dict.common.contactAdvisor} />
           </Link>

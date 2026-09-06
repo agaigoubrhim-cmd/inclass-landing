@@ -217,19 +217,18 @@ export function AudienceCards() {
     );
 
     return (
-        <section
-            ref={containerRef}
-            className="
-                mx-auto
-                max-w-[1440px]
-                px-4
-                py-16
-                sm:px-6
-                lg:px-8
-                lg:py-24
-                [perspective:1200px]
-            "
-        >
+    <section
+        ref={containerRef}
+        className="
+            mx-auto
+            max-w-[1440px]
+            px-4
+            py-16
+            sm:px-6
+            lg:px-8
+            lg:py-24
+        "
+    >
             <SectionHead
                 eyebrow={dict.audiencesSection.eyebrow}
                 title={dict.audiencesSection.title}
@@ -263,16 +262,17 @@ export function AudienceCards() {
                                 flex
                                 flex-col
                                 overflow-hidden
-                                rounded-3xl
+                                rounded-[28px]
                                 border
-                                border-slate-200
+                                border-line/80
                                 bg-white
                                 p-3
                                 duration-300
-                                will-change-transform
-                                [transform-style:preserve-3d]
-                                dark:border-slate-800
+                                hover:-translate-y-1
+                                hover:border-ink/10
+                                dark:border-white/10
                                 dark:bg-ink-900
+                                dark:hover:border-white/20
                                 ${BORDER_HOVER_STYLES[a.tone] || ""}
                             `}
                         >
@@ -306,6 +306,7 @@ export function AudienceCards() {
                                         select-none
                                     "
                                 />
+                                <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent" />
 
                                 {/* Image overlay */}
                                 {/* <div className="absolute inset-0 rounded-[40px] bg-gradient-to-t from-black/75 via-black/25 to-transparent" /> */}
@@ -317,6 +318,7 @@ export function AudienceCards() {
                                         bottom-4
                                         left-4
                                         right-4
+                                        z-10
                                         flex
                                         items-center
                                         gap-3
@@ -372,7 +374,7 @@ export function AudienceCards() {
                                         text-2xl
                                         font-bold
                                         tracking-tight
-                                        text-slate-900
+                                        text-ink
                                         dark:text-white
                                         xl:text-3xl
                                     "
@@ -385,7 +387,7 @@ export function AudienceCards() {
                                         mt-3
                                         text-sm
                                         leading-relaxed
-                                        text-slate-600
+                                        text-ink-soft
                                         dark:text-white/70
                                     "
                                 >
@@ -398,7 +400,7 @@ export function AudienceCards() {
                                         space-y-3.5
                                         text-sm
                                         font-medium
-                                        text-slate-700
+                                        text-ink-soft
                                         dark:text-white/90
                                     "
                                 >
