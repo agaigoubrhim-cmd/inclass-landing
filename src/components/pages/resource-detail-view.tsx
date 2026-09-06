@@ -24,6 +24,7 @@ import { CtaBand } from "@/components/sections";
 import { RollingNumber } from "@/components/gsap/rolling-number";
 import ArticleShareActions from "@/components/article-share-actions";
 import {
+  getApiCoverImage,
   getDefaultArticleSections,
   normalizeResourceType,
   type ResourceItem,
@@ -223,8 +224,7 @@ function MediaFrame({ article, type }: { article: ResourceItem; type: "video" | 
   const isVideo = type === "video";
   const label = isVideo ? dict.resourcesPage.playVideo : dict.resourcesPage.listenAudio;
   // API `cover_image_url` is the single source of truth for the poster/cover.
-  const poster =
-    article.coverImageUrl || (article.cover && /^https?:/i.test(article.cover) ? article.cover : null);
+  const poster = getApiCoverImage(article);
 
   return (
     <div data-anim="up" className="mt-8 overflow-hidden rounded-3xl border border-line bg-ink-950 dark:border-white/10">
@@ -302,7 +302,7 @@ function EditorialArticle({ article }: { article: ResourceItem }) {
     fontFamily:
       "Georgia, 'Times New Roman', 'Noto Serif', serif",
   };
-  const rightImg = article.coverImageUrl || (article.cover && /^https?:/i.test(article.cover) ? article.cover : null);
+  const rightImg = getApiCoverImage(article);
   const hasImage = Boolean(rightImg);
 
   return (
@@ -779,8 +779,7 @@ export default function ResourceDetailView({
   const typeLabel = dict.resourcesPage.types[type] ?? dict.resourcesPage.types.article;
   const isEditorial = type === "article" || type === "notes" || type === "guide" || type === "exercise";
   // API `cover_image_url` is the single source of truth for the hero image.
-  const heroImage =
-    article.coverImageUrl || (article.cover && /^https?:/i.test(article.cover) ? article.cover : null);
+  const heroImage = getApiCoverImage(article);
 
   return (
     <>

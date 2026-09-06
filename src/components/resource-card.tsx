@@ -17,7 +17,7 @@ import {
   Video,
 } from "lucide-react";
 import type { ResourceItem, ResourceType } from "@/lib/article-types";
-import { normalizeResourceType } from "@/lib/article-types";
+import { getApiCoverImage, normalizeResourceType } from "@/lib/article-types";
 import { ResourceTypeIcon } from "@/components/resource-type";
 import { useI18n } from "@/i18n";
 
@@ -149,8 +149,7 @@ function CardCover({
   heightClass?: string;
   className?: string;
 }) {
-  const image =
-    article.coverImageUrl || (article.cover && /^https?:/i.test(article.cover) ? article.cover : null);
+  const image = getApiCoverImage(article);
 
   if (!image) return null;
 
@@ -347,9 +346,10 @@ function ResourceCardSkin({ article, type, href }: { article: ResourceItem; type
       const leadHeading = paragraphs[0] || article.category;
       const leadBody = paragraphs.slice(1, 3).join(" ");
       const restBody = paragraphs.slice(3);
-      // Real API image only (`cover_image_url`). Local default banners are not
-      // treated as a real photo so a missing API image shows the placeholder.
-      const imageUrl = article.coverImageUrl || (article.cover && /^https?:/i.test(article.cover) ? article.cover : null);
+      // Real API image only (`cover_image_url`). Local default banners are never
+      // treated as a real photo; when no valid API image exists the layout
+      // collapses into a single text column.
+      const imageUrl = getApiCoverImage(article);
       const hasImage = Boolean(imageUrl);
 
       return (

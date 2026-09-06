@@ -122,6 +122,25 @@ export const ARTICLE_CATEGORIES = [
   "Examens",
 ];
 
+/**
+ * Returns the API-provided cover image URL only when it is a valid remote
+ * HTTP/HTTPS URL. Local placeholder paths and missing/invalid values always
+ * return null so the surrounding UI can collapse naturally.
+ */
+export function getApiCoverImage(
+  article: Pick<ResourceItem, "coverImageUrl" | "cover">,
+): string | null {
+  const apiCover = article.coverImageUrl?.trim();
+  if (apiCover && /^https?:\/\//i.test(apiCover)) return apiCover;
+
+  // Some API payloads expose the same normalized value through `cover`; local
+  // paths (e.g. `/images/...`) are never treated as an API image.
+  const backendCover = article.cover?.trim();
+  if (backendCover && /^https?:\/\//i.test(backendCover)) return backendCover;
+
+  return null;
+}
+
 export function getDefaultArticleSections() {
   return [
     {
