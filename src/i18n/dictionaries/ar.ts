@@ -432,6 +432,8 @@ export const ar: Dictionary = {
     mediaUnavailable: "سيتوفر هذا المحتوى في التطبيق قريباً.",
     playVideo: "تشغيل الفيديو",
     listenAudio: "استمع إلى الصوت",
+    comments: "تعليقات",
+    likes: "إعجاب",
     types: {
       article: "مقال",
       guide: "دليل",

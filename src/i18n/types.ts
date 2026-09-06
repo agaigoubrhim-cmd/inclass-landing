@@ -307,6 +307,8 @@ export interface Dictionary {
     mediaUnavailable: string;
     playVideo: string;
     listenAudio: string;
+    comments: string;
+    likes: string;
     types: {
       article: string;
       guide: string;

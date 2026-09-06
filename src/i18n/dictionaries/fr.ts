@@ -432,6 +432,8 @@ export const fr: Dictionary = {
     mediaUnavailable: "Ce média sera disponible dans l'application très prochainement.",
     playVideo: "Lire la vidéo",
     listenAudio: "Écouter l'audio",
+    comments: "commentaires",
+    likes: "j'aime",
     types: {
       article: "Article",
       guide: "Guide",

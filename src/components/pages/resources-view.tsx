@@ -1,40 +1,15 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { AlertTriangle, ArrowRight, BookOpen, Clock3, RefreshCw, Search, X } from "lucide-react";
+import { AlertTriangle, BookOpen, RefreshCw, Search, X } from "lucide-react";
 import PageHero from "@/components/page-hero";
 import { CtaBand } from "@/components/sections";
 import { RollingNumber } from "@/components/gsap/rolling-number";
-import {
-  ARTICLE_CATEGORIES,
-  normalizeResourceType,
-  RESOURCE_TYPES,
-  type ResourceItem,
-} from "@/lib/article-types";
-import { ResourceTypeIcon, RESOURCE_TYPE_STYLE } from "@/components/resource-type";
+import { ARTICLE_CATEGORIES, RESOURCE_TYPES, type ResourceItem } from "@/lib/article-types";
+import { ResourceTypeIcon } from "@/components/resource-type";
+import ResourceCard from "@/components/resource-card";
 import { useI18n } from "@/i18n";
-
-const AUDIENCE_TAGS: Record<string, { cls: string }> = {
-  student: { cls: "bg-student-100 text-student-800 dark:bg-student-950/80 dark:text-student-300" },
-  tutor: { cls: "bg-tutor-100 text-tutor-800 dark:bg-tutor-950/80 dark:text-tutor-300" },
-  parent: { cls: "bg-parent-100 text-parent-800 dark:bg-parent-950/80 dark:text-parent-300" },
-};
-
-function formatDate(date: Date, locale: string) {
-  const locMap: Record<string, string> = {
-    fr: "fr-MA",
-    en: "en-US",
-    es: "es-ES",
-    ar: "ar-MA",
-  };
-  return new Intl.DateTimeFormat(locMap[locale] ?? "fr-MA", {
-    day: "numeric",
-    month: "short",
-    year: "numeric",
-  }).format(new Date(date));
-}
 
 export default function ResourcesView({
   articles,
@@ -49,7 +24,7 @@ export default function ResourcesView({
   basePath?: string;
   initialError?: boolean;
 }) {
-  const { dict, locale, isRTL } = useI18n();
+  const { dict } = useI18n();
   const [query, setQuery] = useState("");
 
   const normalizedQuery = query.trim().toLowerCase();
@@ -218,88 +193,10 @@ export default function ResourcesView({
             </Link>
           </div>
         ) : filtered.length ? (
-          <div data-anim-stagger className="mt-8 grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-            {filtered.map((article) => {
-              const tag = AUDIENCE_TAGS[article.audience] ?? AUDIENCE_TAGS.student;
-              const coverImg = article.cover || "/images/banner-resources.jpg";
-              const type = normalizeResourceType(article.type ?? article.resourceType);
-              const typeStyle = RESOURCE_TYPE_STYLE[type];
-
-              return (
-                <Link
-                  key={article.slug}
-                  data-anim-child
-                  href={`${basePath}/${article.slug}`}
-                  className="group relative flex flex-col overflow-hidden rounded-[30px] border border-line bg-white transition-all duration-300 hover:-translate-y-1.5 dark:border-white/10 dark:bg-ink-800"
-                >
-                  {/* Cover Image Container */}
-                  <div className="relative h-52 w-full overflow-hidden bg-sand dark:bg-ink-900">
-                    <Image
-                      src={coverImg}
-                      alt={article.title}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                      className="object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20" />
-
-                    {/* Category & Type Pills */}
-                    <div className="absolute left-4 rtl:left-auto rtl:right-4 top-4 flex flex-wrap gap-2">
-                      <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-md ${typeStyle.soft}`}>
-                        <ResourceTypeIcon type={type} className="h-3.5 w-3.5" />
-                        {dict.resourcesPage.types[type] ?? dict.resourcesPage.types.article}
-                      </span>
-                      <span className={`inline-flex items-center rounded-full px-3 py-1 text-xs font-bold uppercase tracking-wider backdrop-blur-md ${tag.cls}`}>
-                        {article.category}
-                      </span>
-                    </div>
-
-                    {/* Reading time badge */}
-                    <div className="absolute bottom-3 right-4 rtl:right-auto rtl:left-4 flex items-center gap-1.5 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white backdrop-blur-md">
-                      <Clock3 className="h-3.5 w-3.5" />
-                      <span>
-                        {article.readMinutes} {dict.resourcesPage.minRead}
-                      </span>
-                    </div>
-                  </div>
-
-                  {/* Body Content */}
-                  <div className="flex flex-1 flex-col justify-between p-6 sm:p-7">
-                    <div>
-                      {/* Title */}
-                      <h3 className="text-lg font-extrabold leading-snug text-ink transition-colors group-hover:text-tutor-600 dark:text-white dark:group-hover:text-tutor-400">
-                        {article.title}
-                      </h3>
-
-                      {/* Excerpt */}
-                      <p className="mt-3 text-sm leading-relaxed text-ink-soft line-clamp-3 dark:text-white/70">
-                        {article.excerpt}
-                      </p>
-                    </div>
-
-                    {/* Author & Date Footer */}
-                    <div className="mt-6 flex items-center justify-between border-t border-line/70 pt-4 dark:border-white/10">
-                      <div className="flex items-center gap-2.5">
-                        <span className="grid h-8 w-8 place-items-center rounded-full bg-tutor-100 text-xs font-extrabold text-tutor-700 dark:bg-tutor-950 dark:text-tutor-300">
-                          {article.author.slice(0, 2).toUpperCase()}
-                        </span>
-                        <div>
-                          <p className="text-xs font-bold text-ink dark:text-white line-clamp-1">{article.author}</p>
-                          <p className="text-[11px] text-ink-soft dark:text-white/50">
-                            {formatDate(article.publishedAt, locale)}
-                          </p>
-                        </div>
-                      </div>
-
-                      <span className="inline-flex items-center gap-1 text-xs font-bold text-tutor-600 transition-transform group-hover:translate-x-1 rtl:group-hover:-translate-x-1 dark:text-tutor-400">
-                        <span>{dict.common.readArticle}</span>
-                        <ArrowRight className={`h-3.5 w-3.5 ${isRTL ? "rotate-180" : ""}`} />
-                      </span>
-                    </div>
-                  </div>
-                </Link>
-              );
-            })}
+          <div data-anim-stagger className="mt-8 grid items-stretch gap-7 md:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((article) => (
+              <ResourceCard key={article.slug} article={article} basePath={basePath} />
+            ))}
           </div>
         ) : (
           <div className="mt-12 rounded-[32px] border border-dashed border-line bg-white p-14 text-center dark:border-white/10 dark:bg-ink-800">

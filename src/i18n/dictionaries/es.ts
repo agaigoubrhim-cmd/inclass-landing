@@ -432,6 +432,8 @@ export const es: Dictionary = {
     mediaUnavailable: "Este contenido multimedia estará disponible en la app muy pronto.",
     playVideo: "Reproducir vídeo",
     listenAudio: "Escuchar audio",
+    comments: "comentarios",
+    likes: "me gusta",
     types: {
       article: "Artículo",
       guide: "Guía",
