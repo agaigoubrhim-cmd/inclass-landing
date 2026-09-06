@@ -182,11 +182,12 @@
 }
 
 /* =========================================================
-   MODERN 2026 BUTTON (flat, bold, blue)
+   MODERN 3D BUTTON (blue, bold, pressed-edge like Duolingo)
    ========================================================= */
 .btn-duo {
   --btn-color: var(--color-duo-500);
   --btn-text: #ffffff;
+  --btn-edge: var(--color-duo-600);
   --btn-hover-color: var(--color-duo-600);
 
   position: relative;
@@ -195,6 +196,9 @@
   justify-content: center;
   gap: 0.5rem;
   border-radius: 1rem;
+  border: 2px solid transparent;
+  border-bottom-width: 5px;
+  border-bottom-color: var(--btn-edge);
   background: var(--btn-color);
   color: var(--btn-text);
   font-weight: 800;
@@ -202,39 +206,49 @@
   user-select: none;
   transition:
     transform 0.12s ease,
+    border-bottom-width 0.12s ease,
     background-color 0.15s ease,
+    filter 0.15s ease,
     opacity 0.15s ease;
 }
 
 .btn-duo:hover {
   background: var(--btn-hover-color);
+  filter: brightness(1.05);
 }
 
 .btn-duo:active {
-  transform: scale(0.98);
+  transform: translateY(3px);
+  border-bottom-width: 2px;
+  filter: brightness(0.98);
 }
 
 .btn-duo-blue {
   --btn-color: var(--color-tutor-500);
+  --btn-edge: var(--color-tutor-600);
 }
 
 .btn-duo-student {
   --btn-color: var(--color-student-500);
+  --btn-edge: var(--color-student-600);
 }
 
 .btn-duo-parent {
   --btn-color: var(--color-parent-500);
+  --btn-edge: var(--color-parent-600);
 }
 
 .btn-duo-white {
   --btn-color: #ffffff;
   --btn-text: var(--color-ink);
+  --btn-edge: #d7dce8;
   --btn-hover-color: #eef3ff;
 }
 
 .btn-duo-ink {
   --btn-color: var(--color-ink);
   --btn-text: #ffffff;
+  --btn-edge: #05070f;
 }
 
 /* GSAP reveal: elements start hidden and are animated in by ScrollFX. */
