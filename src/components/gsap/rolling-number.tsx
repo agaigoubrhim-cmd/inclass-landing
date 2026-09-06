@@ -68,7 +68,6 @@ const RollingDigit = ({
         },
         {
             dependencies: [num, height, duration, delay, isDigit, repeatOnScroll],
-            scope: triggerRef,
         }
     );
 

@@ -96,6 +96,18 @@
   --color-parent-900: #1f1147;
   --color-parent-950: #100827;
 
+  /* Duolingo-inspired primary action color */
+  --color-duo-50: #eaffd8;
+  --color-duo-100: #d7ffb8;
+  --color-duo-200: #b8f28c;
+  --color-duo-300: #9ae864;
+  --color-duo-400: #7cdc45;
+  --color-duo-500: #58cc02;
+  --color-duo-600: #46a302;
+  --color-duo-700: #3a8c00;
+  --color-duo-800: #2f7300;
+  --color-duo-900: #255a00;
+
   --radius-4xl: 2rem;
   --radius-5xl: 2.75rem;
 }
@@ -187,6 +199,72 @@
 
 .dark .shadow-pop {
   box-shadow: 0 24px 60px -28px rgba(0, 0, 0, 0.85);
+}
+
+/* =========================================================
+   DUOLINGO-STYLE 3D BUTTON
+   ========================================================= */
+.btn-duo {
+  --btn-color: var(--color-duo-500);
+  --btn-edge: var(--color-duo-600);
+  --btn-text: #ffffff;
+
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 2px solid transparent;
+  border-bottom-width: 5px;
+  border-bottom-color: var(--btn-edge);
+  border-radius: 1rem;
+  background: var(--btn-color);
+  color: var(--btn-text);
+  font-weight: 800;
+  cursor: pointer;
+  user-select: none;
+  transition:
+    transform 0.12s ease,
+    filter 0.15s ease,
+    border-bottom-width 0.12s ease,
+    box-shadow 0.15s ease;
+}
+
+.btn-duo:hover {
+  filter: brightness(1.06);
+  box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--btn-edge) 45%, transparent);
+}
+
+.btn-duo:active {
+  transform: translateY(3px);
+  border-bottom-width: 2px;
+}
+
+.btn-duo-blue {
+  --btn-color: var(--color-tutor-500);
+  --btn-edge: var(--color-tutor-600);
+}
+
+.btn-duo-student {
+  --btn-color: var(--color-student-500);
+  --btn-edge: var(--color-student-600);
+}
+
+.btn-duo-parent {
+  --btn-color: var(--color-parent-500);
+  --btn-edge: var(--color-parent-600);
+}
+
+.btn-duo-white {
+  --btn-color: #ffffff;
+  --btn-edge: #d8d8dd;
+  --btn-text: var(--color-ink);
+}
+
+.btn-duo-ink {
+  --btn-color: var(--color-ink);
+  --btn-edge: #05070f;
+  --btn-text: #ffffff;
 }
 
 /* GSAP reveal: elements start hidden and are animated in by ScrollFX. */

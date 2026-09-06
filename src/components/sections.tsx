@@ -709,13 +709,13 @@ export function CtaBand({
         <div className="relative mt-8 flex flex-wrap justify-center gap-3">
           <Link
             href="/contact"
-            className="group inline-flex h-13 items-center rounded-full bg-cream px-7 py-3.5 text-[15px] font-bold text-ink transition-transform hover:scale-[1.03]"
+            className="btn-duo btn-duo-white group inline-flex h-13 items-center rounded-2xl px-7 py-3.5 text-[15px] font-extrabold"
           >
             <RollingText text={dict.common.requestTutor} />
           </Link>
           <Link
             href="/contact"
-            className="group inline-flex items-center rounded-full border-2 border-white/40 px-7 py-3.5 text-[15px] font-bold transition-colors hover:bg-white/10 text-white"
+            className="group inline-flex items-center rounded-2xl border-2 border-white/40 px-7 py-3.5 text-[15px] font-bold transition-colors hover:bg-white/10 text-white"
           >
             <RollingText text={dict.common.contactAdvisor} />
           </Link>

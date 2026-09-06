@@ -118,17 +118,17 @@ export default function Hero() {
               className="mt-8 hidden flex-wrap items-center gap-4 sm:flex"
             >
               {/* Trouver un prof */}
-              <div className="group flex gap-1">
+              <div className="group flex gap-2">
                 <Link
                   href="/contact"
-                  className="inline-flex h-16 items-center gap-3 rounded-full bg-tutor-500 px-10 text-[17px] font-bold text-white transition-all duration-300 hover:bg-tutor-600 hover:shadow-lg hover:shadow-tutor-500/25"
+                  className="btn-duo h-16 items-center gap-3 rounded-2xl px-8 text-[17px] font-extrabold"
                 >
                   <RollingText text={dict.hero.btnFind} />
                 </Link>
 
                 <Link
                   href="/contact"
-                  className="inline-flex h-16 w-16 items-center justify-center rounded-full bg-tutor-500 text-white transition-all duration-300 hover:bg-tutor-600 hover:shadow-lg hover:shadow-tutor-500/25"
+                  className="btn-duo h-16 w-16 items-center justify-center rounded-2xl"
                   aria-label={dict.hero.btnFind}
                 >
                   <ArrowRight className={`h-5 w-5 text-white transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`} />
@@ -136,17 +136,17 @@ export default function Hero() {
               </div>
 
               {/* Devenir enseignant */}
-              <div className="group flex gap-1">
+              <div className="group flex gap-2">
                 <Link
                   href="/comment-ca-marche/profs"
-                  className="inline-flex h-16 items-center rounded-full border border-white/30 bg-white/95 px-8 text-[15px] font-bold text-ink backdrop-blur-md transition-all duration-300 hover:bg-white hover:shadow-lg"
+                  className="btn-duo btn-duo-white h-16 items-center rounded-2xl px-7 text-[15px] font-extrabold"
                 >
                   <RollingText text={dict.hero.btnBecome} />
                 </Link>
 
                 <Link
                   href="/comment-ca-marche/profs"
-                  className="inline-flex h-16 w-16 items-center justify-center rounded-full border border-white/30 bg-white/95 text-ink backdrop-blur-md transition-all duration-300 hover:bg-white hover:shadow-lg"
+                  className="btn-duo btn-duo-white h-16 w-16 items-center justify-center rounded-2xl"
                   aria-label={dict.hero.btnBecome}
                 >
                   <ArrowRight className={`h-5 w-5 text-ink transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`} />
@@ -179,15 +179,15 @@ export default function Hero() {
         >
           <Link
             href="/contact"
-            className="group flex h-13 w-full items-center justify-center gap-2 rounded-full bg-tutor-500 px-6 text-sm font-bold text-white shadow-lg shadow-tutor-500/30 active:scale-[0.98]"
+            className="btn-duo group flex h-13 w-full items-center justify-center gap-2 rounded-2xl px-6 text-sm font-extrabold"
           >
             <RollingText text={dict.hero.btnFind} />
-            <ArrowRight className={`h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`} />
+            <ArrowRight className={`h-4 w-4 text-white transition-transform duration-300 group-hover:translate-x-1 ${isRTL ? "rotate-180" : ""}`} />
           </Link>
 
           <Link
             href="/comment-ca-marche/profs"
-            className="flex h-12 w-full items-center justify-center rounded-full border border-white/30 bg-white/90 px-6 text-xs font-bold text-ink backdrop-blur-md active:scale-[0.98]"
+            className="btn-duo btn-duo-white flex h-12 w-full items-center justify-center rounded-2xl px-6 text-xs font-extrabold"
           >
             <RollingText text={dict.hero.btnBecome} />
           </Link>

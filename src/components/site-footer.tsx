@@ -113,7 +113,7 @@ function FooterNewsletter() {
       <button
         type="submit"
         disabled={state === "loading"}
-        className="group inline-flex h-14 w-full items-center justify-center gap-3 rounded-full bg-tutor-500 px-8 text-[15px] font-bold text-white transition-all duration-300 hover:bg-tutor-600 hover:shadow-lg hover:shadow-tutor-500/25 disabled:opacity-60"
+        className="btn-duo group inline-flex h-14 w-full items-center justify-center gap-3 rounded-2xl px-8 text-[15px] font-extrabold disabled:opacity-60"
       >
         {state === "loading" ? (
           <LoaderIcon className="h-5 w-5 animate-spin" />

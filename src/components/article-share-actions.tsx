@@ -8,11 +8,46 @@ import { RollingText } from "@/components/gsap/rolling-text";
 export default function ArticleShareActions({ title, url }: { title: string; url?: string }) {
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = () => {
-    if (typeof window !== "undefined") {
-      navigator.clipboard.writeText(window.location.href);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2500);
+  const handleCopy = async () => {
+    if (typeof window === "undefined") return;
+
+    const text = url || window.location.href;
+
+    // Preferred: async Clipboard API (may be blocked by permissions policy).
+    try {
+      if (navigator.clipboard?.writeText) {
+        await navigator.clipboard.writeText(text);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2500);
+        return;
+      }
+    } catch {
+      // Fall through to legacy fallback below.
+    }
+
+    // Fallback: temporary textarea + execCommand, works without clipboard permission.
+    try {
+      const textarea = document.createElement("textarea");
+      textarea.value = text;
+      textarea.setAttribute("readonly", "");
+      textarea.style.position = "fixed";
+      textarea.style.top = "-9999px";
+      textarea.style.opacity = "0";
+      document.body.appendChild(textarea);
+      textarea.select();
+      textarea.setSelectionRange(0, textarea.value.length);
+      const ok = document.execCommand("copy");
+      document.body.removeChild(textarea);
+
+      if (ok) {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2500);
+      } else {
+        // Last resort: show the link so the user can copy it manually.
+        window.prompt("Copie le lien :", text);
+      }
+    } catch {
+      window.prompt("Copie le lien :", text);
     }
   };
 
